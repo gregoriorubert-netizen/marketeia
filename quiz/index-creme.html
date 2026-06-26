@@ -513,6 +513,9 @@
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="./firebase-config.js"></script>
 </head>
 <body>
 
@@ -672,6 +675,32 @@
 
     // ---- WhatsApp (trocar pelo número real da Marketeia) ----
     var WHATSAPP_NUMBER = "5500000000000";
+
+    // ---- Firebase ----
+    var db = null;
+    try {
+      if (typeof firebase !== "undefined" &&
+          typeof FIREBASE_CONFIG !== "undefined" &&
+          FIREBASE_CONFIG.projectId !== "COLE_AQUI") {
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+      }
+    } catch (e) { console.warn("[Firebase]", e.message); }
+
+    function saveLead() {
+      if (!db) return;
+      db.collection("leads").add({
+        timestamp:    firebase.firestore.FieldValue.serverTimestamp(),
+        versao:       "creme",
+        instagram:    answers.instagram ? "@" + answers.instagram : "",
+        segmento:     optText("segmento"),
+        dores:        multiText("dores"),
+        google:       optText("google"),
+        faturamento:  optText("faturamento"),
+        investimento: answers.investimento || "",
+        ticket:       answers.ticket || ""
+      }).catch(function (e) { console.warn("[Firebase] Erro ao salvar lead:", e); });
+    }
 
     // ---- icons (Lucide-style) ----
     var ICONS = {
@@ -952,22 +981,38 @@
       var text = (key >= 0 && INSIGHT[key]) ? INSIGHT[key] : INSIGHT_DEFAULT;
       document.getElementById("insightText").innerHTML = "Hoje, o maior ponto de melhoria está " + text;
       document.getElementById("waBtn").href = buildWhatsApp();
+      saveLead();
       show("result");
     }
 
     function buildWhatsApp() {
+      var ig = answers.instagram ? "@" + answers.instagram : "-";
+      var q3 = findQ("dores");
+      var doreLines = (answers.dores || []).map(function (i) {
+        return "  ⚡ " + ((q3 && q3.options[i]) || "");
+      }).join("\n") || "  Não informado";
+
       var L = [];
-      L.push("Olá, Marketeia! Acabei de fazer o Diagnóstico de Performance e quero meu plano de ação. 🚀");
+      L.push("Olá, Marketeia! 👋");
       L.push("");
-      L.push("Instagram: @" + (answers.instagram || "-"));
-      L.push("Segmento: " + optText("segmento"));
-      L.push("Desafios: " + multiText("dores"));
-      L.push("Google: " + optText("google"));
-      L.push("Faturamento (3m): " + optText("faturamento"));
-      L.push("Investe/mês (tráfego+gestão): R$ " + (answers.investimento || "-"));
-      L.push("Ticket médio: R$ " + (answers.ticket || "-"));
-      var msg = L.join("\n");
-      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
+      L.push("Acabei de concluir o *Diagnóstico de Performance Digital* e quero receber meu plano de ação personalizado!");
+      L.push("");
+      L.push("*— MINHA EMPRESA —*");
+      L.push("📱 Instagram: " + ig);
+      L.push("🏢 Segmento: " + optText("segmento"));
+      L.push("");
+      L.push("*— MAIORES DESAFIOS —*");
+      L.push(doreLines);
+      L.push("");
+      L.push("*— SITUAÇÃO ATUAL —*");
+      L.push("🔍 Google: " + optText("google"));
+      L.push("💰 Faturamento (3 meses): " + optText("faturamento"));
+      L.push("📊 Investimento/mês: R$ " + (answers.investimento || "-"));
+      L.push("🎯 Ticket médio: R$ " + (answers.ticket || "-"));
+      L.push("");
+      L.push("Quero receber meu plano de ação agora! 🚀");
+
+      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(L.join("\n"));
     }
 
     function optText(id) {

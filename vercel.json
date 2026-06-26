@@ -1,6 +1,7 @@
 {
   "rewrites": [
-    { "source": "/quiz",     "destination": "/quiz/index-creme.html" },
-    { "source": "/quizdark", "destination": "/quiz/index.html" }
+    { "source": "/quiz",      "destination": "/quiz/index-creme.html" },
+    { "source": "/quizdark",  "destination": "/quiz/index.html" },
+    { "source": "/adminquiz", "destination": "/adminquiz/index.html" }
   ]
 }
