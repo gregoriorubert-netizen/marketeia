@@ -1,0 +1,2059 @@
+<!doctype html>
+<html lang="pt-BR" class="theme-dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marketeia DS - Sinal Aberto v1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+:root,
+.theme-dark {
+  --acc-vermillion: #e8401f;
+  --acc-vermillion-bright: #ff5c36;
+  --acc-petrol: #11393b;
+  --acc-petrol-ink: #0a1f21;
+  --acc-signal: #6fb5ac;
+  --acc-amber: #e9a23b;
+  --acc-green: #57b97e;
+  --acc-rose: #e0455c;
+  --acc-cream: #f2ede3;
+
+  --bg-primary: #0a1f21;
+  --bg-secondary: #0e282b;
+  --bg-tertiary: #143639;
+  --bg-elevated: #102e31;
+
+  --text-primary: #f2ede3;
+  --text-secondary: #d2ccbe;
+  --text-tertiary: #9b9787;
+  --text-muted: #6c695c;
+
+  --border-subtle: rgba(242, 237, 227, .07);
+  --border-default: rgba(242, 237, 227, .12);
+  --border-strong: rgba(242, 237, 227, .2);
+
+  --accent: var(--acc-vermillion);
+  --accent-muted: rgba(232, 64, 31, .1);
+  --accent-soft: rgba(232, 64, 31, .22);
+  --secondary: var(--acc-signal);
+  --secondary-muted: rgba(111, 181, 172, .11);
+
+  --text-on-accent: #fff7ef;
+
+  --glass-bg: rgba(242, 237, 227, .05);
+  --glass-strong: rgba(242, 237, 227, .085);
+  --shadow-card: 0 22px 44px -24px rgba(4, 14, 15, .8), 0 1px 0 rgba(242, 237, 227, .05) inset;
+
+  --font-display: "Archivo", "Inter Tight", sans-serif;
+  --font-ui: "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --sidebar: 280px;
+  --content-max: 1320px;
+  --section-x: clamp(32px, 5.8vw, 92px);
+  --section-y: clamp(84px, 8vw, 132px);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+.theme-light {
+  --bg-primary: #f4f1e8;
+  --bg-secondary: #ece7da;
+  --bg-tertiary: #e0daca;
+  --bg-elevated: #f0ebdf;
+  --text-primary: #122b2d;
+  --text-secondary: #2e4543;
+  --text-tertiary: #5b6b66;
+  --text-muted: #7e887f;
+  --border-subtle: rgba(17, 57, 59, .1);
+  --border-default: rgba(17, 57, 59, .16);
+  --border-strong: rgba(17, 57, 59, .26);
+  --accent: #d03a1b;
+  --accent-muted: rgba(208, 58, 27, .1);
+  --accent-soft: rgba(208, 58, 27, .2);
+  --secondary: #1e6b63;
+  --secondary-muted: rgba(30, 107, 99, .12);
+  --text-on-accent: #fff7ef;
+  --glass-bg: rgba(255, 253, 247, .66);
+  --glass-strong: rgba(255, 253, 247, .88);
+  --shadow-card: 0 18px 42px -30px rgba(17, 57, 59, .28), 0 1px 0 rgba(255, 255, 255, .9) inset;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 84% 38%, rgba(232, 64, 31, .09), transparent 34vw),
+    radial-gradient(circle at 14% 72%, rgba(111, 181, 172, .08), transparent 30vw),
+    var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .16;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr);
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  z-index: 10;
+  padding: 28px 22px;
+  border-right: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  backdrop-filter: blur(22px) saturate(1.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.brandmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 42px;
+}
+
+.sigil {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--acc-vermillion);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-card);
+}
+
+.sigil svg {
+  width: 22px;
+  height: 15px;
+  fill: #fff7ef;
+  stroke: none;
+}
+
+.brandmark strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.brandmark span span,
+.meta,
+.eyebrow,
+.nav a,
+.tile-index,
+.swatch em,
+.media-slot > span,
+.spec-row span,
+.module-grid span,
+.quality-grid span,
+.narrative-grid .meta,
+.category .meta,
+.prompt-card .meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.nav {
+  display: grid;
+  gap: 4px;
+}
+
+.nav a {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  transition: color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--text-primary);
+  background: var(--accent-muted);
+  transform: translateX(2px);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.theme-toggle {
+  min-height: 44px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.theme-light .sidebar {
+  background: rgba(236, 231, 218, .88);
+}
+
+.theme-light .theme-toggle,
+.theme-light .btn.secondary,
+.theme-light input,
+.theme-light select,
+.theme-light .lucide-grid span {
+  background: rgba(255, 253, 247, .78);
+}
+
+main { min-width: 0; }
+
+.hero,
+.section {
+  padding: var(--section-y) var(--section-x);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero {
+  min-height: 100dvh;
+  max-width: calc(var(--content-max) + var(--section-x) * 2);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: clamp(44px, 7vw, 96px);
+  align-items: center;
+}
+
+.section {
+  max-width: calc(var(--content-max) + var(--section-x) * 2);
+}
+
+.hero-content,
+.section-header,
+.color-layout,
+.type-layout,
+.component-layout,
+.asset-layout,
+.motion-lab {
+  width: 100%;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  font-weight: 500;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: .98;
+}
+
+h1 {
+  max-width: 900px;
+  font-size: clamp(54px, 8vw, 112px);
+}
+
+h2 {
+  max-width: 860px;
+  font-size: clamp(38px, 4.8vw, 68px);
+}
+
+h3 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--text-secondary);
+  line-height: 1.62;
+}
+
+.hero-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroWordReveal 600ms var(--ease) forwards;
+}
+
+@keyframes heroWordReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lead {
+  max-width: 720px;
+  margin-top: 24px;
+  font-size: clamp(19px, 2vw, 25px);
+  line-height: 1.38;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn {
+  height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius-md);
+  padding: 0 18px;
+  border: 1px solid var(--border-default);
+  background: var(--glass-bg);
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1;
+  transition: transform 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease), opacity 180ms var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
+}
+
+.btn:active { transform: translateY(-1px) scale(.99); }
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.swatch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--text-on-accent);
+  font-weight: 700;
+}
+
+.btn.primary:hover {
+  background: var(--acc-vermillion-bright);
+}
+
+.theme-light .btn.primary:hover {
+  background: #e8401f;
+}
+
+.btn.secondary { background: var(--glass-bg); }
+.btn.tertiary { background: transparent; border-color: transparent; color: var(--text-secondary); }
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hero-panel {
+  border-left: 1px solid var(--border-default);
+  padding-left: 26px;
+}
+
+.hero-score {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 82px;
+  line-height: .86;
+  color: var(--accent);
+}
+
+.hero-pulse {
+  width: 100%;
+  height: 44px;
+  margin-top: 16px;
+  stroke: var(--secondary);
+  stroke-width: 2.5;
+}
+
+.status-line,
+.bar-chart,
+.skeleton {
+  overflow: hidden;
+  background: var(--bg-tertiary);
+}
+
+.status-line {
+  height: 8px;
+  border-radius: 999px;
+  margin-top: 22px;
+}
+
+.status-line span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(280px, .48fr);
+  gap: clamp(28px, 6vw, 92px);
+  align-items: start;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.section-header > p {
+  padding-top: 36px;
+  font-size: 16px;
+}
+
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rule-tile {
+  min-height: 228px;
+  padding: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-secondary) 86%, transparent);
+  display: grid;
+  align-content: space-between;
+  gap: 28px;
+  box-shadow: 0 1px 0 rgba(242, 237, 227, .04) inset;
+}
+
+.tile-index {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.rule-tile h3 { margin-bottom: 8px; }
+
+.theme-light .rule-tile,
+.theme-light .module-grid article,
+.theme-light .quality-grid article,
+.theme-light .brandos-map article,
+.theme-light .state-card,
+.theme-light .motion-demo,
+.theme-light .category,
+.theme-light .narrative-grid article,
+.theme-light .heuristic-list article {
+  background: rgba(250, 248, 240, .76);
+  box-shadow: 0 18px 38px -34px rgba(17, 57, 59, .22), 0 1px 0 rgba(255, 255, 255, .82) inset;
+}
+
+.module-grid,
+.quality-grid,
+.brandos-map {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.module-grid article,
+.quality-grid article,
+.brandos-map article {
+  min-height: 144px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: grid;
+  align-content: space-between;
+  gap: 18px;
+  background: color-mix(in srgb, var(--bg-primary) 91%, transparent);
+}
+
+.module-grid strong,
+.quality-grid strong,
+.brandos-map strong {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.quality-grid em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.color-layout,
+.type-layout,
+.component-layout,
+.asset-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .42fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.swatch {
+  min-height: 166px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-secondary) 86%, transparent);
+  padding: 14px;
+  display: grid;
+  align-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.swatch span {
+  display: block;
+  height: 72px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(242, 237, 227, .16);
+}
+
+.swatch strong { margin-top: 18px; }
+.swatch em { display: block; margin-top: 4px; font-style: normal; }
+
+.usage-panel,
+.brandos-preview,
+.icon-library,
+.prompt-bank article {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(22px) saturate(1.3);
+  box-shadow: var(--shadow-card);
+}
+
+.theme-light .usage-panel,
+.theme-light .brandos-preview,
+.theme-light .icon-library,
+.theme-light .prompt-bank article {
+  background: rgba(252, 250, 244, .8);
+}
+
+.usage-panel {
+  position: sticky;
+  top: 28px;
+  padding: 22px;
+}
+
+.usage-panel h3 { margin-bottom: 14px; }
+.spec-row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.spec-row strong {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.type-layout { grid-template-columns: minmax(0, 1fr) 360px; }
+.type-samples {
+  display: grid;
+  gap: 30px;
+}
+
+.type-samples article {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sample-display,
+.sample-ui,
+.sample-mono { margin-top: 14px; color: var(--text-primary); }
+.sample-display {
+  max-width: 920px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(50px, 7vw, 100px);
+  line-height: .96;
+}
+.sample-display b { color: var(--accent); font-weight: inherit; }
+.sample-ui {
+  max-width: 760px;
+  font-size: clamp(28px, 3.6vw, 50px);
+  font-weight: 700;
+  line-height: 1.04;
+}
+.sample-mono {
+  font-family: var(--font-mono);
+  font-size: clamp(17px, 1.9vw, 26px);
+  color: var(--secondary);
+}
+
+.component-layout { grid-template-columns: minmax(0, .88fr) minmax(360px, .56fr); }
+.component-stack {
+  display: grid;
+  gap: 18px;
+}
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.form-demo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-secondary) 86%, transparent);
+}
+
+.form-demo label {
+  display: grid;
+  gap: 8px;
+}
+
+.form-demo label:last-child { grid-column: 1 / -1; }
+.form-demo label span {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+input,
+select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  padding: 0 12px;
+}
+
+.has-error input {
+  border-color: color-mix(in srgb, var(--acc-rose) 68%, var(--border-default));
+}
+
+.has-error small {
+  color: var(--acc-rose);
+  font-size: 12px;
+}
+
+.state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.state-card {
+  min-height: 186px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.state-card svg { color: var(--secondary); }
+.state-card.error svg { color: var(--acc-rose); }
+.skeleton {
+  display: block;
+  width: 100%;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--bg-tertiary), var(--glass-strong), var(--bg-tertiary));
+  background-size: 220% 100%;
+  animation: shimmer 1.7s linear infinite;
+}
+
+.brandos-preview {
+  padding: 22px;
+  display: grid;
+  gap: 22px;
+}
+
+.preview-head,
+.metric-row,
+.asset-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+}
+
+.badge {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  background: var(--accent-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.metric-row {
+  align-items: stretch;
+}
+
+.metric-row div {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.metric-row span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.metric-row strong {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.bar-chart {
+  height: 180px;
+  border-radius: var(--radius-md);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  align-items: end;
+  padding: 16px;
+}
+
+.bar-chart i {
+  display: block;
+  border-radius: var(--radius-sm) var(--radius-sm) 2px 2px;
+  background: linear-gradient(180deg, var(--secondary), var(--accent));
+}
+
+.asset-list {
+  display: grid;
+  gap: 10px;
+}
+
+.asset-list div {
+  min-height: 56px;
+  justify-content: start;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
+}
+
+.asset-list span { margin-left: auto; color: var(--text-tertiary); }
+
+.motion-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.motion-lab {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.motion-demo {
+  min-height: 270px;
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-secondary) 86%, transparent);
+  display: grid;
+  align-content: space-between;
+  gap: 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+.magnetic-button {
+  height: 46px;
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 200ms var(--ease);
+}
+
+.magnetic-button:hover { transform: translateY(-3px); }
+.mini-stack {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.mini-stack i {
+  display: block;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--accent-muted), var(--secondary-muted));
+  border: 1px solid var(--border-subtle);
+}
+
+.word-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 38px;
+  line-height: .94;
+}
+
+#miniShader {
+  width: 100%;
+  height: 110px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-muted), var(--secondary-muted));
+}
+
+.motion-lab.is-playing .mini-stack i,
+.motion-lab.is-playing .word-demo span {
+  animation: fadeUp 700ms var(--ease) both;
+}
+.motion-lab.is-playing .mini-stack i:nth-child(2) { animation-delay: 90ms; }
+.motion-lab.is-playing .mini-stack i:nth-child(3) { animation-delay: 180ms; }
+.motion-lab.is-playing .word-demo span:nth-child(2) { animation-delay: 70ms; }
+.motion-lab.is-playing .word-demo span:nth-child(3) { animation-delay: 140ms; }
+.motion-lab.is-playing .magnetic-button { animation: pressPreview 800ms var(--ease) both; }
+
+.anti-list {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.anti-list span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--glass-bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.icon-library { padding: 24px; }
+.library-head { margin-bottom: 24px; }
+
+.lucide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lucide-grid span {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-primary) 62%, transparent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.lucide-grid svg { color: var(--accent); }
+
+.asset-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.media-slot {
+  min-height: 264px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.media-slot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .72;
+}
+
+.media-slot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(180deg, transparent, #000 44%);
+  opacity: .4;
+}
+
+.media-slot > * { position: relative; z-index: 1; }
+.media-slot > span {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.media-slot.photo::before {
+  background:
+    radial-gradient(circle at 22% 20%, rgba(232, 64, 31, .22), transparent 24%),
+    linear-gradient(135deg, rgba(10, 31, 33, .4), rgba(17, 57, 59, .3)),
+    url("https://picsum.photos/seed/marketeia-pme/900/620") center/cover;
+  filter: saturate(.7) contrast(1.05) brightness(.55);
+}
+
+.theme-light .media-slot.photo::before {
+  filter: saturate(.76) contrast(1.03) brightness(.72);
+}
+.media-slot.illustration::before {
+  background:
+    radial-gradient(circle at 70% 24%, rgba(111, 181, 172, .2), transparent 30%),
+    conic-gradient(from 180deg at 52% 52%, transparent, rgba(232, 64, 31, .16), transparent, rgba(111, 181, 172, .16), transparent);
+}
+.media-slot.ai::before {
+  background:
+    radial-gradient(circle at 64% 36%, rgba(232, 64, 31, .22), transparent 28%),
+    radial-gradient(circle at 30% 70%, rgba(111, 181, 172, .2), transparent 32%),
+    linear-gradient(135deg, #0a1f21, #143639);
+}
+.media-slot.pattern::before {
+  background:
+    repeating-linear-gradient(135deg, rgba(111, 181, 172, .1) 0 1px, transparent 1px 12px),
+    radial-gradient(circle at 50% 50%, rgba(232, 64, 31, .14), transparent 34%);
+}
+
+.unsplash-moodboard {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.theme-light .unsplash-moodboard {
+  background: rgba(252, 250, 244, .8);
+}
+
+.moodboard-head { margin-bottom: 22px; }
+.moodboard-head p { margin-top: 8px; font-size: 14px; }
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.category {
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.category .meta { margin-top: 8px; }
+.category p { font-size: 14px; }
+.category code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--secondary);
+  line-height: 1.5;
+  display: block;
+}
+
+.prompt-bank {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.prompt-bank article {
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.prompt-bank article.global-direction {
+  grid-column: 1 / -1;
+  border-color: var(--accent-soft);
+}
+
+.prompt-head h3 { margin-top: 6px; }
+.prompt-text {
+  margin: 0;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-primary) 80%, transparent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.prompt-bank .meta { margin-top: 4px; }
+.prompt-bank p { font-size: 14px; }
+
+.brandos-narrative,
+.heuristics-block,
+.anti-generic-block {
+  margin-bottom: 36px;
+}
+
+.brandos-narrative h3,
+.heuristics-block h3,
+.anti-generic-block h3,
+.brandos-map-block h3 {
+  margin-bottom: 16px;
+}
+
+.narrative-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.narrative-grid article {
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-secondary) 86%, transparent);
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.narrative-grid .meta {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.narrative-grid p { font-size: 14px; }
+
+.heuristic-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.heuristic-list article {
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--bg-primary) 90%, transparent);
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.heuristic-list h4 { color: var(--secondary); }
+.heuristic-list p { font-size: 14px; }
+
+.guardrail-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.guardrail-list li {
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.guardrail-list strong { color: var(--accent); }
+
+.final-section { padding-bottom: clamp(120px, 13vw, 190px); }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 560ms var(--ease), transform 560ms var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes shimmer {
+  to { background-position: -220% 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pressPreview {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-4px); }
+  70% { transform: translateY(-1px) scale(.99); }
+  100% { transform: translateY(0); }
+}
+
+@media (max-width: 1180px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed;
+    inset: auto 14px 14px 14px;
+    height: auto;
+    padding: 10px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    flex-direction: row;
+    align-items: center;
+  }
+  .brandmark,
+  .sidebar .meta { display: none; }
+  .nav {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    flex: 1;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    min-height: 40px;
+    white-space: nowrap;
+    padding: 0 10px;
+  }
+  .sidebar-footer { margin: 0; }
+  .theme-toggle {
+    width: auto;
+    min-width: 96px;
+  }
+  .theme-toggle span { display: none; }
+  .hero,
+  .section {
+    max-width: none;
+  }
+  .hero {
+    min-height: 100dvh;
+    padding-bottom: 104px;
+  }
+}
+
+@media (max-width: 980px) {
+  :root { --section-x: 24px; --section-y: 78px; }
+  .hero,
+  .section-header,
+  .color-layout,
+  .type-layout,
+  .component-layout,
+  .asset-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-panel {
+    border-left: 0;
+    border-top: 1px solid var(--border-default);
+    padding-left: 0;
+    padding-top: 24px;
+  }
+  .section-header > p {
+    padding-top: 0;
+  }
+  .usage-panel {
+    position: static;
+  }
+  .principle-grid,
+  .module-grid,
+  .quality-grid,
+  .brandos-map,
+  .motion-lab,
+  .narrative-grid,
+  .lucide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  :root { --section-x: 22px; --section-y: 66px; }
+  h1 { font-size: clamp(44px, 13vw, 70px); }
+  h2 { font-size: clamp(34px, 10vw, 50px); }
+  .lead { font-size: 18px; }
+  .hero-actions .btn {
+    flex: 1 1 0;
+    padding: 0 12px;
+  }
+  .principle-grid,
+  .module-grid,
+  .quality-grid,
+  .brandos-map,
+  .swatch-grid,
+  .state-grid,
+  .lucide-grid,
+  .media-grid,
+  .prompt-bank,
+  .motion-lab,
+  .narrative-grid,
+  .heuristic-list,
+  .guardrail-list,
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-demo {
+    grid-template-columns: 1fr;
+  }
+  .metric-row {
+    flex-direction: column;
+  }
+  .sidebar {
+    inset: auto 12px 12px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" class="icon-sprite">
+    <symbol id="i-marketeia" viewBox="0 0 562 384"><path fill-rule="evenodd" clip-rule="evenodd" d="M482.244 273.177C477.001 273.177 472.364 269.773 470.795 264.77L394.527 21.7134C385.67 -6.89874 347.425 -7.30173 340.179 20.9074L286.881 223.103C283.872 234.518 267.919 235.184 263.969 224.059L216.587 90.6242C212.562 79.3405 202.095 72.4897 190.42 72.4897C178.745 72.4897 168.278 79.7435 162.642 90.2212L92.3916 265.639C90.568 270.192 86.1567 273.177 81.2517 273.177H12C5.37257 273.177 0 278.55 0 285.177V320.417C0 327.044 5.37258 332.417 12 332.417H109.099C120.774 332.417 131.241 325.969 135.669 314.685L175.903 210.407C179.916 200.006 194.706 200.221 198.415 210.734L251.647 361.599C251.891 362.292 252.067 363.021 252.21 363.742C257.583 390.855 300.011 390.881 306.765 363.044L358.478 168.673C361.572 157.043 377.951 156.699 381.531 168.188L425.928 310.655C429.149 323.148 440.421 332.417 453.304 332.417H550C556.627 332.417 562 327.044 562 320.417V285.177C562 278.55 556.627 273.177 550 273.177H482.244Z" fill="currentColor"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 10-10 3 3 0 0 1-3 3h-2.2a2 2 0 0 0-1.7 3.1 2.6 2.6 0 0 1-2.1 3.9z"/><circle cx="7.5" cy="10" r="1"/><circle cx="10.5" cy="6.5" r="1"/><circle cx="15" cy="7.5" r="1"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></symbol>
+    <symbol id="i-layout-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="1.5"/><path d="m21 16-5-5L5 19"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 .9-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5.9h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5z"/></symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 11-12h-8l1-8z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-message-circle" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+    <symbol id="i-bar-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  </svg>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brandmark" href="#top" aria-label="Voltar ao topo">
+        <span class="sigil"><svg aria-hidden="true"><use href="#i-marketeia"/></svg></span>
+        <span>
+          <strong>Marketeia DS</strong>
+          <span>Sinal Aberto v1</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Seções do showcase">
+        <a href="#foundation">Base</a>
+        <a href="#color">Color</a>
+        <a href="#type">Type</a>
+        <a href="#components">UI</a>
+        <a href="#motion">Motion</a>
+        <a href="#icons">Icons</a>
+        <a href="#assets">Assets</a>
+        <a href="#quality">QA</a>
+        <a href="#ai-gen">AI Gen</a>
+        <a href="#os">OS</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle" type="button" id="themeToggle">
+          <span>Theme</span>
+          <strong id="themeLabel">Dark</strong>
+        </button>
+        <span class="meta">Workbench da Etapa 3 do PDR</span>
+      </div>
+    </aside>
+
+    <main id="top">
+      <section class="hero" data-section="hero">
+        <div class="hero-content reveal">
+          <span class="eyebrow">Marketeia Design System</span>
+          <h1 class="hero-title js-hero-title">Sinal Aberto v1</h1>
+          <p class="lead">A superfície oficial pra travar tokens, componentes, motion e regras de qualidade antes da LP e do Painel. Petróleo segura a sala, vermillion marca o sinal, creme dá o respiro.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#foundation">Revisar sistema <svg><use href="#i-arrow-right"/></svg></a>
+            <a class="btn secondary" href="#os">Mapa do OS <svg><use href="#i-layout-grid"/></svg></a>
+          </div>
+        </div>
+
+        <aside class="hero-panel reveal" aria-label="Status do design system">
+          <span class="meta">Etapa 3 do PDR</span>
+          <div class="hero-score">10</div>
+          <p>Seções em revisão cobrindo fundação, cor, tipo, UI, motion, ícones, assets, qualidade, prompts e o OS da marca.</p>
+          <svg class="hero-pulse" viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 H40 L55 12 L70 38 L85 22 H120 L132 8 L148 34 L160 26 H200"/></svg>
+          <div class="status-line"><span style="width: 80%"></span></div>
+        </aside>
+      </section>
+
+      <section id="foundation" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">01 Foundation</span>
+            <h2>Sinal antes de estética.</h2>
+          </div>
+          <p>Um sistema pra uma marca que vende leitura de sinal precisa provar disciplina no próprio corpo.</p>
+        </header>
+
+        <div class="principle-grid reveal">
+          <article class="rule-tile">
+            <span class="tile-index">01</span>
+            <h3>Sinal sobre ruído</h3>
+            <p>Vermillion só aparece onde há sinal: um CTA, um dado que muda decisão, um alerta. O resto fica em petróleo e creme.</p>
+          </article>
+          <article class="rule-tile">
+            <span class="tile-index">02</span>
+            <h3>Petróleo é a sala, vermillion é o botão</h3>
+            <p>A base é funda e calma pra carregar autoridade. A ação é quente e única. Os dois nunca disputam a mesma dobra.</p>
+          </article>
+          <article class="rule-tile">
+            <span class="tile-index">03</span>
+            <h3>Transparência é layout</h3>
+            <p>Sem caixa-preta: número grande, dado visível, hierarquia honesta. O Painel é a prova, o site é a promessa.</p>
+          </article>
+          <article class="rule-tile">
+            <span class="tile-index">04</span>
+            <h3>Três vozes de tipo</h3>
+            <p>Archivo pra manchete, Inter Tight pra operação, JetBrains Mono pra evidência, métrica e label de sistema.</p>
+          </article>
+          <article class="rule-tile">
+            <span class="tile-index">05</span>
+            <h3>Cantos 4/8/14/20, material fosco</h3>
+            <p>Radius nunca é acidental. Profundidade vem de sombra tintada de petróleo, nunca de brilho ou vidro pesado.</p>
+          </article>
+          <article class="rule-tile">
+            <span class="tile-index">06</span>
+            <h3>Zero cara de IA genérica</h3>
+            <p>Sem glow roxo, sem spark flutuante, sem mosaico de cards uniformes, sem sorriso de banco de imagem com laptop.</p>
+          </article>
+        </div>
+
+        <div class="module-grid reveal" aria-label="Checklist de módulos do DESIGN.md">
+          <article><span>Palette</span><strong>RADAR: dark e light, tokens semânticos</strong></article>
+          <article><span>Typography</span><strong>3 papéis, escala fluida, ritmo travado</strong></article>
+          <article><span>Spacing</span><strong>base 4px, 8 paradas, respiro generoso</strong></article>
+          <article><span>Components</span><strong>botões, forms, estados completos, preview do Painel</strong></article>
+          <article><span>Elevation</span><strong>sombras tintadas de petróleo, sem stock</strong></article>
+          <article><span>Narrative</span><strong>cada decisão visual rastreia o conceito de sinal</strong></article>
+        </div>
+      </section>
+
+      <section id="color" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">02 Color</span>
+            <h2>Petróleo segura, vermillion dispara.</h2>
+          </div>
+          <p>Clique nos swatches pra copiar. O light mode é reconstruído pra contraste, não invertido.</p>
+        </header>
+
+        <div class="color-layout reveal">
+          <div class="swatch-grid">
+            <button class="swatch" data-copy="#E8401F"><span style="background:#E8401F"></span><strong>Vermillion</strong><em>#E8401F</em></button>
+            <button class="swatch" data-copy="#11393B"><span style="background:#11393B"></span><strong>Petróleo</strong><em>#11393B</em></button>
+            <button class="swatch" data-copy="#0A1F21"><span style="background:#0A1F21"></span><strong>Petróleo Ink</strong><em>#0A1F21</em></button>
+            <button class="swatch" data-copy="#6FB5AC"><span style="background:#6FB5AC"></span><strong>Sinal</strong><em>#6FB5AC</em></button>
+            <button class="swatch" data-copy="#F2EDE3"><span style="background:#F2EDE3"></span><strong>Creme</strong><em>#F2EDE3</em></button>
+            <button class="swatch" data-copy="#ECE7DA"><span style="background:#ECE7DA"></span><strong>Creme Surface</strong><em>#ECE7DA</em></button>
+            <button class="swatch" data-copy="#E9A23B"><span style="background:#E9A23B"></span><strong>Âmbar</strong><em>#E9A23B</em></button>
+            <button class="swatch" data-copy="#57B97E"><span style="background:#57B97E"></span><strong>Verde Confirma</strong><em>#57B97E</em></button>
+            <button class="swatch" data-copy="#E0455C"><span style="background:#E0455C"></span><strong>Rose Recupera</strong><em>#E0455C</em></button>
+          </div>
+
+          <aside class="usage-panel">
+            <h3>Heurísticas de cor</h3>
+            <div class="spec-row"><span>Vermillion</span><strong>Um CTA por seção, o dado decisivo, o pulso da marca</strong></div>
+            <div class="spec-row"><span>Petróleo</span><strong>Fundos, bands institucionais, superfícies do Painel</strong></div>
+            <div class="spec-row"><span>Sinal</span><strong>Links, dataviz secundária, estados informativos</strong></div>
+            <div class="spec-row"><span>Creme</span><strong>Texto sobre dark, light mode, respiro entre bands</strong></div>
+            <div class="spec-row"><span>Âmbar e Rose</span><strong>Só estados: atenção e recuperação. Nunca decoração</strong></div>
+            <div class="spec-row"><span>Neutro</span><strong>A maior parte da UI. Cor tem que merecer atenção</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="type" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">03 Typography</span>
+            <h2>Manchete que afirma, operação que não cansa.</h2>
+          </div>
+          <p>O ritmo entre eyebrow, título e corpo trava aqui, porque ritmo frouxo mata o sistema rápido.</p>
+        </header>
+
+        <div class="type-layout reveal">
+          <div class="type-samples">
+            <article>
+              <span class="meta">Display · Archivo</span>
+              <p class="sample-display">Sinal, não ruído.</p>
+            </article>
+            <article>
+              <span class="meta">UI · Inter Tight</span>
+              <p class="sample-ui">Campanhas, criativos, públicos, CPL e relatórios em uma língua operacional só.</p>
+            </article>
+            <article>
+              <span class="meta">Mono · JetBrains Mono</span>
+              <p class="sample-mono">CPL R$ 7,90 / CTR 4,2% / DESIGN.md / COPY-Marketeia.md</p>
+            </article>
+          </div>
+
+          <aside class="usage-panel">
+            <h3>Escala de tipo</h3>
+            <div class="spec-row"><span>Hero</span><strong>clamp(54px, 8vw, 112px)</strong></div>
+            <div class="spec-row"><span>H2</span><strong>clamp(38px, 4.8vw, 68px)</strong></div>
+            <div class="spec-row"><span>H3</span><strong>clamp(24px, 2.8vw, 38px)</strong></div>
+            <div class="spec-row"><span>Body</span><strong>15-17px, line-height 1.6</strong></div>
+            <div class="spec-row"><span>Meta</span><strong>11px mono, .12em uppercase</strong></div>
+            <div class="spec-row"><span>Wordmark</span><strong>marketeia lowercase, "ia" no accent. Nunca caixa alta, nunca AI</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="components" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">04 Components</span>
+            <h2>Peças com todos os estados.</h2>
+          </div>
+          <p>Componente sem hover, focus, disabled, loading, empty e error não entra no Painel nem na LP.</p>
+        </header>
+
+        <div class="component-layout reveal">
+          <div class="component-stack">
+            <div class="control-row">
+              <button class="btn primary">Pede o diagnóstico <svg><use href="#i-arrow-right"/></svg></button>
+              <button class="btn secondary">Ver o Painel <svg><use href="#i-external-link"/></svg></button>
+              <button class="btn tertiary">Saber mais</button>
+              <button class="btn primary" disabled>Desabilitado</button>
+            </div>
+
+            <form class="form-demo">
+              <label>
+                <span>Nome do negócio</span>
+                <input value="Clínica Vitalle" />
+              </label>
+              <label>
+                <span>Status</span>
+                <select>
+                  <option>Diagnóstico agendado</option>
+                  <option>Em campanha</option>
+                </select>
+              </label>
+              <label class="has-error">
+                <span>Instagram do negócio</span>
+                <input value="@clinica vitalle" />
+                <small>Handle não pode ter espaço. Tenta @clinicavitalle.</small>
+              </label>
+            </form>
+
+            <div class="state-grid">
+              <article class="state-card">
+                <span class="skeleton"></span>
+                <strong>Loading</strong>
+                <p>Skeleton com a forma do conteúdo final. Spinner é banido aqui.</p>
+              </article>
+              <article class="state-card">
+                <svg><use href="#i-bar-chart"/></svg>
+                <strong>Empty</strong>
+                <p>Diz o que falta e entrega um próximo passo claro.</p>
+              </article>
+              <article class="state-card error">
+                <svg><use href="#i-x"/></svg>
+                <strong>Error</strong>
+                <p>Diz o que falhou e como recuperar. Sem banner vermelho vago.</p>
+              </article>
+            </div>
+          </div>
+
+          <aside class="brandos-preview">
+            <div class="preview-head">
+              <div>
+                <span class="eyebrow">Preview do produto</span>
+                <h3>Painel Marketeia</h3>
+              </div>
+              <span class="badge">v1</span>
+            </div>
+            <div class="metric-row">
+              <div><span>Invest. do mês</span><strong>R$ 12,4k</strong></div>
+              <div><span>CPL médio</span><strong>R$ 8,40</strong></div>
+              <div><span>Leads no mês</span><strong>312</strong></div>
+            </div>
+            <div class="bar-chart" aria-label="Progresso de campanhas">
+              <i style="height:42%"></i><i style="height:58%"></i><i style="height:74%"></i><i style="height:64%"></i>
+              <i style="height:88%"></i><i style="height:69%"></i><i style="height:92%"></i><i style="height:78%"></i>
+            </div>
+            <div class="asset-list">
+              <div><svg><use href="#i-file-text"/></svg><strong>DESIGN.md</strong><span>fonte do sistema de UI</span></div>
+              <div><svg><use href="#i-file-text"/></svg><strong>COPY-Marketeia.md</strong><span>fonte da voz</span></div>
+              <div><svg><use href="#i-file-text"/></svg><strong>PDR-Marketeia.md</strong><span>fonte do negócio</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="motion" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">05 Motion</span>
+            <h2>Movimento é sinal, não enfeite.</h2>
+          </div>
+          <p>Use o replay pra inspecionar a língua de movimento. Todo efeito tem que ser repetível, legível e removível.</p>
+        </header>
+
+        <div class="motion-toolbar reveal">
+          <button class="btn primary" id="replayMotion"><svg><use href="#i-play"/></svg> Replay</button>
+          <span class="meta">Reduced-motion desliga o playback automático.</span>
+        </div>
+
+        <div class="motion-lab reveal" id="motionLab">
+          <article class="motion-demo demo-micro">
+            <span class="meta">Micro-interação</span>
+            <button class="magnetic-button">Ação com pulso <svg><use href="#i-arrow-right"/></svg></button>
+            <p>Lift, anel de foco, press. Movimento só em elemento interativo.</p>
+          </article>
+          <article class="motion-demo demo-reveal">
+            <span class="meta">Scroll reveal</span>
+            <div class="mini-stack">
+              <i></i><i></i><i></i>
+            </div>
+            <p>Opacity mais translateY(16px), stagger de 80-120ms.</p>
+          </article>
+          <article class="motion-demo demo-text">
+            <span class="meta">Só no hero</span>
+            <div class="word-demo"><span>Sinal,</span><span>não</span><span>ruído.</span></div>
+            <p>Permitido uma vez no H1. Banido em conteúdo normal.</p>
+          </article>
+          <article class="motion-demo demo-webgl">
+            <span class="meta">WebGL opcional</span>
+            <canvas id="miniShader" aria-hidden="true"></canvas>
+            <p>Shader só no hero, com fallback. Flag desligada neste projeto.</p>
+          </article>
+        </div>
+
+        <div class="anti-list reveal">
+          <span>Nunca transition-all</span>
+          <span>Nunca animar width ou height</span>
+          <span>Nunca parallax pesado</span>
+          <span>Nunca loop infinito sem pausa</span>
+          <span>Nunca WebGL fora do hero</span>
+        </div>
+      </section>
+
+      <section id="icons" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">06 Icons</span>
+            <h2>Uma língua de ícone.</h2>
+          </div>
+          <p>Lucide é a única biblioteca do sistema. Stroke 1.75px em todos os tamanhos. Sem exceção.</p>
+        </header>
+
+        <article class="icon-library reveal">
+          <div class="library-head">
+            <span class="eyebrow">Lucide Library</span>
+            <h3>Ícones operacionais, zero decoração.</h3>
+          </div>
+          <div class="lucide-grid">
+            <span><svg><use href="#i-arrow-right"/></svg>ArrowRight</span>
+            <span><svg><use href="#i-trending-up"/></svg>TrendingUp</span>
+            <span><svg><use href="#i-bar-chart"/></svg>BarChart3</span>
+            <span><svg><use href="#i-target"/></svg>Target</span>
+            <span><svg><use href="#i-zap"/></svg>Zap</span>
+            <span><svg><use href="#i-message-circle"/></svg>MessageCircle</span>
+            <span><svg><use href="#i-search"/></svg>Search</span>
+            <span><svg><use href="#i-check"/></svg>Check</span>
+            <span><svg><use href="#i-x"/></svg>X</span>
+            <span><svg><use href="#i-menu"/></svg>Menu</span>
+            <span><svg><use href="#i-copy"/></svg>Copy</span>
+            <span><svg><use href="#i-upload"/></svg>Upload</span>
+            <span><svg><use href="#i-download"/></svg>Download</span>
+            <span><svg><use href="#i-external-link"/></svg>ExternalLink</span>
+            <span><svg><use href="#i-image"/></svg>Image</span>
+            <span><svg><use href="#i-settings"/></svg>Settings</span>
+            <span><svg><use href="#i-sparkles"/></svg>Sparkles</span>
+            <span><svg><use href="#i-file-text"/></svg>FileText</span>
+          </div>
+        </article>
+      </section>
+
+      <section id="assets" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">07 Assets</span>
+            <h2>Matéria-prima visual com disciplina.</h2>
+          </div>
+          <p>Fotografia, ilustração, imagem gerada e textura: cada tipo com direção própria e regra de rejeição.</p>
+        </header>
+
+        <div class="asset-layout reveal">
+          <div class="media-grid">
+            <article class="media-slot photo">
+              <span>Photography</span>
+              <h3>PME real em operação</h3>
+              <p>Dono de negócio brasileiro no ambiente dele: balcão, clínica, oficina. Luz natural, meio da ação, zero pose de banco de imagem.</p>
+            </article>
+            <article class="media-slot illustration">
+              <span>Illustration</span>
+              <h3>Diagramas de funil e sinal</h3>
+              <p>Estrutura em stroke único: funis, pulsos, fluxos de campanha. Esquemático, técnico, sem mascote.</p>
+            </article>
+            <article class="media-slot ai">
+              <span>AI generated image</span>
+              <h3>Cenas com o mood da marca</h3>
+              <p>Só quando carregam petróleo, vermillion e creme, e nunca com texto fake de UI.</p>
+            </article>
+            <article class="media-slot pattern">
+              <span>Pattern / texture</span>
+              <h3>Pulso como textura</h3>
+              <p>A linha de pulso do M vira grafismo de seção. Substrato sutil, nunca papel de parede.</p>
+            </article>
+          </div>
+        </div>
+
+        <article class="unsplash-moodboard reveal">
+          <header class="moodboard-head">
+            <span class="eyebrow">Unsplash moodboard</span>
+            <h3>Categorias de imagem placeholder</h3>
+            <p>Curadas pro build da LP. O Claude Code busca via Unsplash na hora do build e filtra pelas notas de mood.</p>
+          </header>
+
+          <div class="category-grid">
+            <article class="category">
+              <h4>Dono de negócio real</h4>
+              <p class="meta">Onde usa</p>
+              <p>Hero da LP e seção de diagnóstico.</p>
+              <p class="meta">Termos de busca</p>
+              <code>brazilian small business owner, shop owner portrait candid, clinic reception real, entrepreneur working brazil</code>
+              <p class="meta">Notas de mood</p>
+              <p>Real, no ambiente, luz natural, postura digna. Rejeitar: escritório corporate, fundo branco, sorriso de stock.</p>
+            </article>
+            <article class="category">
+              <h4>Operação e atendimento</h4>
+              <p class="meta">Onde usa</p>
+              <p>Seções de metodologia e do funil de WhatsApp.</p>
+              <p class="meta">Termos de busca</p>
+              <code>whatsapp business conversation, customer service small business, store counter service, phone checkout brazil</code>
+              <p class="meta">Notas de mood</p>
+              <p>Mãos, telas, balcão, movimento real. Rejeitar: mockup genérico, mão de modelo com luz de estúdio.</p>
+            </article>
+            <article class="category">
+              <h4>Dado em tela</h4>
+              <p class="meta">Onde usa</p>
+              <p>Blocos do Painel e prova de transparência.</p>
+              <p class="meta">Termos de busca</p>
+              <code>analytics dashboard dark screen, marketing data laptop, charts on screen closeup</code>
+              <p class="meta">Notas de mood</p>
+              <p>Tela com dado plausível, ângulo de quem trabalha. Rejeitar: dashboard fake colorido demais, azul corporativo de stock.</p>
+            </article>
+            <article class="category">
+              <h4>Textura quente abstrata</h4>
+              <p class="meta">Onde usa</p>
+              <p>Divisores de seção e fundos de stories.</p>
+              <p class="meta">Termos de busca</p>
+              <code>dark teal texture, warm paper texture, abstract gradient deep green, grain texture minimal</code>
+              <p class="meta">Notas de mood</p>
+              <p>Petróleo profundo, grão sutil, calor de creme. Rejeitar: roxo, neon azul, bokeh genérico.</p>
+            </article>
+          </div>
+        </article>
+      </section>
+
+      <section id="quality" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">08 Quality</span>
+            <h2>Gates profissionais antes da aprovação.</h2>
+          </div>
+          <p>Este é o checklist que protege a LP e o Painel do drift de vibe-coding.</p>
+        </header>
+
+        <div class="quality-grid reveal">
+          <article><span>Accessibility</span><strong>Contraste AA, foco visível, teclado, reduced motion</strong><em>Texto 4.5:1 · UI 3:1 · toque 44px</em></article>
+          <article><span>Responsive</span><strong>Mobile-first: o dono de PME decide no celular</strong><em>375 · 768 · 1024 · 1280</em></article>
+          <article><span>Microcopy</span><strong>Ação específica, erro útil, recuperação clara</strong><em>Banidos: alavancar, desbloquear, próximo nível</em></article>
+          <article><span>States</span><strong>Loading, empty, error, success, disabled</strong><em>Skeleton no lugar de spinner</em></article>
+          <article><span>Performance</span><strong>Riqueza visual dentro de orçamento</strong><em>1MB página · 180KB hero · 80KB JS · LCP &lt; 2.5s</em></article>
+          <article><span>SEO</span><strong>Title, description, OG, schema, sitemap, robots</strong><em>OG 1200x630 · 150-160 chars · ProfessionalService</em></article>
+        </div>
+      </section>
+
+      <section id="ai-gen" class="section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">09 AI Gen</span>
+            <h2>Prompts por imagem-chave.</h2>
+          </div>
+          <p>Cada prompt é o brief descritivo: cena, mood, paleta, exclusões. Parâmetros de ferramenta entram na hora de rodar.</p>
+        </header>
+
+        <div class="prompt-bank reveal">
+          <article class="prompt-card global-direction">
+            <header class="prompt-head">
+              <span class="meta">Global direction</span>
+              <h3>Regras de imagem do projeto inteiro</h3>
+            </header>
+            <p>Toda imagem respeita a paleta RADAR: petróleo profundo, vermillion como único calor, creme como luz. Fotografia é documental e natural, nunca stock corporate. Nenhuma imagem leva texto fake de UI, glow roxo ou spark flutuante genérico. O pulso do M é o único grafismo de marca permitido dentro de imagem.</p>
+          </article>
+
+          <article class="prompt-card">
+            <header class="prompt-head">
+              <span class="meta">Key image · Hero da LP</span>
+              <h3>Pulso sobre petróleo</h3>
+            </header>
+            <p class="meta">Onde usa</p>
+            <p>Fundo do hero da LP institucional, atrás do headline, com gradiente escuro pra legibilidade.</p>
+            <p class="meta">Prompt</p>
+            <pre class="prompt-text">Cinematic abstract scene of a deep petrol-green dark room filled with soft volumetric haze. A single thin glowing vermillion red-orange pulse line crosses the frame horizontally like a heartbeat signal, casting subtle warm light on matte surfaces. Faint warm cream light enters from one side. Minimal, premium, quiet tension between deep teal darkness and one precise line of energy. Photographic depth, subtle film grain, generous negative space on the left for typography. No text, no UI elements, no purple, no lens flare, no people, no neon city.</pre>
+            <p class="meta">Ferramentas sugeridas</p>
+            <p>nano-banana-2 ou FLUX-2 pra precisão de linha. Midjourney pra variação de atmosfera.</p>
+          </article>
+
+          <article class="prompt-card">
+            <header class="prompt-head">
+              <span class="meta">Key image · Seção diagnóstico</span>
+              <h3>A leitura do sinal</h3>
+            </header>
+            <p class="meta">Onde usa</p>
+            <p>Imagem de apoio do bloco de diagnóstico na LP e no doc de metodologia nichada.</p>
+            <p class="meta">Prompt</p>
+            <pre class="prompt-text">Documentary top-down photograph of a Brazilian small business owner's desk during a strategy review: hands pointing at a phone showing a simple dark analytics screen, paper notes with handwritten numbers, coffee cup, warm natural window light. Palette leans deep teal shadows and warm cream highlights, one small red-orange accent object on the desk. Honest, grounded, mid-action. Shallow depth of field, 35mm feel, subtle grain. No faces, no corporate office, no staged smile, no fake charts with rainbow colors, no logos.</pre>
+            <p class="meta">Ferramentas sugeridas</p>
+            <p>nano-banana-2 pro realismo de mãos e telas. FLUX-2 como alternativa.</p>
+          </article>
+
+          <article class="prompt-card">
+            <header class="prompt-head">
+              <span class="meta">Key image · Aula e webinar</span>
+              <h3>Sala de sinal</h3>
+            </header>
+            <p class="meta">Onde usa</p>
+            <p>Backdrop 16:9 da abertura da aula gravada do funil e thumbnails de YouTube.</p>
+            <p class="meta">Prompt</p>
+            <pre class="prompt-text">Wide 16:9 minimal backdrop in deep petrol green, almost black at the edges, with a faint repeating pulse-line pattern etched in slightly lighter teal across the lower third. One vermillion red-orange pulse stroke runs through the pattern as the focal accent. Soft warm cream vignette in the center where a speaker or title will sit. Matte, premium, flat depth, extremely subtle grain. Large clean negative space in the center. No text, no people, no purple, no glossy 3D shapes, no particles.</pre>
+            <p class="meta">Ferramentas sugeridas</p>
+            <p>nano-banana-2 pra controle do padrão. Upscale 4x pra uso em vídeo.</p>
+          </article>
+
+          <article class="prompt-card">
+            <header class="prompt-head">
+              <span class="meta">Key image · Fundo de stories</span>
+              <h3>Textura de pulso vertical</h3>
+            </header>
+            <p class="meta">Onde usa</p>
+            <p>Fundo 9:16 de stories, destaques e cards de prova social.</p>
+            <p class="meta">Prompt</p>
+            <pre class="prompt-text">Vertical 9:16 abstract background: deep petrol green field with fine warm grain, a single thin vermillion pulse line traveling vertically along the right edge like a live signal. Top two thirds almost empty for typography, bottom third slightly lighter with a soft cream glow rising. Matte print-like finish, flat and quiet, premium restraint. No text, no icons, no purple, no gradients with more than two colors, no light leaks.</pre>
+            <p class="meta">Ferramentas sugeridas</p>
+            <p>nano-banana-2 ou geração local z-image-turbo pra volume de variações.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="os" class="section final-section">
+        <header class="section-header reveal">
+          <div>
+            <span class="eyebrow">10 OS</span>
+            <h2>O sistema vira operação de marca.</h2>
+          </div>
+          <p>Quando este showcase for aprovado, o DESIGN.md é exportado daqui. Esta seção é o núcleo narrativo que o Claude Code lê no build.</p>
+        </header>
+
+        <div class="brandos-narrative reveal">
+          <h3>Narrativa de marca aplicada às decisões visuais</h3>
+          <div class="narrative-grid">
+            <article>
+              <span class="meta">Sinal</span>
+              <p>Vermillion aparece uma vez por dobra: no CTA, no número decisivo ou no pulso. Se aparece duas vezes, uma está errada.</p>
+            </article>
+            <article>
+              <span class="meta">Transparência</span>
+              <p>Número grande, em mono, sempre visível. Dado nunca fica escondido atrás de clique ou tooltip.</p>
+            </article>
+            <article>
+              <span class="meta">Descolado corporate</span>
+              <p>O microcopy fala como o Greg fala. O layout obedece grid como consultoria. A tensão entre os dois é a marca.</p>
+            </article>
+            <article>
+              <span class="meta">Verbo</span>
+              <p>CTA usa a língua da marca: Marketeia aí, Pede o diagnóstico, Vê o sinal. Nunca "Saiba mais" sozinho.</p>
+            </article>
+            <article>
+              <span class="meta">Anti-agência</span>
+              <p>Foto real de PME, zero sorriso de stock. Promessa só aparece com prova do lado (número, print, Painel).</p>
+            </article>
+            <article>
+              <span class="meta">Produto-first</span>
+              <p>O Painel Marketeia usa os mesmos tokens deste DS. Site e produto falam a mesma língua visual.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="heuristics-block reveal">
+          <h3>Heurísticas de uso</h3>
+          <div class="heuristic-list">
+            <article>
+              <h4>Quando vermillion vs sinal?</h4>
+              <p>Vermillion é a ação mais importante da seção (um CTA por seção). Sinal é apoio: link, dado secundário, estado informativo. Nunca os dois competindo na mesma dobra.</p>
+            </article>
+            <article>
+              <h4>Quando banda escura vs clara?</h4>
+              <p>Banda em petróleo pra declarações de peso (hero, manifesto, prova, CTA final). Banda em creme pra conteúdo informacional. Alternar pra criar ritmo de leitura.</p>
+            </article>
+            <article>
+              <h4>Quando usar o pulso gráfico?</h4>
+              <p>Como divisor de seção, sublinhado de dado importante ou textura de fundo em área vazia. Nunca mais de um pulso visível por viewport.</p>
+            </article>
+            <article>
+              <h4>Quando mono?</h4>
+              <p>Métrica, label de sistema, eyebrow, evidência (CPL, CTR, datas). Se o conteúdo é prova ou dado, é mono. Se é argumento, é UI.</p>
+            </article>
+            <article>
+              <h4>Quando card vs banda inteira?</h4>
+              <p>Card pra unidade limitada (depoimento, recurso do Painel, plano). Banda inteira pra composição de peso (hero, manifesto, oferta). Não empilhar mais de duas grades de cards seguidas.</p>
+            </article>
+            <article>
+              <h4>Quando animar?</h4>
+              <p>Quando o estado muda: hover, load, scroll reveal, validação. Conteúdo estático fica estático. Animação decorativa é dívida.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="anti-generic-block reveal">
+          <h3>Guardrails anti-genérico</h3>
+          <ul class="guardrail-list">
+            <li><strong>Cores:</strong> nunca vermillion em massa de texto ou fundo de seção inteira. Nunca paleta Tailwind default.</li>
+            <li><strong>Cores:</strong> nada de roxo, em nenhuma circunstância. É a cor da categoria "IA genérica".</li>
+            <li><strong>Tipografia:</strong> nunca uma fonte só. Display + UI + mono, com os papéis deste DS.</li>
+            <li><strong>Sombras:</strong> nunca shadow-md cru. Sombra é tintada de petróleo, em camadas.</li>
+            <li><strong>Fundos:</strong> alternar bands com ritmo. Nunca empilhar paredão branco ou dark infinito.</li>
+            <li><strong>Motion:</strong> nunca transition-all. Só transform e opacity. Reduced motion respeitado.</li>
+            <li><strong>Estados:</strong> todo clicável tem hover, focus-visible e active. Sem exceção.</li>
+            <li><strong>Layout:</strong> nem tudo centralizado. Variar composição entre seções, usar o grid.</li>
+            <li><strong>AI tells:</strong> sem glow roxo, sem mosaico de cards uniformes, sem alturas de seção idênticas, sem gente de stock sorrindo com laptop.</li>
+            <li><strong>Marca:</strong> o nome é sempre marketeia em lowercase com "ia" no accent. Nunca caixa alta no nome, nunca "Markete AI", nunca "marketeAI".</li>
+            <li><strong>Marca:</strong> o spark só existe integrado ao M do ícone. Spark flutuante solto é proibido.</li>
+            <li><strong>Copy:</strong> banidos alavancar, desbloquear, revolucione, próximo nível. Promessa exige prova ao lado.</li>
+          </ul>
+        </div>
+
+        <div class="brandos-map-block reveal">
+          <h3>Mapa do BrandOS</h3>
+          <div class="brandos-map">
+            <article><span>BRAND.md</span><strong>Voz, identidade, regras de logo e do nome. Fecha junto com a Etapa 2 final.</strong></article>
+            <article><span>DESIGN.md</span><strong>Este sistema exportado: tokens, UI, motion e regras de implementação.</strong></article>
+            <article><span>Asset index</span><strong>Logos, fotos, imagens geradas, templates sociais e exports.</strong></article>
+            <article><span>Painel Marketeia</span><strong>Onde o sistema vira produto vivo na mão do cliente.</strong></article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+const root = document.documentElement;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const themeToggle = document.getElementById("themeToggle");
+const themeLabel = document.getElementById("themeLabel");
+const savedTheme = localStorage.getItem("marketeia-ds-showcase-theme");
+const requestedTheme = new URLSearchParams(window.location.search).get("theme");
+
+if (requestedTheme === "light" || (!requestedTheme && savedTheme === "light")) {
+  root.classList.remove("theme-dark");
+  root.classList.add("theme-light");
+  themeLabel.textContent = "Light";
+} else if (requestedTheme === "dark") {
+  root.classList.remove("theme-light");
+  root.classList.add("theme-dark");
+  themeLabel.textContent = "Dark";
+}
+
+themeToggle?.addEventListener("click", () => {
+  const isLight = root.classList.toggle("theme-light");
+  root.classList.toggle("theme-dark", !isLight);
+  themeLabel.textContent = isLight ? "Light" : "Dark";
+  localStorage.setItem("marketeia-ds-showcase-theme", isLight ? "light" : "dark");
+});
+
+const heroTitle = document.querySelector(".js-hero-title");
+if (heroTitle && !prefersReducedMotion) {
+  const words = heroTitle.textContent.split(" ");
+  heroTitle.innerHTML = words.map((w, i) =>
+    `<span class="word" style="animation-delay:${i * 60}ms">${w}</span>`
+  ).join(" ");
+}
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("in");
+  });
+}, { threshold: 0.14 });
+
+document.querySelectorAll(".reveal").forEach((node) => revealObserver.observe(node));
+
+const sections = [...document.querySelectorAll("main section[id]")];
+const navLinks = [...document.querySelectorAll(".nav a")];
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+    });
+  });
+}, { rootMargin: "-38% 0px -56% 0px" });
+
+sections.forEach((section) => navObserver.observe(section));
+
+document.querySelectorAll("[data-copy]").forEach((node) => {
+  node.addEventListener("click", async () => {
+    const value = node.getAttribute("data-copy");
+    const label = node.querySelector("em");
+    try {
+      await navigator.clipboard.writeText(value);
+      label.textContent = "Copiado";
+      window.setTimeout(() => { label.textContent = value; }, 850);
+    } catch {
+      label.textContent = value;
+    }
+  });
+});
+
+const motionLab = document.getElementById("motionLab");
+const replayMotion = document.getElementById("replayMotion");
+
+function playMotionLab() {
+  if (!motionLab) return;
+  motionLab.classList.remove("is-playing");
+  void motionLab.offsetWidth;
+  motionLab.classList.add("is-playing");
+}
+
+replayMotion?.addEventListener("click", playMotionLab);
+if (!prefersReducedMotion) window.setTimeout(playMotionLab, 900);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+/* ============================================================
+   Marketeia Design System - Sinal Aberto v1
+   tokens.css - derivado de showcase.html. Nao editar a mao:
+   edite o showcase e regenere.
+   ============================================================ */
+
+:root,
+:root[data-theme="dark"] {
+  /* BRAND */
+  --color-primary: #e8401f;            /* Vermillion: acao unica, sinal */
+  --color-primary-bright: #ff5c36;     /* hover do vermillion no dark */
+  --color-secondary: #6fb5ac;          /* Sinal: links, dataviz secundaria */
+  --color-petrol: #11393b;             /* Petroleo: bands, superficies institucionais */
+  --color-cream: #f2ede3;              /* Creme: texto sobre dark, respiro */
+
+  /* NEUTRALS (escala quente sobre petroleo) */
+  --color-neutral-50: #f4f1e8;
+  --color-neutral-100: #ece7da;
+  --color-neutral-200: #d2ccbe;
+  --color-neutral-300: #9b9787;
+  --color-neutral-400: #6c695c;
+  --color-neutral-600: #2e4543;
+  --color-neutral-700: #143639;
+  --color-neutral-800: #0e282b;
+  --color-neutral-900: #0a1f21;
+
+  /* SEMANTIC */
+  --color-success: #57b97e;
+  --color-warning: #e9a23b;
+  --color-error: #e0455c;
+
+  /* SURFACES */
+  --color-bg: #0a1f21;
+  --surface-primary: #0e282b;
+  --surface-secondary: #143639;
+  --surface-elevated: #102e31;
+  --surface-glass: rgba(242, 237, 227, 0.05);
+  --surface-glass-strong: rgba(242, 237, 227, 0.085);
+
+  /* TEXT */
+  --color-text: #f2ede3;
+  --color-text-secondary: #d2ccbe;
+  --color-text-tertiary: #9b9787;
+  --color-text-muted: #6c695c;
+  --color-text-on-primary: #fff7ef;
+
+  /* BORDERS */
+  --border-subtle: rgba(242, 237, 227, 0.07);
+  --border-default: rgba(242, 237, 227, 0.12);
+  --border-strong: rgba(242, 237, 227, 0.2);
+
+  /* ACCENT HELPERS */
+  --accent-muted: rgba(232, 64, 31, 0.1);
+  --accent-soft: rgba(232, 64, 31, 0.22);
+  --secondary-muted: rgba(111, 181, 172, 0.11);
+
+  /* ELEVATION (sombras tintadas de petroleo, nunca stock) */
+  --shadow-card: 0 22px 44px -24px rgba(4, 14, 15, 0.8), 0 1px 0 rgba(242, 237, 227, 0.05) inset;
+  --shadow-primary-sm: 0 8px 18px -10px rgba(232, 64, 31, 0.5);
+  --shadow-primary-md: 0 14px 28px -12px rgba(232, 64, 31, 0.55);
+
+  /* TYPOGRAPHY */
+  --font-display: "Archivo", "Inter Tight", sans-serif;
+  --font-ui: "Inter Tight", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --text-hero: clamp(54px, 8vw, 112px);
+  --text-h2: clamp(38px, 4.8vw, 68px);
+  --text-h3: clamp(24px, 2.8vw, 38px);
+  --text-h4: 1.25rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-meta: 0.6875rem;
+
+  --leading-tight: 0.98;
+  --leading-snug: 1.15;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.12em;
+
+  /* SPACING (base 4px, 8 paradas) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* RADIUS (4/8/14/20, nunca acidental) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* MOTION */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-medium: 400ms;
+  --duration-slow: 600ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ICONS */
+  --icon-stroke: 1.75;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+}
+
+:root[data-theme="light"] {
+  --color-primary: #d03a1b;            /* vermillion ajustado pra creme */
+  --color-primary-bright: #e8401f;
+  --color-secondary: #1e6b63;          /* sinal escurecido pra contraste AA */
+
+  --color-bg: #f4f1e8;
+  --surface-primary: #ece7da;
+  --surface-secondary: #e0daca;
+  --surface-elevated: #f0ebdf;
+  --surface-glass: rgba(255, 253, 247, 0.66);
+  --surface-glass-strong: rgba(255, 253, 247, 0.88);
+
+  --color-text: #122b2d;
+  --color-text-secondary: #2e4543;
+  --color-text-tertiary: #5b6b66;
+  --color-text-muted: #7e887f;
+  --color-text-on-primary: #fff7ef;
+
+  --border-subtle: rgba(17, 57, 59, 0.1);
+  --border-default: rgba(17, 57, 59, 0.16);
+  --border-strong: rgba(17, 57, 59, 0.26);
+
+  --accent-muted: rgba(208, 58, 27, 0.1);
+  --accent-soft: rgba(208, 58, 27, 0.2);
+  --secondary-muted: rgba(30, 107, 99, 0.12);
+
+  --shadow-card: 0 18px 42px -30px rgba(17, 57, 59, 0.28), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}

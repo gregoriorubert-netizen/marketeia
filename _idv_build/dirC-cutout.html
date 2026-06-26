@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  :root{--bg:#0A1F21;--petrol:#11393B;--primary:#E8401F;--secondary:#6FB5AC;--cream:#F2EDE3;--cream-dim:rgba(242,237,227,.74);--cream-faint:rgba(242,237,227,.42);
+    --fd:'Archivo',sans-serif;--fu:'Inter Tight',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#000;}
+  .post{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);color:var(--cream);font-family:var(--fu);}
+  .blob{position:absolute;width:880px;height:880px;border-radius:50%;right:-260px;bottom:-180px;background:radial-gradient(circle, rgba(232,64,31,.30) 0%, rgba(232,64,31,0) 62%);}
+  .grid-tag{position:absolute;top:64px;right:76px;font-family:var(--fm);font-size:14px;letter-spacing:.16em;color:var(--cream-faint);z-index:4;}
+  .person{position:absolute;right:-70px;bottom:0;height:1150px;z-index:3;filter:drop-shadow(-30px 20px 50px rgba(0,0,0,.55));}
+  .content{position:absolute;inset:0;padding:64px 76px 56px;display:flex;flex-direction:column;z-index:2;}
+  .eyebrow{font-family:var(--fm);font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-dim);display:flex;align-items:center;gap:12px;}
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--secondary);}
+  .hwrap{margin-top:140px;position:relative;z-index:2;max-width:540px;}
+  .pulse{width:300px;height:40px;margin-bottom:24px;}
+  .pulse polyline{fill:none;stroke:var(--secondary);stroke-width:5;stroke-linejoin:round;stroke-linecap:round;}
+  h1{font-family:var(--fd);font-weight:800;font-size:64px;line-height:.97;letter-spacing:-.02em;text-transform:uppercase;}
+  h1 .accent{color:var(--primary);}
+  .sub{font-family:var(--fu);font-weight:400;font-size:24px;line-height:1.5;color:var(--cream-dim);margin-top:24px;max-width:460px;}
+  .spacer{flex:1 1 auto;}
+  .cta{align-self:flex-start;font-family:var(--fm);font-size:17px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);padding:20px 30px;border:1.5px solid rgba(242,237,227,.22);border-radius:8px;background:rgba(242,237,227,.03);display:inline-flex;gap:14px;align-items:center;}
+  .cta .arrow{color:var(--primary);}
+  .foot{display:flex;justify-content:space-between;align-items:flex-end;padding-top:26px;margin-top:30px;border-top:1px solid rgba(242,237,227,.10);position:relative;z-index:5;}
+  .wordmark{font-family:var(--fd);font-weight:800;font-size:31px;letter-spacing:-.01em;}
+  .wordmark .ia{color:var(--primary);}
+  .tagline{font-family:var(--fm);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint);}
+</style></head>
+<body>
+  <div class="post">
+    <div class="blob"></div>
+    <img class="person" src="covers/person-cutout.png" alt="">
+    <div class="grid-tag">@marketeia</div>
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Tráfego pago • Conversão</div>
+      <div class="hwrap">
+        <svg class="pulse" viewBox="0 0 300 40"><polyline points="0,28 120,28 150,8 178,34 206,12 232,28 300,28"/></svg>
+        <h1>Anúncios que geram <span class="accent">leads compradores</span></h1>
+        <p class="sub">A estrutura de campanha que filtra curioso e atrai quem tem cartão na mão.</p>
+      </div>
+      <div class="spacer"></div>
+      <div class="cta">Leia a legenda <span class="arrow">→</span> pré-qualifique</div>
+      <div class="foot"><div class="wordmark">markete<span class="ia">ia</span></div><div class="tagline">Sinal vs ruído</div></div>
+    </div>
+  </div>
+</body></html>

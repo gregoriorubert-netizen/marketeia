@@ -1,0 +1,30 @@
+# === OS cruft ===
+Thumbs.db
+ehthumbs.db
+.DS_Store
+desktop.ini
+
+# === Tooling (caso alguém adicione build/deps) ===
+node_modules/
+.venv/
+__pycache__/
+
+# === Marketeia: scratch & legado (não fazem parte da fonte da marca) ===
+
+# Renders de trabalho, provas e screenshots de verificação.
+# Todos regeneráveis a partir de _idv_build/*.html via render.ps1.
+# (NÃO ignora _idv_build/covers/ — essa é a biblioteca de assets de marca.)
+_idv_build/*.png
+
+# Exploração / rascunho de IDV
+idv-exploracao/
+
+# Notas de voz / áudio bruto
+outro/
+
+# Identidade antiga sendo substituída (posts "Roxo e Preto" do Canva)
+Modelar Posts/
+
+# Binários legados pesados (deck herdado da Impulsionar, exports do FigJam)
+*.pdf
+*.jam

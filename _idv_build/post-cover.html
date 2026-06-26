@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1F21; --petrol:#11393B; --primary:#E8401F; --secondary:#6FB5AC;
+    --cream:#F2EDE3; --cream-dim:rgba(242,237,227,.72); --cream-faint:rgba(242,237,227,.40);
+    --font-display:'Archivo',sans-serif; --font-ui:'Inter Tight',sans-serif; --font-mono:'JetBrains Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#000;}
+  .post{
+    position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:var(--bg);
+    font-family:var(--font-ui); color:var(--cream);
+    padding:64px 76px 56px; display:flex; flex-direction:column;
+  }
+  .top{display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2;}
+  .eyebrow{font-family:var(--font-mono); font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--cream-dim); display:flex; align-items:center; gap:12px;}
+  .eyebrow .dot{width:9px; height:9px; border-radius:50%; background:var(--secondary); display:inline-block;}
+  .handle{font-family:var(--font-mono); font-size:14px; letter-spacing:.16em; text-transform:lowercase; color:var(--cream-faint);}
+
+  /* COVER IMAGE + thick pulse baseline */
+  .cover-wrap{position:relative; margin-top:30px; z-index:2;}
+  .cover{width:100%; height:498px; border-radius:10px; overflow:hidden; background:var(--petrol);}
+  .cover img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pulse-base{position:absolute; left:0; bottom:-4px; width:100%; height:50px;}
+  .pulse-base polyline{fill:none; stroke:var(--secondary); stroke-width:8; stroke-linejoin:round; stroke-linecap:round;}
+
+  .body-block{position:relative; z-index:2; margin-top:42px;}
+  h1{font-family:var(--font-display); font-weight:800; font-size:86px; line-height:.98; letter-spacing:-.02em; text-transform:uppercase; color:var(--cream);}
+  h1 .accent{color:var(--secondary);}
+  .sub{font-family:var(--font-ui); font-weight:400; font-size:25px; line-height:1.5; color:var(--cream-dim); margin-top:26px; max-width:860px;}
+  .sub b{color:var(--primary); font-weight:600;}
+
+  .cta{display:inline-flex; align-items:center; gap:14px; align-self:flex-start; margin-top:36px;
+    font-family:var(--font-mono); font-size:17px; letter-spacing:.1em; text-transform:uppercase; color:var(--cream);
+    padding:20px 30px; border:1.5px solid rgba(242,237,227,.22); border-radius:8px; background:rgba(242,237,227,.03);}
+  .cta .arrow{color:var(--primary); font-weight:500;}
+
+  .spacer{flex:1 1 auto;}
+  .foot{display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:2; padding-top:26px; border-top:1px solid rgba(242,237,227,.08);}
+  .wordmark{font-family:var(--font-display); font-weight:800; font-size:31px; letter-spacing:-.01em; color:var(--cream);}
+  .wordmark .ia{color:var(--primary);}
+  .tagline{font-family:var(--font-mono); font-size:14px; letter-spacing:.16em; text-transform:uppercase; color:var(--cream-faint);}
+</style>
+</head>
+<body>
+  <div class="post">
+    <div class="top">
+      <div class="eyebrow"><span class="dot"></span>Tráfego pago • Resultado</div>
+      <div class="handle">@marketeia</div>
+    </div>
+
+    <div class="cover-wrap">
+      <div class="cover"><img src="covers/clay1.png" alt=""></div>
+      <svg class="pulse-base" viewBox="0 0 928 50" preserveAspectRatio="none">
+        <polyline points="0,38 384,38 424,10 456,46 490,8 524,38 928,38"/>
+      </svg>
+    </div>
+
+    <div class="body-block">
+      <h1>3 pilares para um tráfego pago <span class="accent">de resultados</span></h1>
+      <p class="sub">Se você ainda está sem resultados, entenda <b>por que isso acontece</b> e receba um plano pra resolver de imediato.</p>
+      <div class="cta">Material gratuito <span class="arrow">&rarr;</span> link na bio</div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="foot">
+      <div class="wordmark">markete<span class="ia">ia</span></div>
+      <div class="tagline">Sinal vs ruído</div>
+    </div>
+  </div>
+</body>
+</html>

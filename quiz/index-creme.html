@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>marketeia · Diagnóstico de Performance Digital</title>
+  <meta name="description" content="Em menos de 2 minutos, identificamos onde sua estratégia digital está falhando e como a Marketeia pode acelerar seu crescimento. Diagnóstico gratuito." />
+  <meta property="og:title" content="Diagnóstico de Performance Digital · marketeia" />
+  <meta property="og:description" content="Descubra o gargalo do seu faturamento. Diagnóstico gratuito em 2 minutos." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* ===== TEMA CREME (light) ===== */
+      --bg: #ece7da;            /* creme surface — fundo da página */
+      --card: #f6f3ec;          /* superfície elevada do card */
+      --topbar-bg: #faf8f2;
+
+      --accent: #d03a1b;        /* vermillion ajustado pra contraste sobre creme */
+      --accent-bright: #e8401f;
+      --on-accent: #fff7ef;
+      --sinal: #1e6b63;         /* sinal escurecido pra AA */
+
+      --text: #122b2d;
+      --text-dim: #2e4543;
+      --text-muted: #5b6b66;
+
+      --border-subtle: rgba(17, 57, 59, .08);
+      --border-default: rgba(17, 57, 59, .14);
+      --border-strong: rgba(17, 57, 59, .24);
+
+      --fill: rgba(17, 57, 59, .03);
+      --fill-hover: rgba(17, 57, 59, .05);
+      --accent-soft: rgba(208, 58, 27, .08);
+      --sinal-soft: rgba(30, 107, 99, .08);
+
+      --next-bg: #e7e1d3;
+      --next-bg-hover: #ddd6c5;
+      --bar-track: rgba(17, 57, 59, .1);
+
+      --shadow-card: 0 26px 54px -34px rgba(17, 57, 59, .32), 0 1px 0 rgba(255, 255, 255, .75) inset;
+      --shadow-fire: 0 16px 32px -16px rgba(208, 58, 27, .45);
+
+      --font-display: "Archivo", sans-serif;
+      --font-ui: "Inter Tight", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(30, 107, 99, .07), transparent 60%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    /* grao sutil na pagina inteira (multiply pra modo claro) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      pointer-events: none;
+      opacity: .05;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
+    }
+
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, .display { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; line-height: 1.02; margin: 0; }
+    ::selection { background: var(--accent); color: var(--on-accent); }
+    .mono { font-family: var(--font-mono); }
+    .accent { color: var(--accent); }
+    .ia { color: var(--accent); }
+
+    /* ============ SHELL ============ */
+    .wrap {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      padding: 18px 18px 28px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ============ HEADER ============ */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      background: var(--topbar-bg);
+      box-shadow: 0 10px 24px -20px rgba(17, 57, 59, .4);
+      margin-bottom: 16px;
+    }
+    .wordmark { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; font-size: 21px; display: flex; align-items: center; gap: 9px; color: var(--text); }
+    .pulse-mark { width: 26px; height: 18px; fill: var(--accent); flex: none; }
+    .topbar .sys {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .04em;
+      color: #0c1c1a;                 /* preto */
+      border: 1px solid var(--border-default);
+      border-radius: 999px;
+      padding: 6px 16px 6px 7px;
+      line-height: 1.25;
+      text-align: left;
+      background: var(--topbar-bg);
+      max-width: 250px;
+    }
+    .health-ico {
+      flex: none;
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      background: #11393b;            /* verde da referência */
+      display: grid; place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), 0 3px 9px -3px rgba(17, 57, 59, .5);
+    }
+    .health-ico svg { width: 18px; height: 18px; display: block; fill: var(--accent); }
+    @media (max-width: 460px) { .topbar .sys { font-size: 9.5px; max-width: 185px; padding: 5px 12px 5px 6px; } .health-ico { width: 26px; height: 26px; } .health-ico svg { width: 16px; height: 16px; } }
+
+    /* ============ CARD ============ */
+    .card {
+      flex: 1;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(120% 60% at 100% 0%, rgba(208, 58, 27, .045), transparent 55%),
+        var(--card);
+      box-shadow: var(--shadow-card);
+      padding: clamp(22px, 5vw, 38px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============ SCREENS ============ */
+    .screen { display: none; flex-direction: column; flex: 1; }
+    .screen.active { display: flex; animation: screenIn 420ms var(--ease); }
+    @keyframes screenIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============ EYEBROW ============ */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .eyebrow svg { width: 15px; height: 15px; }
+
+    /* ============ INTRO ============ */
+    .intro { align-items: center; text-align: center; justify-content: center; gap: 6px; padding: 8px 0; }
+    .intro-icon {
+      width: clamp(150px, 42vw, 200px);
+      margin: 8px auto clamp(14px, 4vw, 26px);
+      filter: drop-shadow(0 24px 34px rgba(208, 58, 27, .2)) drop-shadow(0 8px 16px rgba(17, 57, 59, .18));
+      animation: floaty 6s var(--ease) infinite;
+    }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    .intro h1 {
+      font-size: clamp(30px, 7.5vw, 46px);
+      max-width: 16ch;
+      color: var(--text);
+    }
+    .intro .sub {
+      margin: clamp(16px, 3vw, 22px) auto 0;
+      max-width: 46ch;
+      color: var(--text-dim);
+      font-size: clamp(15px, 1.8vw, 17px);
+    }
+    .intro-foot { margin-top: clamp(22px, 4vw, 32px); width: 100%; display: grid; gap: 14px; }
+    .intro-note {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .04em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .intro-note i { width: 6px; height: 6px; border-radius: 50%; background: var(--sinal); animation: blink 2.2s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+    /* ============ PROGRESS ============ */
+    .progress { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(22px, 4vw, 30px); }
+    .progress-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: .04em;
+      color: var(--text-dim);
+      border: 1px solid var(--border-default);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+    .pill b { color: var(--accent); font-weight: 500; }
+    .pct { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--sinal); }
+    .bar { height: 5px; border-radius: 999px; background: var(--bar-track); overflow: hidden; }
+    .bar i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      box-shadow: 0 0 14px -2px rgba(208, 58, 27, .5);
+      transition: width 480ms var(--ease);
+    }
+
+    /* ============ QUESTION ============ */
+    .q-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 8px; }
+    .q-ico {
+      flex: none;
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border-radius: var(--radius-md);
+      background: var(--sinal-soft);
+      border: 1px solid rgba(30, 107, 99, .28);
+      color: var(--sinal);
+    }
+    .q-ico svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .q-title { font-size: clamp(22px, 4.6vw, 30px); padding-top: 2px; color: var(--text); }
+    .q-help { color: var(--text-dim); font-size: 14.5px; margin: 14px 0 22px; max-width: 50ch; }
+    .q-help.italic { font-style: italic; color: var(--text-muted); }
+
+    .q-body { display: flex; flex-direction: column; gap: 12px; }
+
+    /* text + number inputs */
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 60px;
+      padding: 0 18px;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border-default);
+      background: var(--fill);
+      transition: border-color 180ms var(--ease), background 180ms var(--ease);
+    }
+    .field:focus-within { border-color: var(--sinal); background: var(--sinal-soft); }
+    .field .pfx { font-family: var(--font-mono); font-size: 19px; color: var(--accent); flex: none; }
+    .field input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 18px;
+      outline: none;
+    }
+    .field input::placeholder { color: var(--text-muted); }
+
+    /* option cards */
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 17px 18px;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border-default);
+      background: var(--fill);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-ui);
+      font-size: 15.5px;
+      line-height: 1.4;
+      color: var(--text);
+      width: 100%;
+      transition: border-color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease), box-shadow 180ms var(--ease);
+    }
+    .opt:hover { border-color: var(--border-strong); background: var(--fill-hover); transform: translateY(-1px); }
+    .opt:focus-visible { outline: 2px solid var(--sinal); outline-offset: 2px; }
+    .opt .box {
+      flex: none;
+      width: 24px; height: 24px;
+      border-radius: 7px;
+      border: 1.75px solid var(--border-strong);
+      display: grid;
+      place-items: center;
+      transition: all 180ms var(--ease);
+    }
+    .opt[data-shape="radio"] .box { border-radius: 50%; }
+    .opt .box svg { width: 14px; height: 14px; fill: none; stroke: var(--on-accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.5); transition: all 160ms var(--ease); }
+    .opt .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--on-accent); opacity: 0; transform: scale(.4); transition: all 160ms var(--ease); }
+    .opt.sel {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      box-shadow: 0 8px 22px -14px rgba(208, 58, 27, .5);
+    }
+    .opt.sel .box { background: var(--accent); border-color: var(--accent); }
+    .opt.sel .box svg, .opt.sel .dot { opacity: 1; transform: scale(1); }
+
+    /* inline error */
+    .q-error {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      letter-spacing: .02em;
+    }
+    .q-error.show { display: flex; }
+    .q-error svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.75; }
+
+    /* ============ NAV ============ */
+    .nav-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: auto;
+      padding-top: clamp(24px, 5vw, 34px);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 54px;
+      padding: 0 26px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 15.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 180ms var(--ease), background 180ms var(--ease), box-shadow 180ms var(--ease), border-color 180ms var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(-1px) scale(.99); }
+    .btn:focus-visible { outline: 2px solid var(--sinal); outline-offset: 3px; }
+    .btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn--fire { background: var(--accent); color: var(--on-accent); box-shadow: var(--shadow-fire); }
+    .btn--fire:hover { background: var(--accent-bright); }
+    .btn--fire:focus-visible { outline-color: var(--accent); }
+    .btn--next {
+      background: var(--next-bg);
+      color: var(--text);
+      border: 1px solid var(--border-default);
+    }
+    .btn--next:hover { border-color: var(--sinal); background: var(--next-bg-hover); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--sinal);
+      padding: 0 8px;
+      font-weight: 600;
+    }
+    .btn--ghost:hover { color: var(--text); }
+    .btn--block { width: 100%; height: 60px; font-size: 16px; }
+
+    /* ============ LOADING ============ */
+    .loading { align-items: center; justify-content: center; text-align: center; gap: 18px; }
+    .load-orb {
+      width: 124px; height: 124px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #143639 0%, #060f10 100%);
+      border: 1px solid rgba(30,107,99,.28);
+      box-shadow: 0 0 0 10px rgba(30,107,99,.05), 0 0 0 22px rgba(30,107,99,.02), 0 28px 56px -18px rgba(17,57,59,.3);
+      display: grid; place-items: center;
+      animation: orb-ring 2.8s ease-in-out infinite;
+    }
+    @keyframes orb-ring {
+      0%,100% { box-shadow: 0 0 0 10px rgba(30,107,99,.05), 0 0 0 22px rgba(30,107,99,.02), 0 28px 56px -18px rgba(17,57,59,.3); }
+      50%       { box-shadow: 0 0 0 15px rgba(30,107,99,.07), 0 0 0 30px rgba(30,107,99,.03), 0 28px 56px -18px rgba(17,57,59,.3); }
+    }
+    .load-orb svg { width: 70px; height: 35px; }
+    .orb-line { stroke: rgba(111,181,172,.4); stroke-width: 1.8; fill: none; }
+    .orb-pulse-path { stroke: var(--accent); stroke-width: 2.3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .load-wm {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 14px; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 7px;
+      color: var(--text-muted); margin-top: -2px;
+    }
+    .load-wm .wm-ia { color: var(--accent); }
+    .load-wm-ico { width: 18px; height: 12px; fill: var(--accent); flex: none; }
+    .loading h2 { font-size: clamp(24px, 5.5vw, 32px); max-width: 17ch; color: var(--text); transition: opacity 220ms var(--ease); }
+    .loading .status {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--sinal); letter-spacing: .04em;
+      min-height: 1.6em; max-width: 30ch;
+    }
+    .loading .status .caret {
+      display: inline-block; width: 7px; height: 14px;
+      background: var(--accent); vertical-align: -2px;
+      margin-left: 2px; animation: blink 1.05s steps(2) infinite;
+    }
+    .load-foot {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-muted); letter-spacing: .025em;
+      max-width: 34ch; line-height: 1.55; margin: 6px 0 0;
+    }
+
+    /* ============ RESULT ============ */
+    .result { gap: 4px; }
+    .result .seal {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--sinal);
+      border: 1px solid rgba(30, 107, 99, .32);
+      border-radius: 999px;
+      padding: 8px 15px;
+      margin-bottom: 22px;
+      background: var(--sinal-soft);
+    }
+    .result .seal svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.75; }
+    .result h2 { font-size: clamp(26px, 5vw, 38px); max-width: 18ch; color: var(--text); }
+    .result .lead { color: var(--text-dim); margin: 18px 0 0; font-size: 16px; max-width: 50ch; }
+    .insight {
+      margin: 24px 0;
+      border: 1px solid var(--border-default);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      padding: 18px 20px;
+    }
+    .insight .lbl {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .insight p { margin: 0; font-size: 16.5px; color: var(--text); line-height: 1.5; }
+    .insight b { color: var(--text); font-weight: 700; }
+    .result-foot { margin-top: auto; padding-top: 26px; display: grid; gap: 13px; }
+    .result-note { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: .02em; }
+
+    /* ============ PILARES ============ */
+    .pilares { margin: 6px 0 0; width: 100%; }
+    .pilares-hdr { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; padding-top: 8px; }
+    .pilares-hdr svg { width: 20px; height: 20px; stroke: var(--sinal); stroke-width: 2.2; fill: none; flex: none; margin-top: 2px; }
+    .pilares-hdr h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; margin: 0; color: var(--text); letter-spacing: -0.015em; line-height: 1.25; }
+    .pilar-card {
+      background: var(--card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 16px 14px;
+      display: grid; grid-template-columns: 42px 1fr; gap: 0 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 3px rgba(17,57,59,.06);
+    }
+    .pilar-num {
+      width: 34px; height: 34px;
+      background: #11393b; border: 1px solid rgba(17,57,59,.15);
+      border-radius: var(--radius-sm); display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: 11.5px; color: rgba(242,237,227,.75);
+      align-self: start; margin-top: 1px;
+    }
+    .pilar-body { min-width: 0; }
+    .pilar-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; }
+    .pilar-title { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; color: var(--text); letter-spacing: -0.015em; line-height: 1.25; flex: 1; }
+    .pilar-badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; color: var(--accent); border: 1px solid rgba(208,58,27,.28); border-radius: 4px; padding: 2px 7px; background: rgba(208,58,27,.07); white-space: nowrap; flex: none; align-self: flex-start; margin-top: 3px; }
+    .pilar-desc { font-size: 13px; color: var(--text-dim); line-height: 1.55; margin: 0; }
+
+    /* ============ PAGE FOOTER ============ */
+    .pagefoot {
+      margin-top: 18px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .04em;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+    .pagefoot .tag { color: var(--sinal); letter-spacing: .14em; text-transform: uppercase; }
+
+    @media (max-width: 460px) {
+      .wrap { padding: 14px 12px 22px; }
+      .btn { padding: 0 18px; font-size: 14.5px; }
+      .nav-foot { gap: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- defs -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="m-pulso" viewBox="0 0 562 384"><path fill-rule="evenodd" clip-rule="evenodd" d="M482.244 273.177C477.001 273.177 472.364 269.773 470.795 264.77L394.527 21.7134C385.67 -6.89874 347.425 -7.30173 340.179 20.9074L286.881 223.103C283.872 234.518 267.919 235.184 263.969 224.059L216.587 90.6242C212.562 79.3405 202.095 72.4897 190.42 72.4897C178.745 72.4897 168.278 79.7435 162.642 90.2212L92.3916 265.639C90.568 270.192 86.1567 273.177 81.2517 273.177H12C5.37257 273.177 0 278.55 0 285.177V320.417C0 327.044 5.37258 332.417 12 332.417H109.099C120.774 332.417 131.241 325.969 135.669 314.685L175.903 210.407C179.916 200.006 194.706 200.221 198.415 210.734L251.647 361.599C251.891 362.292 252.067 363.021 252.21 363.742C257.583 390.855 300.011 390.881 306.765 363.044L358.478 168.673C361.572 157.043 377.951 156.699 381.531 168.188L425.928 310.655C429.149 323.148 440.421 332.417 453.304 332.417H550C556.627 332.417 562 327.044 562 320.417V285.177C562 278.55 556.627 273.177 550 273.177H482.244Z"/></symbol>
+  </svg>
+
+  <div class="wrap">
+    <header class="topbar">
+      <span class="wordmark"><svg class="pulse-mark" aria-hidden="true"><use href="#m-pulso"/></svg><span>markete<span class="ia">ia</span></span></span>
+      <span class="sys" aria-label="Diagnóstico de Performance Digital">
+        <span class="health-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 3.5h4a1.5 1.5 0 0 1 1.5 1.5V8.5h3A1.5 1.5 0 0 1 20 10v4a1.5 1.5 0 0 1-1.5 1.5h-3V19a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 19v-3.5h-3A1.5 1.5 0 0 1 4 14v-4a1.5 1.5 0 0 1 1.5-1.5h3V5A1.5 1.5 0 0 1 10 3.5z"/></svg>
+        </span>
+        Diagnóstico de Performance Digital
+      </span>
+    </header>
+
+    <main class="card" id="card">
+
+      <!-- INTRO -->
+      <section class="screen active intro" id="screen-intro" aria-labelledby="intro-title">
+        <img class="intro-icon" src="../assets/social/elements/el-seta-resultados.png" alt="" aria-hidden="true" />
+        <span class="eyebrow" style="justify-content:center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.8L21 9.6l-4.5 4.3 1.2 6.1L12 17.1 6.3 20l1.2-6.1L3 9.6l6.4-.8z"/></svg>
+          ASSESSORIA MARKETEIA
+        </span>
+        <h1 id="intro-title">Diagnóstico de Performance Digital: <span class="accent">Descubra o gargalo</span> do seu faturamento.</h1>
+        <p class="sub">Em menos de 2 minutos, identificamos onde sua estratégia está falhando e como a Marketeia pode acelerar seu crescimento corporativo.</p>
+        <div class="intro-foot">
+          <button class="btn btn--fire btn--block" id="startBtn" type="button">
+            INICIAR DIAGNÓSTICO GRATUITO
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span class="intro-note"><i></i> 7 perguntas · gratuito · sem compromisso</span>
+        </div>
+      </section>
+
+      <!-- QUIZ (dynamic) -->
+      <section class="screen" id="screen-quiz" aria-live="polite">
+        <div class="progress">
+          <div class="progress-row">
+            <span class="pill">Pergunta <b id="qNum">1</b> de 7</span>
+            <span class="pct" id="qPct">14% Concluído</span>
+          </div>
+          <div class="bar"><i id="qBar"></i></div>
+        </div>
+
+        <div id="qHost"></div>
+
+        <div class="q-error" id="qError">
+          <svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          <span id="qErrorMsg">Selecione uma opção pra continuar.</span>
+        </div>
+
+        <div class="nav-foot">
+          <button class="btn btn--ghost" id="backBtn" type="button">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+            Voltar
+          </button>
+          <button class="btn btn--next" id="nextBtn" type="button">
+            <span id="nextLabel">Próxima Pergunta</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- LOADING -->
+      <section class="screen loading" id="screen-loading" aria-labelledby="loading-title">
+        <div class="load-orb" aria-hidden="true">
+          <svg viewBox="0 0 80 38">
+            <path class="orb-line" d="M0 19 H22"/>
+            <path class="orb-pulse-path" d="M22 19 l7 0 l5 -13 l9 26 l6 -19 l5 6 l6 0"/>
+            <path class="orb-line" d="M60 19 H80"/>
+          </svg>
+        </div>
+        <div class="load-wm" aria-hidden="true">
+          <svg class="load-wm-ico" viewBox="0 0 26 18"><use href="#m-pulso"/></svg>
+          <span>markete<span class="wm-ia">ia</span></span>
+        </div>
+        <h2 id="loading-title" aria-live="polite">Cruzando dados de<br>performance...</h2>
+        <p class="status" id="loadStatus"><span class="caret"></span></p>
+        <p class="load-foot" aria-hidden="true">Analisando seus dados e cruzando com nossas métricas históricas de performance...</p>
+      </section>
+
+      <!-- RESULT -->
+      <section class="screen result" id="screen-result" aria-labelledby="result-title">
+        <span class="seal">
+          <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+          Diagnóstico concluído
+        </span>
+        <h2 id="result-title">Seu diagnóstico está pronto.</h2>
+        <p class="lead">Cruzamos suas respostas com as métricas de performance da Marketeia. Identificamos onde está o maior ponto de fuga do seu faturamento:</p>
+        <div class="insight">
+          <span class="lbl">Oportunidade de melhoria nº1</span>
+          <p id="insightText">—</p>
+        </div>
+        <!-- PILARES -->
+        <div class="pilares">
+          <div class="pilares-hdr">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <h3>Pilares Imediatos do Plano de Ação</h3>
+          </div>
+          <div class="pilar-card">
+            <span class="pilar-num">01</span>
+            <div class="pilar-body">
+              <div class="pilar-title-row">
+                <span class="pilar-title">Identidade Premium &amp; Diferenciação Visual</span>
+                <span class="pilar-badge">ALTA</span>
+              </div>
+              <p class="pilar-desc">Elevar o design das postagens focando no sinal (conteúdo técnico ultra qualificado) e remover o ruído visual genérico. Posicionar-se como a única solução elegante do segmento.</p>
+            </div>
+          </div>
+          <div class="pilar-card">
+            <span class="pilar-num">02</span>
+            <div class="pilar-body">
+              <div class="pilar-title-row">
+                <span class="pilar-title">Tráfego Pago Estratégico &amp; Parametrizado</span>
+                <span class="pilar-badge">ALTA</span>
+              </div>
+              <p class="pilar-desc">Tráfego que gera resultado tem sempre um bom CRM conectado e parametrizando todos os públicos, anúncios que estão gerando bons resultados de fechamentos para o comercial.</p>
+            </div>
+          </div>
+          <div class="pilar-card">
+            <span class="pilar-num">03</span>
+            <div class="pilar-body">
+              <div class="pilar-title-row">
+                <span class="pilar-title">Desenvolvimento de Funil</span>
+                <span class="pilar-badge">ALTA</span>
+              </div>
+              <p class="pilar-desc">Estratégias focadas em ROI alinhadas para o seu modelo e momento de negócio. Com processos de jornada de lead muito bem mapeados e uma comunicação de oferta assertiva.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-foot">
+          <a class="btn btn--fire btn--block" id="waBtn" href="#" target="_blank" rel="noopener">
+            RECEBER MEU PLANO DE AÇÃO PERSONALIZADO
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <span class="result-note">Você recebe o plano direto no WhatsApp. Sem custo, sem robô.</span>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="pagefoot">
+      © 2026 Marketeia Assessoria. Todos os direitos reservados.<br>
+      <span class="tag">Sinal sobre ruído · Marketing que se paga</span>
+    </footer>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    // ---- WhatsApp (trocar pelo número real da Marketeia) ----
+    var WHATSAPP_NUMBER = "5500000000000";
+
+    // ---- icons (Lucide-style) ----
+    var ICONS = {
+      instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+      target:    '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+      alert:     '<circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+      search:    '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+      chart:     '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/>',
+      wallet:    '<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><path d="M16 13h.01"/>',
+      tag:       '<path d="M12.6 2.3a2 2 0 0 0-1.4-.6H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.5 8.5a2 2 0 0 0 2.8 0l6.8-6.8a2 2 0 0 0 0-2.8z"/><path d="M7 7h.01"/>'
+    };
+
+    // ---- questions ----
+    var QUESTIONS = [
+      {
+        id: "instagram", type: "text", icon: "instagram",
+        title: "Qual o @ do Instagram da sua empresa?",
+        help: "Isso nos ajuda a entender a sofisticação da sua presença e posicionamento de marca nas redes.",
+        prefix: "@", placeholder: "minhaempresa"
+      },
+      {
+        id: "segmento", type: "single", icon: "target",
+        title: "Qual a principal área de atuação da sua empresa?",
+        help: "Cada nicho possui uma mecânica de atração específica. Selecione a opção que melhor te define:",
+        options: [
+          "E-commerce / Loja Virtual",
+          "Negócio Local / Clínicas / Escritórios",
+          "Prestação de Serviços / Mentoria",
+          "Infoprodutos / Lançamentos / Coprodução",
+          "B2B / Vendas Corporativas",
+          "Outro Segmento"
+        ]
+      },
+      {
+        id: "dores", type: "multi", icon: "alert",
+        title: "Quais são os maiores desafios e dificuldades hoje com o digital?",
+        help: "Insira os gargalos mais urgentes (selecione uma ou mais opções abaixo):",
+        options: [
+          "Falta de Resultados Reais com Marketing Digital.",
+          "O Tráfego Pago gera muitos Leads, mas são leads desqualificados (curiosos).",
+          "O Tráfego Pago gera Leads Qualificados, mas eles não convertem em vendas no comercial.",
+          "Sinto que meu posicionamento no Instagram poderia ser mais profissional/estratégico.",
+          "Sinto que o Design das minhas postagens não transmite o valor real do meu serviço/produto."
+        ]
+      },
+      {
+        id: "google", type: "single", icon: "search",
+        title: "Hoje você sente que a sua empresa precisa estar bem posicionada no Google?",
+        help: "Selecione a opção que reflete sua realidade atual nas buscas:",
+        options: [
+          "Sim, minha empresa não aparece e estou perdendo clientes para a concorrência.",
+          "Não, minha empresa já é bem posicionada e domina as buscas."
+        ]
+      },
+      {
+        id: "faturamento", type: "single", icon: "chart",
+        title: "Qual o faturamento médio da sua empresa nos últimos 3 meses?",
+        help: "Essa faixa nos ajuda a calibrar a estratégia certa pro seu momento:",
+        options: [
+          "Até R$ 20.000",
+          "De R$ 20.000 a R$ 40.000",
+          "De R$ 40.000 a R$ 60.000",
+          "De R$ 60.000 a R$ 100.000",
+          "De R$ 100.000 a R$ 500.000",
+          "Acima de R$ 500.000"
+        ]
+      },
+      {
+        id: "investimento", type: "number", icon: "wallet",
+        title: "Quanto você investe hoje, mensalmente, em Tráfego Pago + gestão?",
+        help: "Some o valor de mídia com a taxa de gestão da agência ou freelancer.",
+        prefix: "R$", placeholder: "0,00"
+      },
+      {
+        id: "ticket", type: "number", icon: "tag",
+        title: "Qual o ticket médio do seu produto ou serviço principal?",
+        help: "O valor médio que um cliente paga numa compra do seu carro-chefe.",
+        prefix: "R$", placeholder: "0,00"
+      }
+    ];
+
+    // ---- result mapping (variável baseada na dor da P3) ----
+    var INSIGHT = [
+      "na sua <b>estrutura de aquisição e mensuração de resultados</b> — hoje você investe sem enxergar o retorno real de cada ação.",
+      "na sua <b>segmentação e qualificação de leads no tráfego pago</b> — o problema não é volume, é atrair quem tem intenção de compra.",
+      "no seu <b>processo comercial e na conversão de leads em vendas</b> — o lead chega bom, mas se perde entre o anúncio e o fechamento.",
+      "no seu <b>posicionamento estratégico no Instagram</b> — a presença existe, mas ainda não comunica a autoridade que o seu negócio tem.",
+      "no <b>design e na percepção de valor das suas postagens</b> — o conteúdo não transmite o tamanho real do seu serviço ou produto."
+    ];
+    var INSIGHT_DEFAULT = "na sua <b>estrutura digital de ponta a ponta</b> — do tráfego ao comercial, falta um sinal claro de onde o faturamento está vazando.";
+
+    // ---- state ----
+    var answers = {};
+    var qIndex = 0;
+    var screens = {
+      intro: document.getElementById("screen-intro"),
+      quiz: document.getElementById("screen-quiz"),
+      loading: document.getElementById("screen-loading"),
+      result: document.getElementById("screen-result")
+    };
+    var host = document.getElementById("qHost");
+    var elNum = document.getElementById("qNum");
+    var elPct = document.getElementById("qPct");
+    var elBar = document.getElementById("qBar");
+    var elErr = document.getElementById("qError");
+    var elErrMsg = document.getElementById("qErrorMsg");
+    var nextLabel = document.getElementById("nextLabel");
+
+    function show(name) {
+      Object.keys(screens).forEach(function (k) { screens[k].classList.remove("active"); });
+      screens[name].classList.add("active");
+      try { document.getElementById("card").scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+    }
+
+    function icon(key) {
+      return '<svg viewBox="0 0 24 24">' + (ICONS[key] || "") + '</svg>';
+    }
+
+    function renderQuestion() {
+      var q = QUESTIONS[qIndex];
+      elErr.classList.remove("show");
+
+      // progress
+      elNum.textContent = String(qIndex + 1);
+      var pct = Math.round(((qIndex + 1) / QUESTIONS.length) * 100);
+      elPct.textContent = pct + "% Concluído";
+      elBar.style.width = pct + "%";
+      nextLabel.textContent = (qIndex === QUESTIONS.length - 1) ? "Ver meu diagnóstico" : "Próxima Pergunta";
+
+      var html = '<div class="q-head"><span class="q-ico">' + icon(q.icon) + '</span>' +
+                 '<h2 class="q-title">' + q.title + '</h2></div>' +
+                 '<p class="q-help' + (q.type === "multi" ? " italic" : "") + '">' + q.help + '</p>' +
+                 '<div class="q-body">';
+
+      if (q.type === "text" || q.type === "number") {
+        var val = answers[q.id] != null ? answers[q.id] : "";
+        html += '<label class="field">' +
+                  '<span class="pfx">' + q.prefix + '</span>' +
+                  '<input id="qInput" type="text" ' +
+                  (q.type === "number" ? 'inputmode="decimal" ' : '') +
+                  'placeholder="' + q.placeholder + '" value="' + escapeAttr(val) + '" autocomplete="off" />' +
+                '</label>';
+      } else {
+        var sel = answers[q.id] || (q.type === "multi" ? [] : null);
+        var shape = q.type === "multi" ? "check" : "radio";
+        q.options.forEach(function (opt, i) {
+          var isSel = q.type === "multi" ? (sel.indexOf(i) !== -1) : (sel === i);
+          var mark = q.type === "multi"
+            ? '<span class="box"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>'
+            : '<span class="box"><span class="dot"></span></span>';
+          html += '<button type="button" class="opt' + (isSel ? " sel" : "") + '" data-shape="' + shape + '" data-i="' + i + '">' +
+                    mark + '<span>' + opt + '</span>' +
+                  '</button>';
+        });
+      }
+      html += '</div>';
+      host.innerHTML = html;
+
+      // wire
+      if (q.type === "text" || q.type === "number") {
+        var inp = document.getElementById("qInput");
+        inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goNext(); } });
+        inp.addEventListener("input", function () { elErr.classList.remove("show"); });
+        setTimeout(function () { try { inp.focus(); } catch (e) {} }, 60);
+      } else {
+        Array.prototype.forEach.call(host.querySelectorAll(".opt"), function (btn) {
+          btn.addEventListener("click", function () { toggleOption(q, parseInt(btn.getAttribute("data-i"), 10)); });
+        });
+      }
+    }
+
+    function toggleOption(q, i) {
+      elErr.classList.remove("show");
+      if (q.type === "multi") {
+        var arr = answers[q.id] || [];
+        var pos = arr.indexOf(i);
+        if (pos === -1) arr.push(i); else arr.splice(pos, 1);
+        answers[q.id] = arr;
+        var btns = host.querySelectorAll(".opt");
+        btns[i].classList.toggle("sel");
+      } else {
+        answers[q.id] = i;
+        Array.prototype.forEach.call(host.querySelectorAll(".opt"), function (b) {
+          b.classList.toggle("sel", parseInt(b.getAttribute("data-i"), 10) === i);
+        });
+        // avança sozinho em seleção única (UX premium), com pequeno delay pro feedback
+        setTimeout(goNext, 280);
+      }
+    }
+
+    function validate(q) {
+      if (q.type === "text") {
+        var v = (document.getElementById("qInput").value || "").trim();
+        if (!v) return "Preenche esse campo pra continuar.";
+        answers[q.id] = v.replace(/^@+/, "");
+        return null;
+      }
+      if (q.type === "number") {
+        var raw = (document.getElementById("qInput").value || "").trim();
+        if (!raw) return "Informe um valor pra continuar.";
+        answers[q.id] = raw;
+        return null;
+      }
+      if (q.type === "multi") {
+        if (!answers[q.id] || answers[q.id].length === 0) return "Selecione pelo menos uma opção.";
+        return null;
+      }
+      // single
+      if (answers[q.id] == null) return "Selecione uma opção pra continuar.";
+      return null;
+    }
+
+    function goNext() {
+      var q = QUESTIONS[qIndex];
+      var err = validate(q);
+      if (err) { elErrMsg.textContent = err; elErr.classList.add("show"); return; }
+      if (qIndex < QUESTIONS.length - 1) {
+        qIndex++;
+        renderQuestion();
+      } else {
+        runLoading();
+      }
+    }
+
+    function goBack() {
+      // salva campo atual sem validar (pra não perder digitação)
+      var q = QUESTIONS[qIndex];
+      if (q.type === "text" || q.type === "number") {
+        var inp = document.getElementById("qInput");
+        if (inp) answers[q.id] = inp.value.trim();
+      }
+      if (qIndex === 0) { show("intro"); return; }
+      qIndex--;
+      renderQuestion();
+    }
+
+    // ---- loading ----
+    var statusEl = document.getElementById("loadStatus");
+    var DORE_LABELS = [
+      "resultados com marketing digital",
+      "qualidade dos leads de tráfego",
+      "conversão de leads em vendas",
+      "posicionamento no Instagram",
+      "design e percepção de valor"
+    ];
+    function runLoading() {
+      show("loading");
+      var titleEl = document.getElementById("loading-title");
+      var headings = [
+        "Cruzando dados de<br>performance...",
+        "Mapeando pontos<br>de fuga...",
+        "Calculando seu<br>diagnóstico..."
+      ];
+      var dores = answers.dores || [];
+      var statusPhrases = dores.length
+        ? dores.map(function(d){ return "Avaliando " + (DORE_LABELS[d] || "performance digital") + "..."; }).concat(["Cruzando métricas históricas...", "Montando plano de ação..."])
+        : ["Lendo seu posicionamento...", "Cruzando com nossas métricas...", "Isolando o gargalo do faturamento...", "Montando plano de ação..."];
+      var headIdx = 0, i = 0;
+      titleEl.innerHTML = headings[0];
+      statusEl.innerHTML = statusPhrases[0] + '<span class="caret"></span>';
+      var iv = setInterval(function () {
+        i++;
+        if (statusPhrases[i]) statusEl.innerHTML = statusPhrases[i] + '<span class="caret"></span>';
+        if (i % 2 === 1 && headings[headIdx + 1]) {
+          headIdx++;
+          titleEl.style.opacity = "0";
+          (function(h){ setTimeout(function(){ titleEl.innerHTML = h; titleEl.style.opacity = "1"; }, 220); }(headings[headIdx]));
+        }
+        if (i >= statusPhrases.length - 1) clearInterval(iv);
+      }, 700);
+      setTimeout(buildResult, statusPhrases.length * 700 + 500);
+    }
+
+    // ---- result ----
+    function buildResult() {
+      var dores = answers.dores || [];
+      var key = dores.length ? dores[0] : -1;
+      var text = (key >= 0 && INSIGHT[key]) ? INSIGHT[key] : INSIGHT_DEFAULT;
+      document.getElementById("insightText").innerHTML = "Hoje, o maior ponto de melhoria está " + text;
+      document.getElementById("waBtn").href = buildWhatsApp();
+      show("result");
+    }
+
+    function buildWhatsApp() {
+      var L = [];
+      L.push("Olá, Marketeia! Acabei de fazer o Diagnóstico de Performance e quero meu plano de ação. 🚀");
+      L.push("");
+      L.push("Instagram: @" + (answers.instagram || "-"));
+      L.push("Segmento: " + optText("segmento"));
+      L.push("Desafios: " + multiText("dores"));
+      L.push("Google: " + optText("google"));
+      L.push("Faturamento (3m): " + optText("faturamento"));
+      L.push("Investe/mês (tráfego+gestão): R$ " + (answers.investimento || "-"));
+      L.push("Ticket médio: R$ " + (answers.ticket || "-"));
+      var msg = L.join("\n");
+      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
+    }
+
+    function optText(id) {
+      var q = findQ(id);
+      var i = answers[id];
+      return (q && i != null && q.options[i]) ? q.options[i] : "-";
+    }
+    function multiText(id) {
+      var q = findQ(id);
+      var arr = answers[id] || [];
+      if (!arr.length) return "-";
+      return arr.map(function (i) { return q.options[i]; }).join(" | ");
+    }
+    function findQ(id) { for (var i = 0; i < QUESTIONS.length; i++) if (QUESTIONS[i].id === id) return QUESTIONS[i]; return null; }
+
+    function escapeAttr(s) { return String(s).replace(/"/g, "&quot;"); }
+
+    // ---- wire global ----
+    document.getElementById("startBtn").addEventListener("click", function () {
+      qIndex = 0;
+      show("quiz");
+      renderQuestion();
+    });
+    document.getElementById("nextBtn").addEventListener("click", goNext);
+    document.getElementById("backBtn").addEventListener("click", goBack);
+  })();
+  </script>
+
+</body>
+</html>
