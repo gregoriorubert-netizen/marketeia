@@ -1,7 +1,9 @@
 {
   "rewrites": [
-    { "source": "/quiz",      "destination": "/quiz/index-creme.html" },
-    { "source": "/quizdark",  "destination": "/quiz/index.html" },
-    { "source": "/adminquiz", "destination": "/adminquiz/index.html" }
+    { "source": "/quiz",          "destination": "/quiz/index-creme.html" },
+    { "source": "/quizdark",      "destination": "/quiz/index.html" },
+    { "source": "/adminquiz",     "destination": "/adminquiz/index.html" },
+    { "source": "/preonboarding", "destination": "/preonboarding/index.html" },
+    { "source": "/sobrenos",      "destination": "/sobrenos/index.html" }
   ]
 }

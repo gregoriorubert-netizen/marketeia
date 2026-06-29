@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>O Segredo dos Resultados com Digital · marketeia</title>
+  <meta name="description" content="Por que muitas pessoas investem e não têm resultados com tráfego pago. Entenda o mecanismo do problema e como a Marketeia resolve." />
+  <meta property="og:title" content="O Segredo dos Resultados com Digital · marketeia" />
+  <meta property="og:description" content="Você já investiu em anúncios e ficou sem resultado? Entenda o que realmente está errado — e o que ninguém te contou." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:            #f2ede3;
+      --bg-subtle:     #ece7da;
+      --bg-card:       #e5dfd3;
+      --bg-dark:       #11393b;
+      --bg-ink:        #0a1f21;
+
+      --text:          #0a1f21;
+      --text-2:        #2e4543;
+      --text-3:        #6c695c;
+      --text-4:        #9b9787;
+
+      --accent:        #e8401f;
+      --accent-bright: #ff5c36;
+      --accent-soft:   rgba(232,64,31,.09);
+      --accent-border: rgba(232,64,31,.2);
+
+      --teal:          #11393b;
+      --sinal:         #6fb5ac;
+      --sinal-soft:    rgba(111,181,172,.1);
+      --sinal-border:  rgba(111,181,172,.28);
+
+      --border:        rgba(10,31,33,.1);
+      --border-sub:    rgba(10,31,33,.06);
+      --border-str:    rgba(10,31,33,.16);
+
+      --font-d: "Archivo", sans-serif;
+      --font-u: "Inter Tight", system-ui, sans-serif;
+      --font-m: "JetBrains Mono", monospace;
+
+      --r-sm: 4px; --r-md: 8px; --r-lg: 14px; --r-xl: 22px; --r-2xl: 32px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font-u); font-size: 16px;
+      line-height: 1.65; color: var(--text); background: var(--bg);
+      -webkit-font-smoothing: antialiased; overflow-x: clip;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+    h1, h2, h3 { font-family: var(--font-d); font-weight: 800; letter-spacing: -.025em; line-height: 1.05; margin: 0; }
+    p { margin: 0; }
+    ::selection { background: var(--accent); color: #fff; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-card); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── LAYOUT ── */
+    .w { max-width: 700px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(242,237,227,.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-sub); padding: 13px 0;
+    }
+    .topbar-inner {
+      max-width: 700px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .wm { font-family: var(--font-d); font-weight: 800; font-size: 20px; letter-spacing: -.02em; color: var(--text); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .wm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(232,64,31,.45); flex: none; }
+    .wm-ia { color: var(--accent); }
+    .topbar-btn {
+      font-family: var(--font-d); font-weight: 700; font-size: 13px; letter-spacing: -.01em;
+      padding: 9px 18px; background: var(--accent); color: #fff;
+      border: none; border-radius: var(--r-md); cursor: pointer; text-decoration: none;
+      transition: background .15s var(--ease), transform .15s var(--ease);
+    }
+    .topbar-btn:hover { background: var(--accent-bright); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero { padding: 80px 0 68px; }
+
+    .hero-eyebrow {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
+
+    .hero-h1 { font-size: clamp(38px, 6.5vw, 68px); margin-bottom: 6px; }
+    .hero-h1-2 { font-size: clamp(38px, 6.5vw, 68px); color: var(--accent); margin-bottom: 28px; }
+    .hero-sub { font-size: 18px; line-height: 1.72; color: var(--text-2); max-width: 540px; margin-bottom: 16px; }
+
+    .hero-7d {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-m); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--teal); border: 1px solid var(--sinal-border); border-radius: 999px;
+      padding: 6px 14px; background: var(--sinal-soft); margin-bottom: 32px;
+    }
+    .hero-7d::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--sinal); flex: none; }
+
+    .hero-author {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 12px 16px 12px 12px;
+      border: 1px solid var(--border); border-radius: var(--r-xl);
+      background: var(--bg-subtle);
+    }
+    .author-av {
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      background: var(--bg-dark); display: grid; place-items: center;
+      font-family: var(--font-d); font-weight: 800; font-size: 14px; color: var(--sinal);
+    }
+    .author-name { font-family: var(--font-d); font-weight: 700; font-size: 14px; letter-spacing: -.01em; }
+    .author-sub { font-size: 12px; color: var(--text-3); }
+
+    /* ── SECTION BASE ── */
+    .sec { padding: 72px 0; border-top: 1px solid var(--border); }
+    .sec-label {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-4); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sec-label::before { content: ""; width: 14px; height: 1px; background: currentColor; }
+    .sec-h2 { font-size: clamp(26px, 4vw, 40px); margin-bottom: 18px; }
+    .sec-lead { font-size: 17px; line-height: 1.75; color: var(--text-2); max-width: 560px; }
+
+    /* ── DIAG CARDS ── */
+    .diag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr)); gap: 12px; margin-top: 36px; }
+    .diag-card {
+      padding: 22px 22px 20px; border: 1px solid var(--border); border-radius: var(--r-xl);
+      background: var(--bg-subtle); position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s var(--ease);
+    }
+    .diag-card:hover { border-color: var(--border-str); transform: translateY(-2px); }
+    .diag-card::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .diag-num { font-family: var(--font-m); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .diag-title { font-family: var(--font-d); font-weight: 700; font-size: 15px; letter-spacing: -.01em; margin-bottom: 8px; }
+    .diag-body { font-size: 13px; line-height: 1.6; color: var(--text-3); }
+    .diag-tag {
+      margin-top: 14px; padding: 8px 12px;
+      border-radius: var(--r-md); background: var(--accent-soft); border: 1px solid var(--accent-border);
+      font-size: 11px; font-weight: 600; color: var(--accent); font-family: var(--font-m); letter-spacing: .02em;
+    }
+
+    .diag-conclusion {
+      margin-top: 20px; padding: 20px 22px;
+      border-radius: var(--r-xl); border: 1px solid var(--accent-border);
+      background: var(--accent-soft);
+      font-size: 15px; line-height: 1.65; color: var(--text);
+    }
+    .diag-conclusion strong { color: var(--accent); }
+
+    /* ── CALLOUT / QUOTE ── */
+    .callout {
+      margin: 36px 0; padding: 26px 28px;
+      border-left: 4px solid var(--accent);
+      background: var(--bg-subtle);
+      border-radius: 0 var(--r-lg) var(--r-lg) 0;
+    }
+    .callout.teal { border-left-color: var(--teal); }
+    .callout-text { font-family: var(--font-d); font-weight: 700; font-size: clamp(17px,2.5vw,22px); letter-spacing: -.015em; line-height: 1.3; }
+
+    /* ── MONOLOGUE BLOCK (internal doubt) ── */
+    .mono-block {
+      margin: 36px 0; padding: 28px 32px;
+      border: 1px solid var(--border-str); border-radius: var(--r-xl);
+      background: var(--bg-card); position: relative;
+    }
+    .mono-block::before {
+      content: "\201C";
+      position: absolute; top: 10px; left: 20px;
+      font-family: var(--font-d); font-weight: 900; font-size: 80px;
+      color: var(--accent); opacity: .12; line-height: 1; pointer-events: none;
+    }
+    .mono-label {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-4); margin-bottom: 14px;
+    }
+    .mono-text {
+      font-family: var(--font-d); font-style: italic; font-weight: 700;
+      font-size: clamp(17px, 2.4vw, 22px); line-height: 1.4; letter-spacing: -.01em;
+      color: var(--text-2);
+    }
+    .mono-note { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--text-3); }
+
+    /* ── PAINS LIST ── */
+    .pains-list { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-direction: column; gap: 10px; }
+    .pains-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      background: var(--bg-subtle); font-size: 14px; line-height: 1.55; color: var(--text-2);
+    }
+    .pains-list li::before {
+      content: "●"; color: var(--accent); flex: none; font-size: 8px; margin-top: 5px;
+    }
+
+    /* ── 3 CLAREZAS ── */
+    .clarezas { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+    .clareza-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px;
+      border: 1px solid var(--sinal-border); border-radius: var(--r-lg);
+      background: var(--sinal-soft);
+    }
+    .clareza-arrow {
+      font-family: var(--font-m); font-size: 14px; color: var(--teal);
+      flex: none; margin-top: 2px; font-weight: 700;
+    }
+    .clareza-text { font-size: 15px; font-weight: 600; color: var(--teal); letter-spacing: -.01em; }
+    .clareza-sub { font-size: 13px; color: var(--text-3); margin-top: 3px; line-height: 1.5; }
+
+    /* ── DARK BLOCK ── */
+    .dark-block {
+      margin: 40px 0; padding: 36px 36px 32px;
+      background: var(--bg-dark); border-radius: var(--r-xl); color: #f2ede3;
+      position: relative; overflow: hidden;
+    }
+    .dark-block::before {
+      content: ""; position: absolute; top: -40%; right: -10%; width: 260px; height: 260px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(232,64,31,.13), transparent 70%);
+      pointer-events: none;
+    }
+    .dark-label {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--sinal); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .dark-label::before { content: ""; width: 12px; height: 1px; background: currentColor; }
+    .dark-h { font-size: clamp(20px, 3vw, 30px); color: #f2ede3; margin-bottom: 12px; }
+    .dark-body { font-size: 15px; line-height: 1.72; color: rgba(242,237,227,.72); }
+    .dark-accent { color: var(--sinal); font-weight: 600; }
+
+    /* ── BLOCOS DA JORNADA ── */
+    .blocos-wrap { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .bloco {
+      border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden;
+      background: var(--bg-subtle);
+    }
+    .bloco-header {
+      padding: 12px 18px; background: var(--bg-card); border-bottom: 1px solid var(--border);
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-4); display: flex; align-items: center; gap: 8px;
+    }
+    .bloco-header::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+    .bloco-steps {
+      display: flex; align-items: stretch; flex-wrap: wrap;
+    }
+    .bloco-step {
+      flex: 1; min-width: 120px; padding: 16px 18px;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .bloco-step:last-child { border-right: none; }
+    .bloco-step-num {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-4);
+    }
+    .bloco-step-name {
+      font-family: var(--font-d); font-weight: 700; font-size: 14px; letter-spacing: -.01em; color: var(--text);
+    }
+    .bloco-step-sub { font-size: 12px; color: var(--text-3); line-height: 1.45; }
+    .bloco-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px; color: var(--text-4); font-size: 16px; font-weight: 300;
+    }
+
+    /* ── AGENCY QUOTES ── */
+    .agency-quotes { margin: 32px 0; }
+    .agency-quotes-label {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-4); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .agency-quotes-label::before { content: ""; width: 14px; height: 1px; background: currentColor; }
+
+    .aq-bubble-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .aq-bubble {
+      padding: 14px 18px;
+      border: 1px solid var(--accent-border); border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg);
+      background: var(--accent-soft);
+      font-family: var(--font-d); font-style: italic; font-weight: 700;
+      font-size: 15px; letter-spacing: -.01em; color: var(--text);
+      position: relative;
+    }
+    .aq-bubble::before {
+      content: "";
+      position: absolute; top: -1px; left: -1px;
+      width: 14px; height: 14px;
+      background: var(--accent-border); clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+    .aq-who { font-size: 11px; font-family: var(--font-m); font-style: normal; font-weight: 400; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin-top: 6px; }
+
+    /* ── 3 PILLARS ── */
+    .pillars { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+    .pillar {
+      display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--r-xl);
+      background: var(--bg-subtle); overflow: hidden;
+      transition: border-color .2s var(--ease);
+    }
+    .pillar:hover { border-color: var(--border-str); }
+    .pillar-num {
+      flex: none; width: 52px; display: grid; place-items: center;
+      font-family: var(--font-d); font-weight: 900; font-size: 28px; letter-spacing: -.04em;
+      color: var(--accent); opacity: .2;
+      border-right: 1px solid var(--border); background: var(--bg-card);
+    }
+    .pillar-body { flex: 1; padding: 22px 22px 20px; }
+    .pillar-title { font-family: var(--font-d); font-weight: 800; font-size: 17px; letter-spacing: -.015em; margin-bottom: 8px; }
+    .pillar-desc { font-size: 14px; line-height: 1.65; color: var(--text-2); }
+    .pillar-items { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-direction: column; gap: 6px; }
+    .pillar-items li {
+      font-size: 13px; color: var(--text-3); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+    }
+    .pillar-items li::before { content: "→"; color: var(--accent); flex: none; font-size: 12px; margin-top: 1px; font-weight: 700; }
+
+    /* ── VS ── */
+    .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+    .vs-card { padding: 22px; border: 1px solid var(--border); border-radius: var(--r-xl); background: var(--bg-subtle); }
+    .vs-card.bad { border-color: rgba(232,64,31,.18); background: rgba(232,64,31,.04); }
+    .vs-card.good { border-color: rgba(17,57,59,.16); background: rgba(17,57,59,.04); }
+    .vs-label { font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px; }
+    .vs-card.bad .vs-label { color: var(--accent); }
+    .vs-card.good .vs-label { color: var(--teal); }
+    .vs-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .vs-list li {
+      font-size: 13px; line-height: 1.5; padding: 8px 10px; border-radius: var(--r-md);
+      display: flex; align-items: flex-start; gap: 8px; color: var(--text-2);
+    }
+    .vs-card.bad .vs-list li { background: rgba(232,64,31,.06); }
+    .vs-card.good .vs-list li { background: rgba(17,57,59,.06); }
+    .vs-list li::before { font-size: 12px; flex: none; margin-top: 1px; font-weight: 700; }
+    .vs-card.bad .vs-list li::before { content: "✕"; color: var(--accent); }
+    .vs-card.good .vs-list li::before { content: "✓"; color: var(--teal); }
+
+    /* ── GPS BLOCK ── */
+    .gps-block {
+      margin: 40px 0; padding: 36px;
+      border-radius: var(--r-2xl);
+      background: var(--bg-dark); color: #f2ede3;
+      position: relative; overflow: hidden;
+    }
+    .gps-block::before {
+      content: ""; position: absolute; bottom: -30%; right: -5%;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(111,181,172,.15), transparent 70%);
+      pointer-events: none;
+    }
+    .gps-label {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--sinal); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+    }
+    .gps-label::before { content: ""; width: 12px; height: 1px; background: currentColor; }
+    .gps-compare { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+    .gps-side { flex: 1; min-width: 200px; padding: 18px; border-radius: var(--r-lg); }
+    .gps-side.before { background: rgba(242,237,227,.05); border: 1px solid rgba(242,237,227,.08); }
+    .gps-side.after { background: rgba(111,181,172,.08); border: 1px solid rgba(111,181,172,.2); }
+    .gps-side-label { font-family: var(--font-m); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; color: rgba(242,237,227,.4); }
+    .gps-side.after .gps-side-label { color: var(--sinal); }
+    .gps-side-text { font-size: 14px; line-height: 1.6; color: rgba(242,237,227,.7); }
+    .gps-side.after .gps-side-text { color: rgba(242,237,227,.9); }
+    .gps-quote {
+      font-family: var(--font-d); font-weight: 800; font-size: clamp(17px, 2.8vw, 24px);
+      letter-spacing: -.015em; line-height: 1.3; color: #f2ede3;
+      border-left: 3px solid var(--sinal); padding-left: 18px;
+    }
+
+    /* ── STATS ── */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 40px 0; }
+    .stat {
+      padding: 28px 20px; background: var(--bg-dark); text-align: center;
+    }
+    .stats .stat:first-child { border-radius: var(--r-xl) 0 0 var(--r-xl); }
+    .stats .stat:last-child { border-radius: 0 var(--r-xl) var(--r-xl) 0; }
+    .stat-n { font-family: var(--font-d); font-weight: 900; font-size: 38px; line-height: 1; letter-spacing: -.03em; color: #f2ede3; margin-bottom: 4px; }
+    .stat-n .u { color: var(--sinal); }
+    .stat-l { font-size: 12px; color: rgba(242,237,227,.45); }
+
+    /* ── 7 DIAS ── */
+    .days-block {
+      margin: 36px 0; padding: 24px;
+      border: 1px solid var(--sinal-border); border-radius: var(--r-xl);
+      background: var(--sinal-soft);
+    }
+    .days-label { font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .days-label::before { content: ""; width: 12px; height: 1px; background: currentColor; }
+    .days-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .days-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15px; color: var(--teal); font-weight: 600;
+    }
+    .days-list li::before {
+      content: ""; flex: none; width: 20px; height: 20px; border-radius: 50%; margin-top: 2px;
+      background: rgba(17,57,59,.12); border: 1px solid rgba(17,57,59,.2);
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%2311393b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center;
+    }
+
+    /* ── DELIVERABLES ── */
+    .deli-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; margin-top: 28px; }
+    .deli {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 13px 15px;
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      background: var(--bg-subtle); font-size: 13px; line-height: 1.5; color: var(--text-2);
+      transition: border-color .15s;
+    }
+    .deli:hover { border-color: var(--border-str); }
+    .deli-chk {
+      width: 18px; height: 18px; border-radius: 50%; flex: none; margin-top: 1px;
+      background: var(--sinal-soft); border: 1px solid var(--sinal-border);
+      display: grid; place-items: center;
+    }
+    .deli-chk svg { width: 10px; }
+
+    /* ── VERDADE NUA E CRUA ── */
+    .truth-final {
+      margin: 48px 0;
+      border: 1px solid var(--accent-border); border-radius: var(--r-2xl);
+      overflow: hidden;
+    }
+    .truth-header {
+      padding: 22px 28px; background: var(--accent);
+      font-family: var(--font-d); font-weight: 900; font-size: clamp(16px, 2.5vw, 22px);
+      letter-spacing: -.015em; color: #fff; line-height: 1.2;
+    }
+    .truth-sub { font-size: 14px; font-weight: 500; letter-spacing: 0; margin-top: 4px; opacity: .8; }
+    .truth-body { padding: 28px; background: var(--bg-subtle); }
+    .truth-body-lead { font-size: 15px; line-height: 1.7; color: var(--text-2); margin-bottom: 20px; }
+    .truth-never { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .truth-never li {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 14px; border-radius: var(--r-md);
+      background: rgba(232,64,31,.05); border: 1px solid rgba(232,64,31,.1);
+      font-size: 14px; line-height: 1.5; color: var(--text-2);
+    }
+    .truth-never li::before {
+      content: "✕"; color: var(--accent); font-weight: 700; flex: none; font-size: 12px; margin-top: 1px;
+    }
+    .truth-close { margin-top: 20px; padding: 18px; border-radius: var(--r-lg); background: var(--bg-card); font-size: 15px; line-height: 1.65; font-weight: 600; color: var(--text); }
+
+    /* ── CTA ── */
+    .cta-wrap {
+      background: var(--bg-dark); margin: 0 -24px; padding: 80px 24px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-wrap::before {
+      content: ""; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 300px;
+      background: radial-gradient(ellipse, rgba(232,64,31,.12), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; max-width: 480px; margin: 0 auto; }
+    .cta-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sinal); border: 1px solid rgba(111,181,172,.25); border-radius: 999px;
+      padding: 5px 12px; background: rgba(111,181,172,.07); margin-bottom: 22px;
+    }
+    .cta-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--sinal); box-shadow: 0 0 6px var(--sinal); flex: none; }
+    .cta-h { font-size: clamp(28px, 4.5vw, 48px); color: #f2ede3; margin-bottom: 14px; }
+    .cta-h em { font-style: normal; color: var(--accent); }
+    .cta-sub { font-size: 15px; line-height: 1.7; color: rgba(242,237,227,.6); margin-bottom: 28px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-d); font-weight: 700; font-size: 15px; letter-spacing: -.01em;
+      padding: 16px 32px; border: none; border-radius: var(--r-lg);
+      cursor: pointer; text-decoration: none;
+      transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+    }
+    .btn-p { background: var(--accent); color: #fff; box-shadow: 0 14px 28px -12px rgba(232,64,31,.55); }
+    .btn-p:hover { background: var(--accent-bright); transform: translateY(-2px); box-shadow: 0 18px 36px -12px rgba(232,64,31,.65); }
+    .cta-note { margin-top: 14px; font-size: 12px; color: rgba(242,237,227,.35); font-family: var(--font-m); letter-spacing: .04em; }
+    .cta-scarcity {
+      margin-top: 20px; padding: 12px 16px;
+      border: 1px solid rgba(111,181,172,.2); border-radius: var(--r-lg);
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; color: rgba(242,237,227,.6);
+    }
+    .cta-scarcity strong { color: var(--sinal); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--bg-ink); padding: 28px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .footer-wm { font-family: var(--font-d); font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: #f2ede3; }
+    .footer-wm span { color: var(--accent); }
+    .footer-copy { font-size: 12px; color: rgba(242,237,227,.3); font-family: var(--font-m); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 580px) {
+      .vs-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats .stat:first-child { border-radius: var(--r-xl) var(--r-xl) 0 0; }
+      .stats .stat:last-child { border-radius: 0 0 var(--r-xl) var(--r-xl); }
+      .stats .stat:nth-child(2) { border-radius: 0; }
+      .gps-compare { flex-direction: column; }
+      .dark-block { padding: 24px 20px; }
+      .gps-block { padding: 28px 20px; }
+      .hero-h1, .hero-h1-2 { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wm" href="https://marketeia.vercel.app">
+      <div class="wm-dot"></div>market<span class="wm-ia">ia</span>
+    </a>
+    <a class="topbar-btn" href="https://marketeia.vercel.app/quiz">Diagnóstico gratuito</a>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="w">
+  <div class="hero">
+    <div class="hero-eyebrow">O segredo dos resultados com digital</div>
+
+    <h1 class="hero-h1">Por que você investe em anúncios</h1>
+    <h1 class="hero-h1-2">e não tem retorno.</h1>
+
+    <p class="hero-sub">
+      Identificamos a situação atual da sua estrutura digital, o que está errado —
+      e traçamos o plano de ação para ter resultados reais com tráfego pago.
+    </p>
+
+    <div class="hero-7d">Resultados visíveis nos primeiros 7 dias</div>
+
+    <div class="hero-author">
+      <div class="author-av">M</div>
+      <div>
+        <div class="author-name">Equipe Marketeia</div>
+        <div class="author-sub">+R$5M gerenciados · +R$10M em vendas geradas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 01 · MECANISMO DO PROBLEMA ═══ -->
+<section class="w sec">
+  <div class="sec-label">01 · Mecanismo do Problema</div>
+  <h2 class="sec-h2">Você se depara em alguma<br/>dessas situações?</h2>
+  <p class="sec-lead">
+    Antes da solução, você precisa identificar exatamente onde está o gargalo.
+    Três cenários concentram quem investe em digital sem resultado:
+  </p>
+
+  <div class="diag-grid">
+    <div class="diag-card">
+      <div class="diag-num">Situação 01</div>
+      <div class="diag-title">Muitos leads — todos desqualificados</div>
+      <div class="diag-body">Os anúncios geram volume. As mensagens chegam. Mas nenhum tem perfil real de compra. O time perde tempo e a taxa de conversão despenca.</div>
+      <div class="diag-tag">Causa: público × campanha desalinhados</div>
+    </div>
+    <div class="diag-card">
+      <div class="diag-num">Situação 02</div>
+      <div class="diag-title">Leads chegam — mas não viram venda</div>
+      <div class="diag-body">O interesse existe. O contato acontece. Mas na hora de fechar, a conversa esfria. A jornada não está estruturada para conduzir ao fechamento.</div>
+      <div class="diag-tag">Causa: funil sem alinhamento à jornada</div>
+    </div>
+    <div class="diag-card">
+      <div class="diag-num">Situação 03</div>
+      <div class="diag-title">Vende — mas fica no zero a zero</div>
+      <div class="diag-body">Há resultado. Há vendas. Mas o custo por aquisição devora a margem. Investe R$1.500 em anúncios para faturar R$1.500. ROI zero.</div>
+      <div class="diag-tag">Causa: métricas comerciais não cruzadas</div>
+    </div>
+  </div>
+
+  <div class="diag-conclusion">
+    Se você se identificou com qualquer uma dessas situações, você não tem uma
+    <strong>Estrutura Digital Ideal</strong> — com estratégias alinhadas de acordo com
+    o momento e modelo do seu negócio. Você está preso em estratégias genéricas,
+    desalinhadas com a sua realidade.
+  </div>
+</section>
+
+<!-- ═══ 02 · A MENTIRA DO MERCADO ═══ -->
+<section class="w sec">
+  <div class="sec-label">02 · O que o mercado te fez acreditar</div>
+  <h2 class="sec-h2">Em algum momento alguém<br/>te vendeu essa ideia:</h2>
+
+  <div class="callout" style="margin-top:28px">
+    <div class="callout-text">
+      "É só fazer tráfego pago que os resultados chegariam."
+    </div>
+  </div>
+
+  <p style="font-size:16px;line-height:1.75;color:var(--text-2);margin-top:24px">
+    E você seguiu anunciando. Trocou de agência. Mudou o criativo. Testou a oferta.
+    Mas os resultados não apareceram — ou apareceram e sumiram.
+    <br/><br/>
+    <strong>MAS VOCÊ AINDA NÃO PERCEBEU</strong> que não é somente anunciar…
+    e sim, é sobre <strong>O QUÊ</strong> e <strong>COMO</strong> anunciar.
+  </p>
+
+  <p style="font-size:16px;line-height:1.75;color:var(--text-2);margin-top:20px;font-weight:600">
+    Porque você já passou por isso:
+  </p>
+
+  <ul class="pains-list">
+    <li>Já se frustrou pagando anúncios que não geraram retorno — e continuou tentando porque "todo mundo diz que funciona".</li>
+    <li>Já pagou por agências, campanhas e metodologias de "especialistas" do próprio nicho, que nunca funcionaram do jeito prometido.</li>
+    <li>Já ficou sem saber se o problema era no criativo, no funil, na oferta ou na própria comunicação — sem clareza de onde cortar ou onde escalar.</li>
+  </ul>
+
+  <!-- Monólogo interno -->
+  <div class="mono-block">
+    <div class="mono-label">O pensamento que você já teve</div>
+    <div class="mono-text">
+      "Será que marketing digital é real mesmo?<br/>
+      Acho que isso não funciona — é somente mídia<br/>
+      essa febre de investir no digital."
+    </div>
+    <div class="mono-note">
+      Esse pensamento é o sintoma de quem está fazendo certo uma coisa errada.
+      O digital funciona. O problema é a ausência de estrutura personalizada para o seu negócio.
+    </div>
+  </div>
+
+  <div class="dark-block">
+    <div class="dark-label">A causa raiz</div>
+    <h3 class="dark-h">O problema não é o digital.<br/>O problema é que ninguém montou para você uma estrutura <span class="dark-accent">personalizada</span> para o seu momento e modelo de negócio.</h3>
+    <p class="dark-body" style="margin-top:14px">
+      O que você precisa é de <span class="dark-accent">clareza estratégica</span> — não de mais anúncios,
+      mais criativos ou mais dinheiro jogado em campanhas genéricas.
+    </p>
+  </div>
+
+  <!-- 3 Clarezas -->
+  <p style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">As 3 clarezas que mudam o jogo:</p>
+  <div class="clarezas">
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <div class="clareza-text">Clareza sobre o que anunciar</div>
+        <div class="clareza-sub">Qual mensagem, qual ângulo, qual narrativa conecta com o seu público no momento certo da jornada.</div>
+      </div>
+    </div>
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <div class="clareza-text">Clareza sobre como posicionar sua oferta</div>
+        <div class="clareza-sub">O jeito que você apresenta o que você vende define se o lead vai ou não dar o próximo passo.</div>
+      </div>
+    </div>
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <div class="clareza-text">Clareza sobre qual é o próximo passo do seu cliente na jornada</div>
+        <div class="clareza-sub">Cada etapa da jornada exige um estímulo diferente. Sem isso, você perde o lead no meio do caminho.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 03 · MECANISMO DA FUNÇÃO ═══ -->
+<section class="w sec">
+  <div class="sec-label">03 · Mecanismo da Função</div>
+  <h2 class="sec-h2">O detalhe que faz você ter<br/>ou não resultado com tráfego pago</h2>
+  <p class="sec-lead">
+    O que compõe a jornada do lead ideal são os estímulos e as etapas que ele percorre
+    navegando pela internet — desde o primeiro contato até o fechamento com a sua empresa.
+  </p>
+
+  <div class="dark-block" style="margin-top:32px">
+    <div class="dark-label">O conceito central</div>
+    <h3 class="dark-h">Jornada do Lead Ideal</h3>
+    <p class="dark-body" style="margin-top:10px">
+      O lead é conduzido por uma sequência de estímulos construídos por uma estrutura de blocos de informações.
+      Quando você alinha comunicação, funil de vendas, funil de marketing e estratégia, os resultados mudam
+      em questão de <span class="dark-accent">dias — não meses</span>.
+    </p>
+  </div>
+
+  <!-- BLOCOs -->
+  <p style="font-size:15px;font-weight:600;color:var(--text);margin:28px 0 4px">Os blocos da jornada para o seu modelo de negócio:</p>
+  <div class="blocos-wrap">
+    <div class="bloco">
+      <div class="bloco-header">Modelo A · Venda via atendimento direto</div>
+      <div class="bloco-steps">
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 1</div>
+          <div class="bloco-step-name">Anúncio</div>
+          <div class="bloco-step-sub">Criativo com comunicação intencional para o público certo</div>
+        </div>
+        <div class="bloco-arrow">→</div>
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 2</div>
+          <div class="bloco-step-name">WhatsApp</div>
+          <div class="bloco-step-sub">Atendimento taggeado com boas-vindas estruturada</div>
+        </div>
+        <div class="bloco-arrow">→</div>
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 3</div>
+          <div class="bloco-step-name">Fechamento</div>
+          <div class="bloco-step-sub">Consultoria comercial com funil de qualificação</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bloco-header">Modelo B · Venda via página / e-commerce</div>
+      <div class="bloco-steps">
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 1</div>
+          <div class="bloco-step-name">Anúncio</div>
+          <div class="bloco-step-sub">Criativo otimizado para o objetivo de campanha correto</div>
+        </div>
+        <div class="bloco-arrow">→</div>
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 2</div>
+          <div class="bloco-step-name">Página de Vendas</div>
+          <div class="bloco-step-sub">Funil de conteúdo que eleva consciência e gera desejo</div>
+        </div>
+        <div class="bloco-arrow">→</div>
+        <div class="bloco-step">
+          <div class="bloco-step-num">Bloco 3</div>
+          <div class="bloco-step-name">Captação / Checkout</div>
+          <div class="bloco-step-sub">Conversão com retargeting para quem abandonou</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:28px">
+    <div class="callout-text">
+      Cada bloco dessa jornada contém uma estrutura de elementos a ser validada.
+      Quando todos estão alinhados, você para de jogar dinheiro em anúncios aleatórios
+      e começa a investir em uma estratégia que gera resultado.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 · OS 3 PILARES ═══ -->
+<section class="w sec">
+  <div class="sec-label">04 · A Estrutura Digital Ideal</div>
+  <h2 class="sec-h2">Os 3 pilares que constroem<br/>resultado real</h2>
+  <p class="sec-lead">
+    Após gerenciar mais de R$5 milhões em anúncios em diferentes nichos, identificamos que
+    toda estrutura de alta performance é construída sobre três fundamentos inegociáveis.
+  </p>
+
+  <div class="days-block" style="margin-top:32px">
+    <div class="days-label">Nos primeiros 7 dias de implementação, você já começa a ver</div>
+    <ul class="days-list">
+      <li>Leads qualificados chegando e gerando oportunidades reais</li>
+      <li>Mais potenciais clientes entrando em contato com perfil de fechamento</li>
+      <li>Mais conversões reais de vendas e fechamentos acontecendo</li>
+    </ul>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">1</div>
+      <div class="pillar-body">
+        <div class="pillar-title">Gestão Estratégica de Tráfego Pago</div>
+        <div class="pillar-desc">Não é sobre subir qualquer anúncio. É sobre decidir estrategicamente onde cada real trabalha — com objetivo claro, público certo e comunicação validada.</div>
+        <ul class="pillar-items">
+          <li>Estrutura de comunicação: o que anunciar e qual narrativa usar em cada fase</li>
+          <li>Segmentação de público por etapa do funil (topo, meio e fundo)</li>
+          <li>Mapeamento estratégico de objetivos de campanha por meta comercial</li>
+          <li>Rastreamento completo desde o anúncio até a mensagem de boas-vindas taggeada</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">2</div>
+      <div class="pillar-body">
+        <div class="pillar-title">Funil & Comunicação Alinhados</div>
+        <div class="pillar-desc">Cada anúncio, conteúdo e mensagem deve respeitar a jornada real do seu cliente. Nada de fórmulas genéricas — feito sob medida para o momento e modelo do seu negócio.</div>
+        <ul class="pillar-items">
+          <li>Funil de destaques no Instagram para captação orgânica de Leads</li>
+          <li>Postagens intencionais de aterrissagem alinhadas ao funil</li>
+          <li>Roteiros de anúncios em vídeo validados para o seu nicho específico</li>
+          <li>Automações de perfil para nutrimento e qualificação passiva</li>
+          <li>Comunicação interna (remarketing) e externa (aquisição) segmentadas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">3</div>
+      <div class="pillar-body">
+        <div class="pillar-title">Decisão Baseada em Métricas Reais</div>
+        <div class="pillar-desc">Cruzamos métricas de marketing com métricas comerciais, através de critérios e metodologias de análises e consultorias. Você sabe ao vivo o que funciona, o que cortar e como escalar.</div>
+        <ul class="pillar-items">
+          <li>Dashboard ao vivo com relatório de performance em tempo real</li>
+          <li>Benchmarking quinzenal competitivo do seu nicho</li>
+          <li>Consultoria comercial para alinhar meta de vendas e estratégia digital</li>
+          <li>Reuniões quinzenais de alinhamento estratégico com especialista</li>
+          <li>Feedbacks diários via grupo individual no WhatsApp</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 · O QUE O MERCADO NÃO FAZ ═══ -->
+<section class="w sec">
+  <div class="sec-label">05 · O que o mercado não faz</div>
+  <h2 class="sec-h2">O método tradicional<br/>que te deixou sem resultado</h2>
+  <p class="sec-lead">
+    Enquanto você esperava resultados, a maioria das agências seguia o mesmo roteiro —
+    e repetia as mesmas respostas quando você perguntava o que estava errado:
+  </p>
+
+  <!-- Falas das agências -->
+  <div class="agency-quotes">
+    <div class="agency-quotes-label">O que você já ouviu de uma agência</div>
+    <div class="aq-bubble-wrap">
+      <div class="aq-bubble">
+        "Criar campanhas, rodar anúncios e esperar para ver."
+        <div class="aq-who">Método tradicional das agências</div>
+      </div>
+      <div class="aq-bubble">
+        "Por que estamos com esse resultado? — Depende de xyz."
+        <div class="aq-who">Quando você cobra explicação</div>
+      </div>
+      <div class="aq-bubble">
+        "O que devemos fazer nessa situação? — Vamos analisar."
+        <div class="aq-who">Quando você exige um plano de ação</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-grid">
+    <div class="vs-card bad">
+      <div class="vs-label">Método Tradicional</div>
+      <ul class="vs-list">
+        <li>Metodologia genérica — igual para todos os clientes, independente do nicho ou momento</li>
+        <li>Comunicação desalinhada da jornada real do público</li>
+        <li>Decisões sem base em métricas reais — achismo e "vamos ver"</li>
+        <li>Sem roteiros validados de anúncios em vídeo para o seu nicho</li>
+        <li>Relatórios mensais em PDF sem ação imediata</li>
+        <li>Sem consultoria comercial para cruzar digital com metas de venda</li>
+      </ul>
+    </div>
+    <div class="vs-card good">
+      <div class="vs-label">Marketeia</div>
+      <ul class="vs-list">
+        <li>Estratégias adaptadas ao momento e modelo específico do seu negócio</li>
+        <li>Funil e comunicação construídos na jornada real do seu cliente</li>
+        <li>Decisões baseadas em métricas de marketing cruzadas com métricas comerciais</li>
+        <li>Roteiros de anúncios validados e atualizados constantemente para o seu nicho</li>
+        <li>Dashboard ao vivo + relatórios com insights acionáveis</li>
+        <li>Consultoria comercial mensal integrada à gestão digital</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 · MECANISMO DA SOLUÇÃO ═══ -->
+<section class="w sec">
+  <div class="sec-label">06 · Mecanismo da Solução</div>
+  <h2 class="sec-h2">Como a Marketeia<br/>resolve isso na prática</h2>
+  <p class="sec-lead">
+    Eu sei disso porque eu já estive no seu lugar — e percorri esse caminho gerenciando
+    mais de R$5 milhões em anúncios ao longo da trajetória. O mesmo princípio que aplicamos
+    em diferentes nichos:
+  </p>
+
+  <div class="callout teal" style="margin-top:0">
+    <div class="callout-text" style="color:var(--teal)">
+      Estratégias alinhadas ao modelo e ao momento de cada negócio.
+      Não existe uma fórmula. Existe um método que se adapta.
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-n">R$<span class="u">5M</span><span style="font-size:18px;color:rgba(242,237,227,.35)">+</span></div>
+      <div class="stat-l">em anúncios gerenciados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">R$<span class="u">10M</span><span style="font-size:18px;color:rgba(242,237,227,.35)">+</span></div>
+      <div class="stat-l">em vendas geradas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n"><span class="u">7</span></div>
+      <div class="stat-l">dias para os primeiros sinais</div>
+    </div>
+  </div>
+
+  <!-- GPS Metaphor -->
+  <div class="gps-block">
+    <div class="gps-label">A diferença que sentimos na prática</div>
+    <div class="gps-compare">
+      <div class="gps-side before">
+        <div class="gps-side-label">Sem estrutura</div>
+        <div class="gps-side-text">Uma jornada de venda às cegas — sem saber exatamente o que está funcionando, o que cortar ou para onde caminhar. Cada mês é uma aposta.</div>
+      </div>
+      <div class="gps-side after">
+        <div class="gps-side-label">Com a Marketeia</div>
+        <div class="gps-side-text">Um mapa claro do retorno sobre cada real investido — com direcionamento real e um especialista individual guiando cada passo do seu trajeto.</div>
+      </div>
+    </div>
+    <div class="gps-quote">
+      "É como ter um GPS em tempo real nas suas mãos, e um especialista individual falando como guiar seu trajeto — sabendo exatamente onde está, o que cortar e como chegar ao seu destino."
+    </div>
+  </div>
+
+  <!-- O que você leva -->
+  <h3 style="font-size:20px;margin:36px 0 4px">O que você recebe com a Marketeia:</h3>
+  <div class="deli-grid">
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Gestão Estratégica de Tráfego Pago</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Estrutura de Instagram que converte visitantes</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Funil de Destaques para captação orgânica de Leads</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Postagens Intencionais de Aterrissagem no Instagram</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Campanha de Aquisição de Público novo</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Campanha de Captação de Leads qualificados</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Estrutura de Comunicação Interna (Remarketing)</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Estrutura de Comunicação Externa (Aquisição)</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Roteiros validados de anúncios em vídeo para o seu nicho</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Acesso aos melhores tipos de anúncio do seu segmento</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Dashboard ao vivo com relatório em tempo real</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Benchmarking quinzenal competitivo do seu nicho</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Consultorias quinzenais com especialista digital</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Consultoria Comercial sob medida para metas reais</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Automações para o perfil de Instagram</div>
+    <div class="deli"><div class="deli-chk"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#11393b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Feedbacks e análises diárias via grupo individual no WhatsApp</div>
+  </div>
+</section>
+
+<!-- ═══ 07 · VERDADE NUA E CRUA ═══ -->
+<section class="w sec">
+  <div class="sec-label">07 · A verdade nua e crua</div>
+  <h2 class="sec-h2">Por que você ficou<br/>sem resultado até hoje</h2>
+
+  <div class="truth-final">
+    <div class="truth-header">
+      A verdade que ninguém te contou.
+      <div class="truth-sub">O motivo real da falta de resultados com o digital.</div>
+    </div>
+    <div class="truth-body">
+      <p class="truth-body-lead">
+        A verdade é que <strong>não te entregaram</strong> o que é necessário para que uma
+        estrutura digital realmente funcione. Não foi culpa sua não saber —
+        porque ninguém te mostrou o que estava faltando:
+      </p>
+      <ul class="truth-never">
+        <li>Tráfego Pago Estratégico e Parametrizado — com rastreamento de cada etapa da jornada</li>
+        <li>Estrutura de perfil de Instagram que converta visitantes em clientes, não apenas seguidores</li>
+        <li>Funil de Destaques no Instagram para conscientizar visitantes antes do contato</li>
+        <li>Postagens Intencionais de Aterrissagem que conduzem o lead ao próximo passo</li>
+        <li>Estrutura de Comunicação Interna (Remarketing) para quem já interagiu</li>
+        <li>Estrutura de Comunicação Externa (Aquisição) para chegar em públicos novos</li>
+        <li>Estrutura de Conteúdos Intencionais alinhados ao funil de vendas</li>
+        <li>Funil Adaptado para o Modelo e Momento específico do seu Negócio</li>
+        <li>Reuniões Quinzenais para Alinhamento Estratégico contínuo</li>
+        <li>Reuniões de Consultoria Comercial para cruzar digital com metas reais de venda</li>
+      </ul>
+      <div class="truth-close">
+        Não é só sobre anunciar. É sobre o que e o como você anuncia.
+        É sair do escuro e ter um mapa claro do retorno sobre cada real investido.
+        Com a Estrutura Digital Ideal, esse jogo muda.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<div class="w">
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <div class="cta-tag">Próximo passo</div>
+      <h2 class="cta-h">Descubra exatamente<br/><em>onde está o gargalo</em></h2>
+      <p class="cta-sub">
+        Em menos de 2 minutos, o Diagnóstico de Performance Digital identifica
+        sua situação atual e qual dos 3 cenários está travando o seu resultado.
+      </p>
+      <a class="btn btn-p" href="https://marketeia.vercel.app/quiz">
+        <svg width="18" height="18" fill="none" viewBox="0 0 18 18"><path d="M9 2l1.5 3.5H14L11.5 7.5l1 4.5L9 10 5.5 12l1-4.5L4 5.5h3.5L9 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Fazer o diagnóstico gratuito
+      </a>
+      <div class="cta-note">Gratuito · 2 minutos · Resultado imediato</div>
+      <div class="cta-scarcity">
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" stroke="#6fb5ac" stroke-width="1.2"/><path d="M7 4v3.5l2 1.5" stroke="#6fb5ac" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Vagas limitadas — <strong>período de experiência de 7 dias grátis</strong> para novos clientes
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wm">market<span>ia</span></div>
+  <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
+</footer>
+
+</body>
+</html>
