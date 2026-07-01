@@ -4,6 +4,8 @@
     { "source": "/quizdark",      "destination": "/quiz/index.html" },
     { "source": "/adminquiz",     "destination": "/adminquiz/index.html" },
     { "source": "/preonboarding", "destination": "/preonboarding/index.html" },
-    { "source": "/sobrenos",      "destination": "/sobrenos/index.html" }
+    { "source": "/sobrenos",      "destination": "/sobrenos/index.html" },
+    { "source": "/roteiro-webinar", "destination": "/roteiro-webinar/index.html" },
+    { "source": "/ebook",         "destination": "/ebook/index.html" }
   ]
 }

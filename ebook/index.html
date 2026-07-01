@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Estrutura Digital Ideal — marketeia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;0,900;1,800&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --petrol:      #0a1f21;
+  --petrol-mid:  #122a2d;
+  --petrol-lt:   #1a3a3e;
+  --vermillion:  #e8401f;
+  --verm-dim:    rgba(232,64,31,0.1);
+  --sinal:       #6fb5ac;
+  --sinal-dim:   rgba(111,181,172,0.12);
+  --cream:       #f2ede3;
+  --cream-mid:   #e8e2d6;
+  --cream-dim:   #ddd6c8;
+  --ink:         #1a1a18;
+  --ink-mid:     #3a3a36;
+  --ink-lt:      #6a6a62;
+  --white:       #ffffff;
+  --display:     'Archivo', sans-serif;
+  --ui:          'Inter Tight', sans-serif;
+  --mono:        'JetBrains Mono', monospace;
+  --r-sm:        6px;
+  --r-md:        10px;
+  --r-lg:        16px;
+}
+
+/* ─── RESET ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--ui);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── TOPBAR ──────────────────────────────────────────────── */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(242,237,227,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--cream-dim);
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+}
+.tb-brand {
+  font-family: var(--display);
+  font-size: 17px; font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--petrol);
+  display: flex; align-items: center; gap: 6px;
+}
+.tb-brand .dot {
+  width: 6px; height: 6px;
+  background: var(--vermillion);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tb-brand .ia { color: var(--vermillion); }
+.tb-tag {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-lt);
+}
+.tb-progress {
+  width: 120px; height: 2px;
+  background: var(--cream-dim);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.tb-progress-bar {
+  height: 100%; width: 0%;
+  background: var(--vermillion);
+  border-radius: 99px;
+  transition: width 0.1s;
+}
+
+/* ─── SIDE TOC ────────────────────────────────────────────── */
+.toc {
+  position: fixed; left: 0; top: 52px; bottom: 0;
+  width: 220px;
+  background: var(--cream);
+  border-right: 1px solid var(--cream-dim);
+  padding: 28px 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex; flex-direction: column; gap: 0;
+}
+.toc-section {
+  padding: 6px 24px;
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sinal);
+  margin-top: 16px;
+}
+.toc-section:first-child { margin-top: 0; }
+.toc a {
+  display: block;
+  padding: 6px 24px;
+  font-size: 12.5px;
+  color: var(--ink-mid);
+  text-decoration: none;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+.toc a:hover { color: var(--petrol); background: var(--cream-mid); }
+.toc a.active {
+  color: var(--vermillion);
+  border-left-color: var(--vermillion);
+  background: var(--verm-dim);
+  font-weight: 600;
+}
+
+/* ─── MAIN LAYOUT ─────────────────────────────────────────── */
+.main {
+  margin-left: 220px;
+  padding-top: 52px;
+}
+
+/* ─── COVER ───────────────────────────────────────────────── */
+.cover {
+  background: var(--petrol);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(111,181,172,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,64,31,0.08) 0%, transparent 60%);
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sinal);
+  margin-bottom: 28px;
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+}
+.cover-eyebrow::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: var(--sinal);
+}
+.cover h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--white);
+  margin-bottom: 32px;
+  position: relative;
+}
+.cover h1 em {
+  font-style: normal;
+  color: var(--vermillion);
+}
+.cover-desc {
+  font-size: 17px;
+  color: rgba(242,237,227,0.65);
+  max-width: 520px;
+  line-height: 1.6;
+  position: relative;
+  margin-bottom: 48px;
+}
+.cover-pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  position: relative;
+}
+.pill {
+  background: rgba(111,181,172,0.1);
+  border: 1px solid rgba(111,181,172,0.25);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--sinal);
+  letter-spacing: 0.06em;
+}
+.cover-corner {
+  position: absolute; bottom: 48px; right: 72px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(242,237,227,0.2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+/* ─── SECTIONS ────────────────────────────────────────────── */
+section {
+  padding: 72px;
+  border-bottom: 1px solid var(--cream-dim);
+  scroll-margin-top: 68px;
+}
+section:last-child { border-bottom: none; }
+
+/* ─── DARK SECTIONS ───────────────────────────────────────── */
+section.dark {
+  background: var(--petrol);
+  color: var(--cream);
+}
+section.dark p { color: rgba(242,237,227,0.75); }
+section.dark .eyebrow { color: var(--sinal); }
+
+/* ─── EYEBROW / LABELS ────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sinal);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  display: block; width: 20px; height: 1px;
+  background: currentColor;
+}
+
+/* ─── HEADINGS ────────────────────────────────────────────── */
+.ch-num {
+  font-family: var(--display);
+  font-size: 120px; font-weight: 900;
+  line-height: 1;
+  color: var(--cream-dim);
+  letter-spacing: -0.05em;
+  margin-bottom: -20px;
+  display: block;
+}
+section.dark .ch-num { color: rgba(255,255,255,0.05); }
+h2.title {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--petrol);
+  margin-bottom: 20px;
+}
+section.dark h2.title { color: var(--white); }
+h2.title em { font-style: normal; color: var(--vermillion); }
+
+h3.sub {
+  font-family: var(--display);
+  font-size: 22px; font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--petrol);
+  margin: 40px 0 12px;
+}
+section.dark h3.sub { color: var(--white); }
+
+p {
+  font-size: 15.5px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+p strong { color: var(--petrol); font-weight: 700; }
+section.dark p strong { color: var(--cream); }
+
+/* ─── BIG QUOTE ───────────────────────────────────────────── */
+.big-quote {
+  background: var(--verm-dim);
+  border-left: 4px solid var(--vermillion);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: 28px 36px;
+  margin: 32px 0;
+}
+.big-quote blockquote {
+  font-family: var(--display);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 800;
+  font-style: italic;
+  color: var(--petrol);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+section.dark .big-quote { background: rgba(232,64,31,0.08); }
+section.dark .big-quote blockquote { color: var(--cream); }
+.big-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-lt);
+  letter-spacing: 0.06em;
+  font-style: normal;
+}
+section.dark .big-quote cite { color: rgba(242,237,227,0.4); }
+
+/* ─── SITUATION CARDS ─────────────────────────────────────── */
+.sit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 32px 0;
+}
+.sit-card {
+  border: 1px solid var(--cream-dim);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  display: flex; gap: 24px; align-items: flex-start;
+  background: var(--white);
+  transition: box-shadow 0.2s;
+}
+.sit-card:hover { box-shadow: 0 4px 24px rgba(10,31,33,0.06); }
+.sit-big-num {
+  font-family: var(--display);
+  font-size: 64px; font-weight: 900;
+  line-height: 1;
+  color: var(--vermillion);
+  opacity: 0.18;
+  flex-shrink: 0;
+  margin-top: -4px;
+}
+.sit-body strong {
+  display: block;
+  font-size: 16px; font-weight: 700;
+  color: var(--petrol);
+  margin-bottom: 6px;
+}
+.sit-body p { font-size: 14.5px; margin: 0; color: var(--ink-mid); }
+.sit-body .sit-tag {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vermillion);
+  background: var(--verm-dim);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ─── MONO BLOCK (monólogo interno) ──────────────────────── */
+.mono-block {
+  background: var(--petrol);
+  color: var(--cream);
+  border-radius: var(--r-lg);
+  padding: 40px 44px;
+  position: relative;
+  overflow: hidden;
+  margin: 32px 0;
+}
+.mono-block::before {
+  content: '"';
+  position: absolute; top: -16px; right: 20px;
+  font-family: var(--display);
+  font-size: 160px; font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+}
+.mono-block p {
+  font-family: var(--ui);
+  font-size: 17px;
+  font-style: italic;
+  color: rgba(242,237,227,0.85);
+  max-width: none;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* ─── 3 CLAREZAS ──────────────────────────────────────────── */
+.clareza-list {
+  display: flex; flex-direction: column; gap: 12px;
+  margin: 24px 0;
+}
+.clareza-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 22px;
+  background: var(--cream-mid);
+  border-radius: var(--r-md);
+}
+section.dark .clareza-item { background: var(--petrol-lt); }
+.clareza-arrow {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--sinal);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.clareza-item p {
+  font-size: 15px;
+  color: var(--petrol);
+  font-weight: 600;
+  margin: 0; max-width: none;
+}
+section.dark .clareza-item p { color: var(--cream); }
+.clareza-item span {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-lt);
+  margin-top: 3px;
+}
+section.dark .clareza-item span { color: rgba(242,237,227,0.5); }
+
+/* ─── JORNADA BLOCOS ──────────────────────────────────────── */
+.journey-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+.journey-card {
+  background: var(--white);
+  border: 1px solid var(--cream-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+section.dark .journey-card { background: var(--petrol-lt); border-color: rgba(111,181,172,0.15); }
+.jc-header {
+  background: var(--petrol);
+  padding: 14px 20px;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sinal);
+}
+section.dark .jc-header { background: rgba(255,255,255,0.05); }
+.jc-body { padding: 20px; }
+.jc-step {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cream-dim);
+}
+section.dark .jc-step { border-color: rgba(111,181,172,0.1); }
+.jc-step:last-child { border-bottom: none; padding-bottom: 0; }
+.jc-step-num {
+  width: 28px; height: 28px;
+  background: var(--sinal-dim);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 500;
+  color: var(--sinal);
+  flex-shrink: 0;
+}
+.jc-step-label {
+  font-size: 14px; font-weight: 600;
+  color: var(--petrol);
+}
+section.dark .jc-step-label { color: var(--cream); }
+.jc-step-sub {
+  font-size: 12px;
+  color: var(--ink-lt);
+  line-height: 1.4;
+}
+section.dark .jc-step-sub { color: rgba(242,237,227,0.45); }
+
+/* ─── 3 PILARES ───────────────────────────────────────────── */
+.pilares-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+.pilar-card {
+  background: var(--cream-mid);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  border-top: 3px solid var(--vermillion);
+}
+section.dark .pilar-card { background: var(--petrol-lt); }
+.pilar-icon {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+.pilar-num {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--vermillion);
+  margin-bottom: 6px;
+}
+.pilar-card h4 {
+  font-family: var(--display);
+  font-size: 17px; font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--petrol);
+  margin-bottom: 10px;
+}
+section.dark .pilar-card h4 { color: var(--white); }
+.pilar-card ul {
+  list-style: none;
+  padding: 0;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.pilar-card li {
+  font-size: 13px;
+  color: var(--ink-mid);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+section.dark .pilar-card li { color: rgba(242,237,227,0.65); }
+.pilar-card li::before {
+  content: '·';
+  color: var(--sinal);
+  font-size: 16px;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+/* ─── VS TABLE ────────────────────────────────────────────── */
+.vs-wrap {
+  margin: 28px 0;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--cream-dim);
+}
+section.dark .vs-wrap { border-color: rgba(111,181,172,0.15); }
+.vs-table { width: 100%; border-collapse: collapse; }
+.vs-table thead th {
+  padding: 14px 20px;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.vs-table thead th:first-child {
+  background: rgba(232,64,31,0.08);
+  color: var(--vermillion);
+  border-right: 1px solid rgba(232,64,31,0.15);
+}
+.vs-table thead th:last-child {
+  background: rgba(111,181,172,0.08);
+  color: var(--sinal);
+}
+section.dark .vs-table thead th:first-child { background: rgba(232,64,31,0.12); }
+section.dark .vs-table thead th:last-child { background: rgba(111,181,172,0.1); }
+.vs-table tbody tr:nth-child(odd) td { background: rgba(0,0,0,0.02); }
+section.dark .vs-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+.vs-table tbody td {
+  padding: 14px 20px;
+  font-size: 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--cream-dim);
+  line-height: 1.5;
+}
+section.dark .vs-table tbody td { border-color: rgba(111,181,172,0.08); }
+.vs-table tbody td:first-child {
+  color: var(--ink-lt);
+  border-right: 1px solid var(--cream-dim);
+  font-size: 13.5px;
+}
+section.dark .vs-table tbody td:first-child { color: rgba(242,237,227,0.45); border-color: rgba(111,181,172,0.08); }
+.vs-table tbody td:last-child { color: var(--petrol); font-weight: 500; }
+section.dark .vs-table tbody td:last-child { color: var(--cream); }
+.vs-table tbody tr:last-child td { border-bottom: none; }
+
+/* ─── MÓDULO CARDS ────────────────────────────────────────── */
+.modulo-header {
+  background: var(--petrol);
+  padding: 60px 72px 40px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: none;
+}
+.modulo-header::before {
+  content: attr(data-num);
+  position: absolute;
+  right: 40px; top: -10px;
+  font-family: var(--display);
+  font-size: 180px; font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.mod-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sinal);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.mod-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--sinal); }
+.modulo-header h2 {
+  font-family: var(--display);
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  line-height: 1.05;
+  max-width: 600px;
+  position: relative;
+}
+.modulo-header h2 em { font-style: normal; color: var(--vermillion); }
+.modulo-body {
+  padding: 56px 72px;
+  background: var(--cream);
+}
+
+/* ─── CHECKLIST ───────────────────────────────────────────── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 20px 0;
+}
+.checklist li {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 14.5px; color: var(--ink-mid);
+  line-height: 1.55;
+}
+.checklist li::before {
+  content: '→';
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--sinal);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.checklist li strong { color: var(--petrol); }
+
+/* ─── TABLE MINI ──────────────────────────────────────────── */
+.tbl-wrap {
+  margin: 20px 0;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--cream-dim);
+}
+.tbl-mini { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl-mini thead th {
+  background: var(--petrol);
+  color: var(--sinal);
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  text-align: left;
+}
+.tbl-mini tbody tr:nth-child(odd) td { background: rgba(0,0,0,0.02); }
+.tbl-mini tbody td {
+  padding: 11px 16px;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--cream-dim);
+  line-height: 1.45; vertical-align: top;
+}
+.tbl-mini tbody td:first-child { font-weight: 600; color: var(--petrol); }
+.tbl-mini tbody tr:last-child td { border-bottom: none; }
+
+/* ─── DATA ARCH (3 NÍVEIS) ────────────────────────────────── */
+.arch-steps {
+  display: flex; flex-direction: column; gap: 0;
+  margin: 24px 0;
+  border: 1px solid var(--cream-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.arch-step {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--cream-dim);
+}
+.arch-step:last-child { border-bottom: none; }
+.arch-step-num {
+  background: var(--petrol);
+  color: var(--sinal);
+  font-family: var(--display);
+  font-size: 32px; font-weight: 900;
+  min-width: 64px;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
+}
+.arch-step-body {
+  padding: 18px 24px;
+  flex: 1;
+}
+.arch-step-body strong {
+  display: block;
+  font-size: 14px; font-weight: 700;
+  color: var(--petrol);
+  margin-bottom: 4px;
+}
+.arch-step-body p {
+  font-size: 13px;
+  color: var(--ink-lt);
+  margin: 0; max-width: none;
+}
+
+/* ─── GPS / DARK CALLOUT ──────────────────────────────────── */
+.dark-callout {
+  background: var(--petrol);
+  border-radius: var(--r-lg);
+  padding: 36px 40px;
+  margin: 28px 0;
+  position: relative;
+  overflow: hidden;
+}
+.dark-callout::after {
+  content: 'GPS';
+  position: absolute;
+  right: 28px; top: 16px;
+  font-family: var(--display);
+  font-size: 80px; font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  letter-spacing: -0.04em;
+}
+.dark-callout p {
+  color: rgba(242,237,227,0.8);
+  max-width: none;
+  position: relative;
+}
+.dark-callout p strong { color: var(--cream); }
+.dark-callout .pull {
+  font-family: var(--display);
+  font-size: 22px; font-weight: 800;
+  font-style: italic;
+  color: var(--sinal);
+  margin-top: 12px;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+/* ─── NOTA / INSIGHT BOX ──────────────────────────────────── */
+.insight {
+  background: rgba(111,181,172,0.08);
+  border: 1px solid rgba(111,181,172,0.2);
+  border-radius: var(--r-md);
+  padding: 18px 22px;
+  margin: 20px 0;
+}
+.insight p { font-size: 14px; color: var(--petrol); margin: 0; max-width: none; }
+.insight strong { color: var(--petrol); }
+section.dark .insight { background: rgba(111,181,172,0.08); }
+section.dark .insight p { color: var(--cream); }
+
+/* ─── CTA SECTION ─────────────────────────────────────────── */
+.cta-section {
+  background: var(--petrol);
+  padding: 80px 72px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(232,64,31,0.08) 0%, transparent 70%);
+}
+.cta-section .eyebrow { justify-content: center; position: relative; }
+.cta-section h2 {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 18px;
+  position: relative;
+}
+.cta-section h2 em { font-style: normal; color: var(--vermillion); }
+.cta-section p { color: rgba(242,237,227,0.65); position: relative; margin: 0 auto 36px; text-align: center; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--vermillion);
+  color: var(--white);
+  font-family: var(--ui);
+  font-size: 15px; font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 99px;
+  text-decoration: none;
+  position: relative;
+  transition: opacity 0.15s;
+}
+.cta-btn:hover { opacity: 0.88; }
+.cta-note {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(242,237,227,0.3);
+  letter-spacing: 0.06em;
+  position: relative;
+}
+
+/* ─── FOOTER ──────────────────────────────────────────────── */
+footer {
+  background: var(--petrol-mid);
+  padding: 28px 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(111,181,172,0.1);
+}
+.footer-brand {
+  font-family: var(--display);
+  font-size: 16px; font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  display: flex; align-items: center; gap: 6px;
+}
+.footer-brand .ia { color: var(--vermillion); }
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(242,237,227,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .toc { display: none; }
+  .main { margin-left: 0; }
+  section, .cover, .modulo-header, .modulo-body, .cta-section, footer { padding-left: 24px; padding-right: 24px; }
+  .pilares-grid { grid-template-columns: 1fr; }
+  .journey-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── TOPBAR ─── -->
+<header class="topbar">
+  <div class="tb-brand">
+    <div class="dot"></div>
+    <span>markete<span class="ia">ia</span></span>
+  </div>
+  <div class="tb-progress"><div class="tb-progress-bar" id="progress"></div></div>
+  <div class="tb-tag">A Estrutura Digital Ideal</div>
+</header>
+
+<!-- ─── SIDE TOC ─── -->
+<nav class="toc" id="toc">
+  <div class="toc-section">Introdução</div>
+  <a href="#cover">Capa</a>
+  <a href="#intro">Sobre este material</a>
+
+  <div class="toc-section">Diagnóstico</div>
+  <a href="#cap1">Cap 1 · As 3 Situações</a>
+  <a href="#cap2">Cap 2 · A Raiz do Problema</a>
+
+  <div class="toc-section">O Mecanismo</div>
+  <a href="#cap3">Cap 3 · Jornada do Lead</a>
+  <a href="#cap4">Cap 4 · Os 3 Pilares</a>
+
+  <div class="toc-section">A Solução</div>
+  <a href="#cap5">Cap 5 · Atual × Ideal</a>
+
+  <div class="toc-section">Módulos Práticos</div>
+  <a href="#mod1">Módulo 1 · Instagram</a>
+  <a href="#mod2">Módulo 2 · Anúncios</a>
+  <a href="#mod3">Módulo 3 · Públicos</a>
+  <a href="#mod4">Módulo 4 · Funil</a>
+  <a href="#mod5">Módulo 5 · Pré-Qualificação</a>
+  <a href="#mod6">Módulo 6 · Dados Inteligentes</a>
+
+  <div class="toc-section">Próximos Passos</div>
+  <a href="#cta">Comece agora</a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+<!-- ════════════════ COVER ════════════════ -->
+<section class="cover" id="cover" style="border-bottom:none">
+  <div class="cover-eyebrow">marketeia · Material complementar do webinar</div>
+  <h1>A Estrutura<br>Digital <em>Ideal</em></h1>
+  <p class="cover-desc">Por que você investe em anúncios e não tem retorno — e o que muda quando você para de anunciar no escuro e começa a operar com uma estrutura validada para o seu negócio.</p>
+  <div class="cover-pills">
+    <span class="pill">3 Situações de diagnóstico</span>
+    <span class="pill">Jornada do Lead Ideal</span>
+    <span class="pill">3 Pilares da Estrutura</span>
+    <span class="pill">6 Módulos práticos</span>
+    <span class="pill">Checklists de validação</span>
+  </div>
+  <div class="cover-corner">
+    marketeia<br>
+    Estrutura Digital Ideal<br>
+    © 2026
+  </div>
+</section>
+
+<!-- ════════════════ INTRO ════════════════ -->
+<section id="intro">
+  <div class="eyebrow">Antes de começar</div>
+  <h2 class="title">Sobre este material</h2>
+  <p>Este ebook foi criado como material complementar da aula <em>"A Estrutura Digital Ideal"</em>. Aqui você encontra o conteúdo da aula em formato de leitura — com profundidade adicional em cada conceito, checklists práticos e os 6 módulos de aplicação.</p>
+  <p>Se você acabou de assistir à aula, use este material para <strong>fixar e aplicar</strong>. Se está lendo antes da aula, use como mapa para entender o que virá. De qualquer forma, o objetivo é o mesmo: te dar clareza suficiente para identificar onde está o gargalo do seu negócio hoje — e o que fazer com isso a partir de agora.</p>
+
+  <div class="big-quote">
+    <blockquote>"Não é sobre ANUNCIAR. É sobre O QUE e COMO você anuncia."</blockquote>
+    <cite>A Big Ideia que guia tudo neste material</cite>
+  </div>
+
+  <p>Essa frase é o fio condutor. Toda vez que você sentir que perdeu o fio da leitura, volte a ela. Ela resume o diagnóstico, o mecanismo e a solução que você vai encontrar aqui.</p>
+
+  <div class="insight">
+    <p><strong>Como usar:</strong> leia do início ao fim para entender a narrativa completa. Depois, volte aos Módulos Práticos (Caps 6 a 11) e aplique o checklist correspondente ao seu momento atual de negócio.</p>
+  </div>
+</section>
+
+<!-- ════════════════ CAP 1 ════════════════ -->
+<section id="cap1">
+  <span class="ch-num">01</span>
+  <div class="eyebrow">Mecanismo do Problema</div>
+  <h2 class="title">Você se vê em alguma dessas situações?</h2>
+  <p>Antes de falar sobre o que fazer, precisamos identificar <strong>onde você está</strong>. A maioria das pessoas que investe em tráfego pago vive em uma de três situações — e elas são diferentes o suficiente para exigir correções diferentes. Leia com calma e se pergunte: em qual dessas situações eu me reconheço?</p>
+
+  <div class="sit-grid">
+    <div class="sit-card">
+      <div class="sit-big-num">1</div>
+      <div class="sit-body">
+        <strong>Muitos leads, mas desqualificados</strong>
+        <p>Você anuncia, os leads chegam — mas metade nem responde, e quando responde, não é o perfil que fecha com você. Você está pagando para atrair pessoas que não têm intenção real de compra. O anúncio funciona, mas ele está trazendo o público errado, ou o público certo sem filtro suficiente.</p>
+        <span class="sit-tag">Gargalo: Anúncio → Bloco 2</span>
+      </div>
+    </div>
+    <div class="sit-card">
+      <div class="sit-big-num">2</div>
+      <div class="sit-body">
+        <strong>Recebe leads, mas não vira venda</strong>
+        <p>Os leads chegam em um perfil razoável. Mas travam no meio do caminho. A conversa começa, esfria, e você não sabe se o problema é no atendimento, na oferta, no timing ou na comunicação. Você até responde bem — mas algo no percurso do lead não está fechando o ciclo.</p>
+        <span class="sit-tag">Gargalo: Bloco 2 → Bloco 3</span>
+      </div>
+    </div>
+    <div class="sit-card">
+      <div class="sit-big-num">3</div>
+      <div class="sit-body">
+        <strong>Vende, mas fica no zero a zero</strong>
+        <p>Você até vende. Só que no fim do mês, quando olha a planilha, o lucro real não aparece. Você está sustentando o anúncio — não construindo com ele. A operação gira, mas o caixa não cresce. Isso acontece quando não há cruzamento entre métricas de marketing e métricas comerciais reais.</p>
+        <span class="sit-tag">Gargalo: Pós-fechamento — leitura de dado</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="big-quote">
+    <blockquote>"Se você se viu em qualquer uma dessas três, o problema nunca foi falta de tráfego. Foi a ausência de uma Estrutura Digital Ideal."</blockquote>
+  </div>
+
+  <p>Guarde a situação em que você se reconheceu. Ao longo deste material, cada capítulo vai resolver diretamente uma delas — e nos módulos práticos, você vai encontrar o plano de ação específico para o seu caso.</p>
+</section>
+
+<!-- ════════════════ CAP 2 ════════════════ -->
+<section id="cap2" class="dark">
+  <span class="ch-num">02</span>
+  <div class="eyebrow">Quebrando a crença</div>
+  <h2 class="title">A raiz do problema <em>não é</em> o que te disseram</h2>
+
+  <p>O mercado te vendeu uma ideia simples: <strong>"é só fazer tráfego pago que os resultados chegam."</strong> E você seguiu o conselho. Anunciou. Esperou. Contratou agência. Contratou especialista do seu próprio nicho. Trocou de metodologia. Mudou de plataforma.</p>
+  <p>E talvez já tenha chegado nessa conclusão:</p>
+
+  <div class="mono-block">
+    <p>"Será que marketing digital é real mesmo? Acho que isso não funciona para o meu tipo de negócio. Todo mundo fala, mas ninguém entrega resultado de verdade. Acho que é só para quem tem muito dinheiro, ou para quem está num nicho diferente do meu..."</p>
+  </div>
+
+  <p>Esse pensamento é compreensível — e completamente errado na conclusão, mesmo que correto no diagnóstico. <strong>O digital funciona.</strong> O problema é outro.</p>
+
+  <h3 class="sub">O problema real</h3>
+  <p>Ninguém montou para você uma <strong>estrutura digital personalizada</strong> para o seu momento e modelo de negócio. Você recebeu fórmula genérica. E fórmula genérica não serve para um momento específico de negócio.</p>
+  <p>Cada agência que você contratou usou o mesmo playbook para você e para o cliente seguinte — independente do ticket, do nicho, do estágio de crescimento, do comportamento de compra do seu público. Isso gera resultado médio. E resultado médio, para quem está investindo, é resultado negativo.</p>
+
+  <h3 class="sub">O que você realmente precisa</h3>
+  <p>Você precisa de três clarezas que ninguém entregou:</p>
+
+  <div class="clareza-list">
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <p>Clareza sobre <strong>o que anunciar</strong></p>
+        <span>Estrutura de comunicação alinhada à oferta, ao momento e ao público — não criativo improvisado</span>
+      </div>
+    </div>
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <p>Clareza sobre <strong>como posicionar sua oferta</strong></p>
+        <span>Alinhamento entre mensagem, funil e estágio de crença do lead — não promessa genérica de resultado</span>
+      </div>
+    </div>
+    <div class="clareza-item">
+      <div class="clareza-arrow">→</div>
+      <div>
+        <p>Clareza sobre <strong>qual é o próximo passo do seu cliente</strong></p>
+        <span>Jornada de blocos validada para o seu modelo de negócio — não funil copiado de outro nicho</span>
+      </div>
+    </div>
+  </div>
+
+  <p>Essas três clarezas não são teoria. Elas são os três blocos que sustentam o que chamamos de <strong>Estrutura Digital Ideal</strong> — e é isso que o próximo capítulo vai revelar em detalhe.</p>
+</section>
+
+<!-- ════════════════ CAP 3 ════════════════ -->
+<section id="cap3">
+  <span class="ch-num">03</span>
+  <div class="eyebrow">Mecanismo da Função</div>
+  <h2 class="title">A Jornada do Lead Ideal — o detalhe que separa quem tem resultado de quem não tem</h2>
+
+  <p>Não é o orçamento que separa quem tem resultado com tráfego pago de quem não tem. Não é o nicho. Não é a plataforma. É a <strong>Jornada do Lead Ideal</strong>: a sequência de blocos que o seu lead percorre desde o primeiro contato até o fechamento.</p>
+  <p>Cada bloco dessa sequência tem uma estrutura própria de elementos que precisa ser validada. Quando esses blocos estão alinhados entre si — comunicação, funil de marketing, funil de vendas e estratégia — o resultado muda em dias, não em meses.</p>
+
+  <h3 class="sub">Os dois formatos da jornada</h3>
+  <p>Existem dois formatos principais da Jornada do Lead Ideal. A escolha entre eles depende do ticket do seu produto/serviço e da complexidade da decisão de compra:</p>
+
+  <div class="journey-grid">
+    <div class="journey-card">
+      <div class="jc-header">Formato A — Atendimento Consultivo</div>
+      <div class="jc-body">
+        <div class="jc-step">
+          <div class="jc-step-num">1</div>
+          <div>
+            <div class="jc-step-label">Anúncio</div>
+            <div class="jc-step-sub">Hook de dor + mini-revelação de mecanismo</div>
+          </div>
+        </div>
+        <div class="jc-step">
+          <div class="jc-step-num">2</div>
+          <div>
+            <div class="jc-step-label">WhatsApp</div>
+            <div class="jc-step-sub">Atendimento com roteiro validado</div>
+          </div>
+        </div>
+        <div class="jc-step">
+          <div class="jc-step-num">3</div>
+          <div>
+            <div class="jc-step-label">Fechamento</div>
+            <div class="jc-step-sub">Proposta + objeções + decisão</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-card">
+      <div class="jc-header">Formato B — Autoexplicativo</div>
+      <div class="jc-body">
+        <div class="jc-step">
+          <div class="jc-step-num">1</div>
+          <div>
+            <div class="jc-step-label">Anúncio</div>
+            <div class="jc-step-sub">Hook de dor + mini-revelação de mecanismo</div>
+          </div>
+        </div>
+        <div class="jc-step">
+          <div class="jc-step-num">2</div>
+          <div>
+            <div class="jc-step-label">Página de Vendas</div>
+            <div class="jc-step-sub">VSL ou página de captura / checkout</div>
+          </div>
+        </div>
+        <div class="jc-step">
+          <div class="jc-step-num">3</div>
+          <div>
+            <div class="jc-step-label">Captação / Checkout</div>
+            <div class="jc-step-sub">Formulário ou compra direta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <p><strong>Como escolher:</strong> use o Formato A quando a venda precisa de atendimento humano (ticket alto, decisão consultiva, serviço). Use o Formato B quando a oferta é autoexplicativa e a decisão pode ser feita sem contato humano (produto, infoproduto, ticket médio/baixo).</p>
+  </div>
+
+  <h3 class="sub">O bloco invisível: o perfil do Instagram</h3>
+  <p>Existe um bloco extra que a maioria das estratégias ignora. Ele fica entre o Anúncio e o Bloco 2 — e é onde o lead <strong>"confere se é confiável"</strong> antes de dar o próximo passo.</p>
+  <p>É o perfil do Instagram. Se ele não comunica autoridade, prova social e clareza sobre a oferta, o lead para ali. Você pagou para trazer essa pessoa até a porta — e ela não entrou. O perfil é um bloco da jornada, não um cartão de visita estático.</p>
+
+  <h3 class="sub">O princípio que une tudo</h3>
+  <p>Para cada transição entre blocos, existe uma pergunta crítica: <em>"o que o lead precisa ver, sentir ou saber para dar esse próximo passo — e isso está explícito?"</em></p>
+  <p>Quando a resposta é não, o lead para. Ele não vai te mandar uma mensagem dizendo que parou. Ele simplesmente para. E você nunca sabe onde foi o buraco.</p>
+  <p>A Estrutura Digital Ideal mapa e valida cada uma dessas transições. É isso que muda o resultado em dias.</p>
+</section>
+
+<!-- ════════════════ CAP 4 ════════════════ -->
+<section id="cap4" class="dark">
+  <span class="ch-num">04</span>
+  <div class="eyebrow">Os 3 Pilares</div>
+  <h2 class="title">A Estrutura Digital Ideal é construída em <em>3 Pilares</em></h2>
+  <p>Cada pilar resolve diretamente uma das 3 Situações de diagnóstico. Juntos, eles formam a espinha dorsal da Estrutura Digital Ideal.</p>
+
+  <div class="pilares-grid">
+    <div class="pilar-card">
+      <div class="pilar-num">Pilar 01 · Situação 1</div>
+      <h4>Gestão Estratégica de Tráfego Pago</h4>
+      <ul>
+        <li>Decisão estratégica sobre o que vai ser anunciado</li>
+        <li>Qual público, em qual etapa do funil</li>
+        <li>Qual objetivo de campanha, com qual criativo</li>
+        <li>Mapeamento de públicos compradores reais</li>
+      </ul>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">Pilar 02 · Situação 2</div>
+      <h4>Funil & Comunicação Alinhados</h4>
+      <ul>
+        <li>Cada estímulo feito sob medida para o momento do lead</li>
+        <li>Funil adaptado ao modelo e momento do negócio</li>
+        <li>Roteiros validados de anúncio e atendimento</li>
+        <li>Comunicação interna (remarketing) e externa (aquisição)</li>
+      </ul>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">Pilar 03 · Situação 3</div>
+      <h4>Decisão por Métricas Reais</h4>
+      <ul>
+        <li>Cruzamento de métricas de marketing + comerciais</li>
+        <li>Relatórios ao vivo — não só CPL, mas lucro real por cliente</li>
+        <li>Identificação do que cortar, o que manter, o que escalar</li>
+        <li>Dados inteligentes alimentando de volta o sistema de mídia</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">Por que os 3 pilares precisam funcionar juntos</h3>
+  <p>Cada pilar isola uma variável. Mas o resultado real aparece quando os três estão alinhados. Você pode ter o melhor tráfego do mundo (Pilar 1), mas se o funil não converte (Pilar 2), você só vai trazer mais lead para um buraco. E mesmo que o funil converta, sem métricas reais (Pilar 3) você não sabe o que escalar — e vai desperdiçar o que estava funcionando.</p>
+
+  <div class="dark-callout">
+    <p>É como operar com um <strong>GPS em tempo real</strong> em vez de adivinhar o caminho. O GPS não te diz onde ir — você decide o destino. Mas ele mostra, ao vivo, o melhor caminho, os obstáculos à frente e como recalcular quando algo muda.</p>
+    <div class="pull">"Isso não é sobre tentar mais. É sobre saber exatamente o que está funcionando."</div>
+  </div>
+</section>
+
+<!-- ════════════════ CAP 5 ════════════════ -->
+<section id="cap5">
+  <span class="ch-num">05</span>
+  <div class="eyebrow">Mecanismo da Solução</div>
+  <h2 class="title">Estrutura Atual × <em>Estrutura Digital Ideal</em></h2>
+  <p>A tabela abaixo não é para criticar o mercado. É para te dar clareza visual sobre a distância entre o que você provavelmente tem hoje e o que uma estrutura validada entrega. Identifique em qual coluna você está operando agora.</p>
+
+  <div class="vs-wrap">
+    <table class="vs-table">
+      <thead>
+        <tr>
+          <th>Estrutura ATUAL (o que o mercado entrega)</th>
+          <th>Estrutura Digital IDEAL (o que muda o jogo)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Cria campanha, roda anúncio e espera pra ver"</td>
+          <td>Decisão estratégica documentada antes de cada real investido</td>
+        </tr>
+        <tr>
+          <td>"Por que estamos com esse resultado? — Depende de xyz"</td>
+          <td>Relatório ao vivo, causa identificada em tempo real</td>
+        </tr>
+        <tr>
+          <td>Metodologia genérica, igual pra qualquer cliente</td>
+          <td>Metodologia adaptada ao momento e modelo do negócio</td>
+        </tr>
+        <tr>
+          <td>Comunicação desconectada da jornada do público</td>
+          <td>Cada bloco da jornada do lead mapeado e validado</td>
+        </tr>
+        <tr>
+          <td>Decisão no "achismo" — sem dado comercial</td>
+          <td>Decisão cruzando métricas de marketing + comerciais</td>
+        </tr>
+        <tr>
+          <td>Roteiros de anúncio improvisados a cada campanha</td>
+          <td>Roteiros validados e atualizados continuamente</td>
+        </tr>
+        <tr>
+          <td>Lead que chega ao atendimento sem filtro</td>
+          <td>Funil de pré-qualificação que filtra antes do contato</td>
+        </tr>
+        <tr>
+          <td>Pixel alimentado com clique bruto</td>
+          <td>Sistema alimentado com dado real de comprador qualificado</td>
+        </tr>
+        <tr>
+          <td>Nenhum critério claro para escalar ou cortar</td>
+          <td>Critério objetivo: escala o que lucra, corta o que drena</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Não é sobre anunciar mais. É sobre sair da coluna esquerda e entrar na coluna direita. E isso — a partir de uma estrutura validada — é possível em até 7 dias de implementação.</p>
+
+  <div class="big-quote">
+    <blockquote>"Nos primeiros 7 dias de implementação, você já começa a ver sinais claros: leads mais qualificados chegando, mais conversões acontecendo, mais clareza sobre o que funciona."</blockquote>
+  </div>
+</section>
+
+<!-- ════════════════ MÓDULO 1 ════════════════ -->
+<div id="mod1" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="01">
+  <div class="mod-eyebrow">Módulo 01 · Instagram</div>
+  <h2>"Transforme rapidamente visitantes do seu<br>perfil de Instagram <em>em compradores</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> o perfil do Instagram não é cartão de visita — é um bloco extra na Jornada do Lead Ideal. Ele fica entre o Anúncio e o Bloco 2 (WhatsApp ou Página). É onde o lead "confere se é confiável" antes de avançar. Um perfil que não converte anula o investimento em tráfego.</p>
+
+  <h3 class="sub">Os 3 blocos internos do perfil ideal</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Bloco do perfil</th><th>Função</th><th>Pergunta que precisa responder</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Entrada — Foto, bio, destaques</td>
+          <td>Conscientização imediata</td>
+          <td>"O que é isso, é pra mim, por que eu confiaria?"</td>
+        </tr>
+        <tr>
+          <td>Prova — Feed, grid, posicionamento</td>
+          <td>Autoridade e prova social</td>
+          <td>"Esse perfil entrega o que promete?"</td>
+        </tr>
+        <tr>
+          <td>Conversão — Stories, link, CTA fixo</td>
+          <td>Condução ao próximo passo</td>
+          <td>"Qual é a ação clara que devo tomar agora?"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Conteúdo de Aquisição vs Conteúdo de Distribuição</h3>
+  <p><strong>Conteúdo de Aquisição</strong> (= Comunicação Externa, tráfego frio): feito para quem ainda não conhece o perfil. Objetivo: parar o scroll e gerar reconhecimento. Formatos: Reels com hook de dor, conteúdo educativo de topo, as 3 Situações em vídeo curto.</p>
+  <p><strong>Conteúdo de Distribuição</strong> (= Comunicação Interna, remarketing): feito para quem já segue ou engajou. Objetivo: aprofundar confiança e conduzir ao próximo bloco. Formatos: Stories com link, bastidores, prova social, cases, contagem regressiva.</p>
+  <div class="insight">
+    <p><strong>Regra prática:</strong> se o seu perfil só tem um dos dois tipos de conteúdo, você tem um buraco na jornada. Pergunte: dos últimos 12 posts, quantos atraem novos públicos e quantos convertem quem já está olhando?</p>
+  </div>
+
+  <h3 class="sub">Checklist de auditoria do perfil</h3>
+  <ul class="checklist">
+    <li>A bio responde <strong>"o que / pra quem / por quê"</strong> em até 3 linhas?</li>
+    <li>Os destaques cobrem <strong>prova social</strong>, dúvidas frequentes e autoridade?</li>
+    <li>Os últimos 9 posts do grid comunicam posicionamento ou são aleatórios?</li>
+    <li>Existe <strong>CTA fixo e óbvio</strong> para o próximo bloco da jornada (link, WhatsApp, "manda DM")?</li>
+    <li>A proporção de conteúdo de aquisição e distribuição está equilibrada?</li>
+    <li>O visitante consegue entender em menos de 5 segundos o que você faz e para quem?</li>
+  </ul>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 2 ════════════════ -->
+<div id="mod2" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="02">
+  <div class="mod-eyebrow">Módulo 02 · Anúncios</div>
+  <h2>"Como produzir anúncios que geram<br>leads qualificados <em>e vendas</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> o anúncio é o Bloco 1 de toda jornada. A falha mais comum não está no criativo em si — está no desalinhamento entre o que o anúncio promete e o que o próximo bloco entrega. O anúncio não precisa vender: precisa filtrar, aquecer e conduzir.</p>
+
+  <h3 class="sub">Arquitetura do anúncio que converte</h3>
+  <p>Todo anúncio que converte é uma versão comprimida da aula. Três etapas, em 30–60 segundos:</p>
+  <ul class="checklist">
+    <li><strong>Identificação (hook — 3 a 5 seg):</strong> atacar uma das 3 Situações. O lead precisa pensar "isso é sobre mim" nos primeiros 3 segundos ou vai embora.</li>
+    <li><strong>Mini-revelação de mecanismo (corpo — 15 a 30 seg):</strong> dar uma informação que o lead não tinha, que justifica clicar. Não prometer resultado — revelar o porquê.</li>
+    <li><strong>Promessa de estrutura (CTA — 5 seg):</strong> próximo passo claro, sem superpromessa genérica. "Descubra onde está o buraco na sua jornada" converte mais que "aprenda a ter resultado com tráfego".</li>
+  </ul>
+
+  <h3 class="sub">Mapeamento de anúncios validados — Matriz 3×3</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Situação atacada</th><th>Pilar que resolve</th><th>Ângulo do criativo</th></tr></thead>
+      <tbody>
+        <tr><td>Situação 1 — Leads desqualificados</td><td>Pilar 1 — Gestão de Tráfego</td><td>Hook sobre "tráfego que não filtra o perfil certo"</td></tr>
+        <tr><td>Situação 2 — Não fecha</td><td>Pilar 2 — Funil & Comunicação</td><td>Hook sobre "lead que esfria no meio do caminho"</td></tr>
+        <tr><td>Situação 3 — Zero a zero</td><td>Pilar 3 — Métricas</td><td>Hook sobre "vender e não ver o lucro aparecer"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <p><strong>Diagnóstico rápido da sua biblioteca de criativos:</strong> mapeie seus anúncios ativos nessa matriz. Buraco numa linha = buraco na comunicação. Se todos os criativos atacam a mesma Situação, você está ignorando dois terços do público que poderia converter.</p>
+  </div>
+
+  <h3 class="sub">Checklist de validação de estrutura de anúncio</h3>
+  <ul class="checklist">
+    <li>Qual Situação esse anúncio ataca? (se "nenhuma específica", é genérico demais)</li>
+    <li>Para qual bloco da jornada ele direciona o clique? (WhatsApp, perfil, página de vendas)</li>
+    <li>Ele entrega uma <strong>mini-revelação de mecanismo</strong>, ou só promete resultado?</li>
+    <li>A oferta no final está alinhada ao pilar que o hook prometeu resolver?</li>
+    <li>O hook para o scroll nos primeiros 3 segundos — ou começa com apresentação?</li>
+    <li>O CTA é específico e conduz claramente ao próximo bloco, sem ambiguidade?</li>
+  </ul>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 3 ════════════════ -->
+<div id="mod3" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="03">
+  <div class="mod-eyebrow">Módulo 03 · Públicos</div>
+  <h2>"Segmentações Precisas de<br><em>Públicos Qualificados</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> segmentação não é só demografia e interesse. É estágio de crença. Cada público está em um ponto diferente da jornada — e o criativo certo para cada um é diferente. Testar público sem considerar estágio de crença é testar a variável errada.</p>
+
+  <h3 class="sub">Segmentação por temperatura de crença</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Temperatura</th><th>Comportamento</th><th>Crença atual</th><th>Criativo ideal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Frio</td>
+          <td>Nunca interagiu com seu perfil</td>
+          <td>"Basta anunciar e os resultados chegam"</td>
+          <td>Quebra de crença — Cap 2 desta aula em formato de anúncio</td>
+        </tr>
+        <tr>
+          <td>Morno</td>
+          <td>Engajou, visitou, mas não avançou</td>
+          <td>Desconfia que falta algo, não sabe o quê</td>
+          <td>Mecanismo da função — Jornada do Lead Ideal em 60 segundos</td>
+        </tr>
+        <tr>
+          <td>Quente</td>
+          <td>Chegou ao contato/checkout mas não fechou</td>
+          <td>Sabe o problema, precisa de prova final</td>
+          <td>Tabela Atual × Ideal + prova de autoridade + escassez</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <p><strong>O que isso muda na prática:</strong> você para de fazer "teste de público" e começa a fazer <strong>teste de estágio de crença</strong>. Isso dá critério para saber se a ineficiência está no público (segmentação errada) ou na mensagem (qual bloco da narrativa o lead ainda não ouviu).</p>
+  </div>
+
+  <h3 class="sub">Como alimentar o Facebook com dados inteligentes de públicos</h3>
+  <p>A diferença entre "público de lead" e "público de comprador qualificado" está em <strong>qual evento você manda para o Pixel/CAPI</strong>. Isso é o Pilar 3 aplicado à otimização de campanha:</p>
+  <ul class="checklist">
+    <li>Não otimize só por "Lead" genérico — isso alimenta o algoritmo com Situação 1 e ele traz mais do mesmo.</li>
+    <li>Crie um evento de <strong>qualificação real</strong> (lead que respondeu, que teve reunião marcada, que fechou) disparado via CRM/CAPI server-side.</li>
+    <li>Use <strong>esse evento</strong> como público-fonte de Lookalike — não o clique bruto.</li>
+    <li>Públicos de <strong>clientes que compraram</strong> (dado comercial, não só métrica de marketing) geram Lookalike muito mais próximo da Situação resolvida.</li>
+  </ul>
+
+  <h3 class="sub">Mapeamento de públicos compradores</h3>
+  <ul class="checklist">
+    <li>Você tem um público de <strong>clientes que fecharam</strong> salvo como fonte de Lookalike?</li>
+    <li>Existe distinção entre público de "lead que chegou" e público de "lead que qualificou"?</li>
+    <li>Os criativos de remarketing (público morno/quente) são diferentes dos criativos de topo?</li>
+    <li>Você sabe qual anúncio gerou o cliente com maior LTV (não só o cliente com menor CAC)?</li>
+  </ul>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 4 ════════════════ -->
+<div id="mod4" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="04">
+  <div class="mod-eyebrow">Módulo 04 · Funil</div>
+  <h2>"Funil de Venda e<br><em>Jornada do Lead</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> o funil não é genérico. Ele é escolhido para o momento e o modelo do negócio. A jornada de blocos é a espinha dorsal da Estrutura Digital Ideal — e identificar onde a jornada quebra é o primeiro passo para corrigir.</p>
+
+  <h3 class="sub">Desenvolvimento de funil para o momento e modelo do negócio</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Formato</th><th>Quando usar</th><th>Critério decisivo</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Anúncio → WhatsApp → Fechamento</td>
+          <td>Venda consultiva, ticket alto, decisão longa</td>
+          <td>Serviço, alto contato humano necessário para fechar</td>
+        </tr>
+        <tr>
+          <td>Anúncio → Página de Vendas → Checkout</td>
+          <td>Oferta autoexplicativa, ticket médio/baixo</td>
+          <td>Produto, infoproduto, decisão autônoma do lead</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Identificação de gargalos por taxa de conversão</h3>
+  <p>Use esse diagnóstico para identificar onde o seu funil quebra. Cada bloco tem uma taxa. A taxa baixa indica onde está o gargalo:</p>
+  <ul class="checklist">
+    <li><strong>Anúncio → Clique/Contato:</strong> taxa baixa = problema de criativo ou segmentação (Pilar 1)</li>
+    <li><strong>Contato → Resposta/Engajamento:</strong> taxa baixa = problema de atendimento ou comunicação (Pilar 2, Situação 2)</li>
+    <li><strong>Resposta → Fechamento:</strong> taxa baixa = problema de oferta, funil ou objeção não tratada (Pilar 2)</li>
+    <li><strong>Fechamento → Lucro real:</strong> vende mas não sobra = problema de leitura de métrica ou custo invisível (Pilar 3, Situação 3)</li>
+  </ul>
+
+  <div class="insight">
+    <p><strong>Diagnóstico prático:</strong> cada cliente seu, auditado nessa sequência de taxas, vai "cair" claramente em uma das 3 Situações. Isso vira automaticamente o roteiro de correção — sem achismo, sem "vamos analisar".</p>
+  </div>
+
+  <h3 class="sub">Checklist de condução eficiente da jornada</h3>
+  <ul class="checklist">
+    <li>O anúncio filtra o perfil certo e promete exatamente o que o próximo bloco entrega?</li>
+    <li>O perfil do Instagram (bloco extra) confirma autoridade antes de o lead avançar?</li>
+    <li>O WhatsApp ou a página de vendas <strong>continua a narrativa</strong> sem quebrar o fio do anúncio?</li>
+    <li>O atendimento tem roteiro alinhado à dor da Situação que o criativo atacou?</li>
+    <li>Existe um passo claro de fechamento, sem ambiguidade para o lead?</li>
+    <li>Você consegue medir a taxa de conversão de cada transição entre blocos?</li>
+  </ul>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 5 ════════════════ -->
+<div id="mod5" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="05">
+  <div class="mod-eyebrow">Módulo 05 · Pré-Qualificação</div>
+  <h2>"Funil de Pré-Qualificação<br><em>Inteligente de Lead</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> a Situação 1 (leads desqualificados) pode ser tratada em dois momentos: depois que o lead chega ao atendimento (pela segmentação do anúncio) ou antes, com um filtro que protege o Bloco 2 de ser inundado por quem não tem perfil real de compra.</p>
+  <p>O funil de pré-qualificação é esse filtro. Ele não substitui a segmentação — ele é a camada adicional que garante que o atendimento receba apenas leads com intenção e perfil validados.</p>
+
+  <h3 class="sub">Formatos de pré-qualificação</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Formato</th><th>Função</th><th>Quando usar</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Quiz de diagnóstico</td>
+          <td>Lead se autodiagnostica em uma das 3 Situações — chega ao Bloco 2 já consciente e aquecido</td>
+          <td>Serviços, consultoria — quando o lead precisa de conscientização antes do fechamento</td>
+        </tr>
+        <tr>
+          <td>Formulário de pré-qualificação</td>
+          <td>Filtra orçamento, momento de negócio e intenção real — descarta quem não tem perfil</td>
+          <td>Ticket alto, agenda limitada, baixa tolerância a reuniões sem resultado</td>
+        </tr>
+        <tr>
+          <td>Página de captura + VSL curta</td>
+          <td>Apresenta o mecanismo antes da oferta — filtra quem não tem interesse real pelo tema</td>
+          <td>Oferta mais complexa, ou quando o lead precisa de mais contexto antes do contato</td>
+        </tr>
+        <tr>
+          <td>Sequência WhatsApp pré-atendimento</td>
+          <td>Entrega conteúdo que responde objeções comuns antes da conversa de venda</td>
+          <td>Ciclo de venda longo, produto que exige comparação ou reflexão</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">O quiz alinhado à Big Ideia — estrutura</h3>
+  <p>Um quiz de pré-qualificação não é "pesquisa de perfil". É o <strong>Bloco 2 da aula em miniatura</strong>. O lead faz o quiz, se autodiagnostica em uma das 3 Situações, e recebe ao final:</p>
+  <ul class="checklist">
+    <li>Um <strong>diagnóstico nomeado</strong> ("Você está na Situação 2 — o gargalo está na transição para o fechamento")</li>
+    <li>Um <strong>próximo passo claro</strong> (agendar consulta, acessar material específico, iniciar contato)</li>
+    <li>Uma <strong>mini-introdução ao mecanismo</strong> da função — preparando o lead para a conversa de venda</li>
+  </ul>
+
+  <div class="insight">
+    <p><strong>Resultado prático:</strong> o lead que passa pelo quiz chega ao atendimento já sabendo em qual Situação está, já com vocabulário do problema nomeado, e já com curiosidade ativa sobre a solução. A conversa de venda começa em outro nível.</p>
+  </div>
+
+  <h3 class="sub">Checklist de pré-qualificação</h3>
+  <ul class="checklist">
+    <li>O formulário/quiz tem 5–7 perguntas no máximo? (acima disso, a taxa de abandono aumenta significativamente)</li>
+    <li>Pelo menos uma pergunta filtra orçamento ou intenção de investimento?</li>
+    <li>O lead recebe <strong>feedback personalizado</strong> ao final, não uma resposta genérica?</li>
+    <li>O próximo passo após o quiz é claro e alinhado ao estágio de crença do lead?</li>
+    <li>Os leads desqualificados têm um <strong>caminho alternativo de nutrição</strong> em vez de serem descartados?</li>
+    <li>O quiz está integrado com o CRM ou com a ferramenta de atendimento para que o vendedor veja as respostas antes do contato?</li>
+  </ul>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 6 ════════════════ -->
+<div id="mod6" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="06">
+  <div class="mod-eyebrow">Módulo 06 · Dados Inteligentes</div>
+  <h2>"Alimente seu sistema com<br><em>dados inteligentes</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> o Pilar 3 (Decisão por Métricas Reais) não termina nos relatórios. Ele fecha o ciclo quando os dados comerciais reais voltam a alimentar o sistema de mídia. É o loop entre marketing e resultado de negócio — e a maioria das operações nunca fecha esse loop.</p>
+
+  <h3 class="sub">O problema do dado errado no sistema</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>O que está sendo enviado</th><th>O que o algoritmo aprende</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Clique no link do anúncio</td>
+          <td>"Trazer mais pessoas que clicam"</td>
+          <td>Volume, sem qualidade — Situação 1 se instala</td>
+        </tr>
+        <tr>
+          <td>Mensagem iniciada no WhatsApp</td>
+          <td>"Trazer mais pessoas que mandam mensagem"</td>
+          <td>Inclui curiosos sem intenção real de compra</td>
+        </tr>
+        <tr>
+          <td>Qualquer formulário preenchido</td>
+          <td>"Trazer mais preenchimentos"</td>
+          <td>Volume inflado de leads frios</td>
+        </tr>
+        <tr>
+          <td><strong>Compra confirmada + perfil de cliente real</strong></td>
+          <td>"Trazer mais parecidos com quem comprou"</td>
+          <td>Lookalike real — fecha o loop do Pilar 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Arquitetura de dados — 3 níveis</h3>
+  <div class="arch-steps">
+    <div class="arch-step">
+      <div class="arch-step-num">1</div>
+      <div class="arch-step-body">
+        <strong>Pixel básico + eventos padrão</strong>
+        <p>PageView, ViewContent, Lead, Purchase configurados no Pixel. Ponto de partida mínimo — garante que o algoritmo não trabalhe completamente às cegas. A maioria das operações está aqui e acha que está no nível 3.</p>
+      </div>
+    </div>
+    <div class="arch-step">
+      <div class="arch-step-num">2</div>
+      <div class="arch-step-body">
+        <strong>Eventos customizados de qualificação</strong>
+        <p>Criar evento "LeadQualificado" disparado somente quando o atendimento confirma que o lead tem perfil. Criar "ReuniaoMarcada" como sinal de intenção real. Criar "VendaFechada" com valor real de LTV — não só ticket de entrada.</p>
+      </div>
+    </div>
+    <div class="arch-step">
+      <div class="arch-step-num">3</div>
+      <div class="arch-step-body">
+        <strong>CAPI server-side + cruzamento comercial</strong>
+        <p>Eventos via API de Conversões eliminam perda de dado por iOS e bloqueadores. CRM integrado com o gestor de tráfego. Lookalike construído a partir de compradores reais — não de cliques. O cliente que mais voltou e indicou alimenta o próximo ciclo de aquisição.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">O relatório que fecha o loop</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-mini">
+      <thead><tr><th>Métrica de marketing</th><th>Métrica comercial</th><th>Decisão que gera</th></tr></thead>
+      <tbody>
+        <tr><td>CPL (custo por lead)</td><td>Taxa de qualificação do lead</td><td>CPL qualificado real — não o custo do clique</td></tr>
+        <tr><td>CTR do anúncio</td><td>Taxa de abertura/resposta no atendimento</td><td>Onde o funil perde: na comunicação ou no atendimento?</td></tr>
+        <tr><td>Frequência do anúncio</td><td>Taxa de esfriamento de lead</td><td>O anúncio está saturando antes do lead fechar?</td></tr>
+        <tr><td>ROAS</td><td>Margem real por cliente</td><td>Você está escalando o lucrativo ou só o que mais vende?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Checklist de dados inteligentes</h3>
+  <ul class="checklist">
+    <li>Os eventos do Pixel refletem ações reais de qualificação, não só cliques?</li>
+    <li>Existe um evento "LeadQualificado" <strong>separado</strong> do evento "LeadGerado"?</li>
+    <li>A API de Conversões (CAPI) está ativa e passando eventos server-side?</li>
+    <li>O gestor de tráfego tem acesso a <strong>dados comerciais</strong> (quem fechou, quem não fechou, por quê)?</li>
+    <li>Os Lookalike de otimização são baseados em compradores reais ou em cliques?</li>
+    <li>Existe relatório semanal cruzando CPL com taxa de fechamento comercial?</li>
+  </ul>
+
+  <div class="dark-callout">
+    <p>Quando você fecha esse loop — dado comercial alimentando de volta o sistema de mídia — o algoritmo começa a trabalhar <strong>para o seu objetivo real</strong>, não para o objetivo do clique. Esse é o diferencial que o Pilar 3 promete e que quase ninguém entrega.</p>
+    <div class="pull">"Sair do escuro e ter um mapa claro do retorno sobre cada real investido."</div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════ CTA ════════════════ -->
+<section class="cta-section" id="cta" style="border-bottom:none">
+  <div class="eyebrow">Próximos passos</div>
+  <h2>A Estrutura Digital Ideal<br><em>trabalhando para você</em></h2>
+  <p>Você agora sabe o diagnóstico, o mecanismo e a estrutura. O próximo passo é a implementação — e ela começa em 7 dias.</p>
+  <a href="#" class="cta-btn">
+    <span>Quero a minha Estrutura Digital Ideal</span>
+    <span>→</span>
+  </a>
+  <div class="cta-note">7 dias de experiência · sem compromisso de longo prazo · vagas limitadas</div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-brand">
+    <div style="width:6px;height:6px;background:var(--vermillion);border-radius:50%"></div>
+    markete<span class="ia">ia</span>
+  </div>
+  <div class="footer-copy">A Estrutura Digital Ideal · Material complementar do webinar · © 2026</div>
+</footer>
+
+</div><!-- /main -->
+
+<script>
+// Progress bar
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  bar.style.width = Math.min(pct, 100) + '%';
+});
+
+// TOC active state
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.toc a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-52px 0px -60% 0px', threshold: 0 });
+sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
