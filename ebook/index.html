@@ -815,6 +815,133 @@ footer {
   letter-spacing: 0.08em;
 }
 
+/* ─── CAMPANHA COMPONENTS ─────────────────────────────────── */
+.camp-block {
+  margin: 28px 0;
+  border: 1px solid var(--cream-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.camp-block-header {
+  background: var(--petrol);
+  padding: 20px 28px;
+  display: flex; align-items: center; gap: 16px;
+}
+.camp-emoji { font-size: 22px; flex-shrink: 0; }
+.camp-block-header h4 {
+  font-family: var(--display);
+  font-size: 17px; font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin: 0; line-height: 1.2;
+}
+.camp-sub {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sinal);
+  display: block; margin-top: 4px;
+}
+.camp-block-body { padding: 28px 32px; background: var(--white); }
+.camp-block-body p { max-width: none; }
+
+.obj-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 10px; margin: 16px 0;
+}
+.obj-pill {
+  border: 1.5px solid var(--cream-dim);
+  border-radius: var(--r-md);
+  padding: 16px 10px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--petrol);
+  background: var(--cream);
+}
+.obj-pill .obj-icon { font-size: 20px; display: block; margin-bottom: 8px; }
+
+.camp-when {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: var(--sinal-dim);
+  border-radius: var(--r-sm);
+  margin: 20px 0 10px;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sinal);
+}
+.camp-when::before {
+  content: ''; display: block;
+  width: 14px; height: 1px; background: var(--sinal); flex-shrink: 0;
+}
+
+.aud-list { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+.aud-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px;
+  background: var(--cream);
+  border-radius: var(--r-sm);
+  border-left: 3px solid var(--sinal);
+}
+.aud-num {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  color: var(--sinal); letter-spacing: 0.06em;
+  flex-shrink: 0; min-width: 32px; margin-top: 1px;
+}
+.aud-text { font-size: 13.5px; color: var(--ink-mid); line-height: 1.5; }
+.aud-text strong { color: var(--petrol); }
+
+.obs-box {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: rgba(232,64,31,0.05);
+  border: 1px solid rgba(232,64,31,0.15);
+  border-radius: var(--r-md);
+  padding: 14px 18px; margin: 16px 0;
+}
+.obs-badge {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--vermillion); background: var(--verm-dim);
+  padding: 3px 8px; border-radius: 4px;
+  flex-shrink: 0; white-space: nowrap; margin-top: 2px;
+}
+.obs-box p { font-size: 13.5px; color: var(--ink-mid); margin: 0; max-width: none; line-height: 1.5; }
+.obs-box p strong { color: var(--petrol); }
+
+.global-obs-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin: 24px 0;
+}
+.global-obs {
+  background: var(--petrol);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  position: relative; overflow: hidden;
+}
+.global-obs-bg {
+  position: absolute; right: 16px; top: -8px;
+  font-family: var(--display); font-size: 100px; font-weight: 900;
+  color: rgba(255,255,255,0.04); line-height: 1;
+  pointer-events: none; user-select: none;
+}
+.global-obs h5 {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--sinal);
+  margin-bottom: 12px; position: relative;
+}
+.global-obs p {
+  font-size: 14px; color: rgba(242,237,227,0.75);
+  margin: 0; max-width: none; position: relative; line-height: 1.65;
+}
+.global-obs p strong { color: var(--cream); }
+.global-obs code {
+  font-family: var(--mono); font-size: 12px;
+  background: rgba(111,181,172,0.15); color: var(--sinal);
+  padding: 2px 6px; border-radius: 4px;
+}
+
 /* ─── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .toc { display: none; }
@@ -822,6 +949,9 @@ footer {
   section, .cover, .modulo-header, .modulo-body, .cta-section, footer { padding-left: 24px; padding-right: 24px; }
   .pilares-grid { grid-template-columns: 1fr; }
   .journey-grid { grid-template-columns: 1fr; }
+  .obj-grid { grid-template-columns: repeat(2, 1fr); }
+  .global-obs-grid { grid-template-columns: 1fr; }
+  .camp-block-body { padding: 20px 20px; }
 }
 </style>
 </head>
@@ -861,6 +991,7 @@ footer {
   <a href="#mod4">Módulo 4 · Funil</a>
   <a href="#mod5">Módulo 5 · Pré-Qualificação</a>
   <a href="#mod6">Módulo 6 · Dados Inteligentes</a>
+  <a href="#mod7">Módulo 7 · Campanhas</a>
 
   <div class="toc-section">Próximos Passos</div>
   <a href="#cta">Comece agora</a>
@@ -878,7 +1009,7 @@ footer {
     <span class="pill">3 Situações de diagnóstico</span>
     <span class="pill">Jornada do Lead Ideal</span>
     <span class="pill">3 Pilares da Estrutura</span>
-    <span class="pill">6 Módulos práticos</span>
+    <span class="pill">7 Módulos práticos</span>
     <span class="pill">Checklists de validação</span>
   </div>
   <div class="cover-corner">
@@ -1552,6 +1683,149 @@ footer {
     <p>Quando você fecha esse loop — dado comercial alimentando de volta o sistema de mídia — o algoritmo começa a trabalhar <strong>para o seu objetivo real</strong>, não para o objetivo do clique. Esse é o diferencial que o Pilar 3 promete e que quase ninguém entrega.</p>
     <div class="pull">"Sair do escuro e ter um mapa claro do retorno sobre cada real investido."</div>
   </div>
+</div>
+</div>
+
+<!-- ════════════════ MÓDULO 7 ════════════════ -->
+<div id="mod7" style="scroll-margin-top:68px">
+<div class="modulo-header" data-num="07">
+  <div class="mod-eyebrow">Módulo 07 · Campanhas</div>
+  <h2>"As 3 Estruturas de Campanha para<br><em>cada fase do crescimento digital</em>"</h2>
+</div>
+<div class="modulo-body">
+  <p><strong>Conexão com a Big Ideia:</strong> cada estrutura de campanha serve uma função específica na jornada do lead — captar, ganhar seguidores ou nutrir quem já conhece. Rodar qualquer campanha sem saber em qual dessas fases você está é como aplicar o remédio certo na doença errada.</p>
+
+  <!-- ── CAMPANHA 1 ── -->
+  <div class="camp-block">
+    <div class="camp-block-header">
+      <span class="camp-emoji">⏳</span>
+      <div>
+        <h4>Campanha de Testes e Validações de Captação de Lead</h4>
+        <span class="camp-sub">Fase de diagnóstico · antes de escalar</span>
+      </div>
+    </div>
+    <div class="camp-block-body">
+      <p>Antes de escalar qualquer campanha, você precisa saber qual objetivo funciona melhor na sua conta de anúncios. Muitas contas perdem verba rodando o objetivo errado — o resultado parece "campanha fraca" quando o problema é de estrutura.</p>
+
+      <h3 class="sub" style="margin-top:0;font-size:15px;margin-bottom:12px">Objetivos a testar</h3>
+      <div class="obj-grid">
+        <div class="obj-pill"><span class="obj-icon">🛒</span>Vendas</div>
+        <div class="obj-pill"><span class="obj-icon">🎯</span>Leads</div>
+        <div class="obj-pill"><span class="obj-icon">🌐</span>Tráfego</div>
+        <div class="obj-pill"><span class="obj-icon">💬</span>Engajamento</div>
+      </div>
+
+      <div class="obs-box">
+        <span class="obs-badge">OBS</span>
+        <p>Todos os objetivos devem levar ao <strong>WhatsApp ou Direct</strong>, com mensagens de boas-vindas contendo <strong>identificadores únicos por objetivo</strong>. Assim você rastreia qual traz leads com melhor qualidade — não apenas menor custo por clique.</p>
+      </div>
+      <div class="obs-box">
+        <span class="obs-badge">Metodologia</span>
+        <p>Testar <strong>2 por vez</strong>. Rodar por pelo menos 7 dias com o mesmo orçamento antes de tirar conclusões. Compare: volume de contatos, qualidade da conversa inicial e taxa de conversão.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CAMPANHA 2 ── -->
+  <div class="camp-block">
+    <div class="camp-block-header">
+      <span class="camp-emoji">🧊</span>
+      <div>
+        <h4>Campanha de Aquisição de Público</h4>
+        <span class="camp-sub">Ganho de Seguidores · Construção de audiência fria</span>
+      </div>
+    </div>
+    <div class="camp-block-body">
+      <p>Serve para aumentar a base de seguidores qualificados no Instagram — pessoas que vão alimentar os públicos de remarketing (Módulo 3) e aumentar a autoridade percebida do perfil ao longo do tempo.</p>
+
+      <div class="camp-when">Quando houver bons conteúdos intencionais no perfil</div>
+      <ul class="checklist">
+        <li><strong>Meta Business Suite → [Impulsionar]</strong> — tráfego direto para o perfil.</li>
+        <li>Usar <strong>Publicação Existente (PE)</strong> com melhor desempenho orgânico como criativo.</li>
+        <li>Público <strong>aberto da região</strong> · raio de 5 km.</li>
+      </ul>
+
+      <div class="camp-when">Quando os conteúdos roteirizados são melhores mas não estão no feed</div>
+      <ul class="checklist">
+        <li><strong>Campanha de Vendas</strong> otimizando para <strong>Cliques no Link</strong> — subir criativos direto no Gerenciador (não pelo botão Impulsionar).</li>
+      </ul>
+
+      <div class="aud-list">
+        <div class="aud-item">
+          <span class="aud-num">P1</span>
+          <span class="aud-text"><strong>LookaLike — Enviaram Mensagens</strong><br>Baseado em quem já iniciou conversa. O algoritmo busca perfis similares aos que demonstraram intenção real.</span>
+        </div>
+        <div class="aud-item">
+          <span class="aud-num">P2</span>
+          <span class="aud-text"><strong>Geolocalizado · segmentado por idade</strong><br>Sem interesses. Público amplo dentro da região, filtrado apenas por faixa etária relevante.</span>
+        </div>
+        <div class="aud-item">
+          <span class="aud-num">P3</span>
+          <span class="aud-text"><strong>Geolocalizado + interesses premium + somente iOS</strong><br>Filtra por interesses de alto padrão e restringe para dispositivos Apple — tende a qualificar por poder aquisitivo.</span>
+        </div>
+        <div class="aud-item">
+          <span class="aud-num">P4</span>
+          <span class="aud-text"><strong>Geolocalizado + interesses premium</strong><br>Mesma lógica do P3 sem filtro de dispositivo. Base maior, ainda qualificada por interesse declarado.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CAMPANHA 3 ── -->
+  <div class="camp-block">
+    <div class="camp-block-header">
+      <span class="camp-emoji">🔥</span>
+      <div>
+        <h4>Campanha de Distribuição e Nutrição</h4>
+        <span class="camp-sub">Transformar visitantes em compradores</span>
+      </div>
+    </div>
+    <div class="camp-block-body">
+      <p>Serve para ativar quem já conhece o perfil mas ainda não avançou para o contato. Aqui você eleva o nível de consciência — sobre quem é o profissional, o que entrega e por que vale a pena dar o próximo passo.</p>
+
+      <h3 class="sub" style="margin-top:0;font-size:15px;margin-bottom:12px">Tipo de campanha</h3>
+      <ul class="checklist">
+        <li><strong>Campanha de Tráfego → Tráfego para Perfil</strong> — usar quando o conteúdo não está no feed do Instagram.</li>
+        <li><strong>Campanha de Engajamento com Publicação</strong> — usar quando for uma publicação existente no perfil.</li>
+      </ul>
+
+      <h3 class="sub" style="font-size:15px;margin-bottom:12px">Públicos de retargeting</h3>
+      <div class="aud-list">
+        <div class="aud-item">
+          <span class="aud-num">PQ1</span>
+          <span class="aud-text"><strong>Visitantes do Perfil</strong> · 1, 3, 7, 14 e 30 dias<br>Quem visitou mas não interagiu. Janelas curtas = intenção mais recente e quente.</span>
+        </div>
+        <div class="aud-item">
+          <span class="aud-num">PQ2</span>
+          <span class="aud-text"><strong>Engajaram com o Perfil</strong> · 60 e 90 dias+<br>Quem curtiu, comentou ou salvou algum conteúdo. Já tem relação com o perfil — precisa de mais exposição para avançar.</span>
+        </div>
+        <div class="aud-item">
+          <span class="aud-num">PQ3</span>
+          <span class="aud-text"><strong>Assistiu vídeo por 10 segundos</strong> · 365 dias<br>Inclui publicações existentes do Instagram e vídeos rodados em campanhas anteriores. Base ampla de audiência aquecida.</span>
+        </div>
+      </div>
+
+      <div class="insight">
+        <p><strong>Conteúdo ideal para nutrição:</strong> material que aumente o nível de consciência sobre o profissional — quem ele é, o que acredita, qual experiência proporciona — e conteúdos que despertem interesse pelo que ele oferece. Não é venda direta: é construção de confiança.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OBSERVAÇÕES GLOBAIS ── -->
+  <h3 class="sub">Observações globais — válidas para todas as campanhas</h3>
+  <div class="global-obs-grid">
+    <div class="global-obs">
+      <div class="global-obs-bg">1</div>
+      <h5>Observação 01 · Posicionamento</h5>
+      <p>Rodar sempre <strong>somente Instagram</strong> como posicionamento. Desativar Facebook Feed, Audience Network e todos os outros posicionamentos que o Meta ativa por padrão ao criar uma campanha.</p>
+    </div>
+    <div class="global-obs">
+      <div class="global-obs-bg">2</div>
+      <h5>Observação 02 · URL dos anúncios</h5>
+      <p>Configurar a URL sempre como <code>instagram.com/nomedocliente/reels/</code> — o <strong>/reels/</strong> força a abertura no aplicativo do Instagram no celular, não no navegador. Reduz atrito e aumenta a taxa de conversão.</p>
+    </div>
+  </div>
+
 </div>
 </div>
 

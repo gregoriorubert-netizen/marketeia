@@ -490,7 +490,7 @@
 
     /* ── FOOTER ── */
     .footer { background: var(--bg-ink); padding: 28px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-    .footer-wm { font-family: var(--font-d); font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: #f2ede3; }
+    .footer-wm { font-family: var(--font-d); font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: #f2ede3; display: flex; align-items: center; gap: 10px; }
     .footer-wm span { color: var(--accent); }
     .footer-copy { font-size: 12px; color: rgba(242,237,227,.3); font-family: var(--font-m); }
 
@@ -514,7 +514,8 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="wm" href="https://marketeia.vercel.app">
-      <div class="wm-dot"></div><span>markete<span class="wm-ia">ia</span></span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" fill="none" style="height:22px;width:auto;flex-shrink:0"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>markete<span class="wm-ia">ia</span></span>
     </a>
     <a class="topbar-btn" href="https://marketeia.vercel.app/quiz">Diagnóstico gratuito</a>
   </div>
@@ -533,15 +534,6 @@
       e traçamos o plano de ação para ter resultados reais com tráfego pago.
     </p>
 
-    <div class="hero-7d">Resultados visíveis nos primeiros 7 dias</div>
-
-    <div class="hero-author">
-      <div class="author-av">M</div>
-      <div>
-        <div class="author-name">Equipe Marketeia</div>
-        <div class="author-sub">+R$5M gerenciados · +R$10M em vendas geradas</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -994,7 +986,10 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-wm">markete<span>ia</span></div>
+  <div class="footer-wm">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" fill="none" style="height:20px;width:auto;flex-shrink:0"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    markete<span>ia</span>
+  </div>
   <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
 </footer>
 
