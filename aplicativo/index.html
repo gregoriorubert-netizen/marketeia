@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>marketeia · Central</title>
+  <meta name="description" content="Todas as páginas, materiais e ferramentas da Marketeia em um só lugar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --petrol:      #0a1f21;
+      --petrol-mid:  #0e282b;
+      --petrol-lt:   #143438;
+      --vermillion:  #e8401f;
+      --verm-bright: #ff5c36;
+      --sinal:       #6fb5ac;
+      --cream:       #f2ede3;
+      --cream-60:    rgba(242,237,227,.6);
+      --cream-35:    rgba(242,237,227,.35);
+      --cream-15:    rgba(242,237,227,.15);
+      --font-d: "Archivo", sans-serif;
+      --font-u: "Inter Tight", system-ui, sans-serif;
+      --font-m: "JetBrains Mono", monospace;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-u);
+      background: var(--petrol);
+      color: var(--cream);
+      line-height: 1.6;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      display: flex; align-items: center; gap: 32px;
+      padding: 0 48px; height: 68px;
+      background: linear-gradient(180deg, rgba(10,31,33,.92) 0%, rgba(10,31,33,0) 100%);
+      transition: background .3s var(--ease);
+    }
+    .nav.solid { background: rgba(10,31,33,.96); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(111,181,172,.08); }
+    .nav-wm {
+      font-family: var(--font-d); font-weight: 900; font-size: 21px;
+      letter-spacing: -.03em; color: var(--cream);
+      display: flex; align-items: center; gap: 9px; text-decoration: none; flex-shrink: 0;
+    }
+    .nav-wm svg { height: 20px; width: auto; }
+    .nav-wm .ia { color: var(--vermillion); }
+    .nav-links { display: flex; gap: 22px; }
+    .nav-links a {
+      font-size: 13.5px; font-weight: 500; color: var(--cream-60);
+      text-decoration: none; transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-tag {
+      margin-left: auto;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--sinal);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 82vh;
+      display: flex; align-items: center;
+      padding: 130px 48px 90px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 90% at 85% 10%, rgba(111,181,172,.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 10% 95%, rgba(232,64,31,.1) 0%, transparent 60%),
+        var(--petrol);
+    }
+    .hero::after {
+      content: "";
+      position: absolute; left: 0; right: 0; bottom: 0; height: 140px;
+      background: linear-gradient(180deg, transparent, var(--petrol));
+      pointer-events: none;
+    }
+    .hero-wave {
+      position: absolute; right: -4%; top: 50%;
+      transform: translateY(-50%);
+      width: 52vw; max-width: 760px; opacity: .1;
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; max-width: 640px; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-m); font-size: 10.5px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--sinal);
+      border: 1px solid rgba(111,181,172,.3); border-radius: 99px;
+      padding: 6px 14px; margin-bottom: 22px;
+    }
+    .hero-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--sinal); }
+    .hero h1 {
+      font-family: var(--font-d); font-weight: 900;
+      font-size: clamp(38px, 5.4vw, 64px);
+      letter-spacing: -.04em; line-height: .98; margin: 0 0 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--vermillion); }
+    .hero-desc {
+      font-size: 16.5px; color: var(--cream-60);
+      max-width: 480px; margin: 0 0 34px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-d); font-weight: 700; font-size: 15px;
+      letter-spacing: -.01em; text-decoration: none;
+      padding: 14px 28px; border-radius: 8px;
+      transition: transform .15s var(--ease), background .15s var(--ease), opacity .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-play { background: var(--cream); color: var(--petrol); }
+    .btn-play:hover { background: #fff; }
+    .btn-ghost { background: rgba(111,181,172,.14); color: var(--cream); border: 1px solid rgba(111,181,172,.25); }
+    .btn-ghost:hover { background: rgba(111,181,172,.22); }
+    .hero-meta {
+      display: flex; gap: 18px; margin-top: 28px;
+      font-family: var(--font-m); font-size: 11px;
+      letter-spacing: .08em; color: var(--cream-35);
+      text-transform: uppercase; flex-wrap: wrap;
+    }
+    .hero-meta .hot { color: var(--sinal); }
+
+    /* ── ROWS ── */
+    .rows { position: relative; z-index: 2; padding: 8px 0 80px; margin-top: -40px; }
+    .row { margin-bottom: 44px; }
+    .row-head {
+      display: flex; align-items: baseline; gap: 14px;
+      padding: 0 48px; margin-bottom: 14px;
+    }
+    .row-title {
+      font-family: var(--font-d); font-weight: 800; font-size: 19px;
+      letter-spacing: -.02em; margin: 0;
+    }
+    .row-count {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--cream-35);
+    }
+    .row-track {
+      display: flex; gap: 14px;
+      overflow-x: auto; overscroll-behavior-x: contain;
+      padding: 10px 48px 22px;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+    .row-track::-webkit-scrollbar { display: none; }
+
+    /* ── CARDS ── */
+    .card {
+      position: relative; flex: 0 0 auto;
+      width: 340px; aspect-ratio: 16/9;
+      border-radius: 10px; overflow: hidden;
+      text-decoration: none; color: var(--cream);
+      background: var(--petrol-mid);
+      border: 1px solid rgba(111,181,172,.1);
+      scroll-snap-align: start;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      z-index: 5;
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      border-color: rgba(111,181,172,.3);
+    }
+    .card-art { position: absolute; inset: 0; }
+    .card-shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(6,18,19,.88) 100%);
+    }
+    .card-body {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 16px 18px 14px;
+    }
+    .card-kicker {
+      font-family: var(--font-m); font-size: 9px; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--sinal); margin-bottom: 5px;
+    }
+    .card-title {
+      font-family: var(--font-d); font-weight: 800; font-size: 18px;
+      letter-spacing: -.02em; line-height: 1.1; margin: 0 0 4px;
+    }
+    .card-sub {
+      font-size: 12px; color: var(--cream-60); margin: 0;
+      max-width: 95%;
+      opacity: 0; transform: translateY(4px);
+      transition: opacity .25s var(--ease), transform .25s var(--ease);
+    }
+    .card:hover .card-sub { opacity: 1; transform: translateY(0); }
+    .card-badge {
+      position: absolute; top: 12px; left: 12px;
+      font-family: var(--font-m); font-size: 9px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 4px 9px; border-radius: 4px;
+      background: var(--vermillion); color: #fff;
+    }
+    .card-badge.teal { background: rgba(111,181,172,.9); color: var(--petrol); }
+    .card-badge.ghost { background: rgba(10,31,33,.7); color: var(--cream-60); border: 1px solid var(--cream-15); }
+    .card-go {
+      position: absolute; top: 12px; right: 12px;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(242,237,227,.12); backdrop-filter: blur(6px);
+      font-size: 13px; color: var(--cream);
+      opacity: 0; transition: opacity .25s var(--ease);
+    }
+    .card:hover .card-go { opacity: 1; }
+
+    /* card art variants */
+    .art-type {
+      display: flex; align-items: flex-start;
+      padding: 18px;
+      font-family: var(--font-d); font-weight: 900;
+      letter-spacing: -.05em; line-height: .85;
+      color: rgba(242,237,227,.07);
+      font-size: 74px;
+      user-select: none;
+    }
+    .art-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid rgba(111,181,172,.08);
+      padding: 34px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap;
+    }
+    .footer-wm {
+      font-family: var(--font-d); font-weight: 800; font-size: 17px;
+      letter-spacing: -.02em; color: var(--cream);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .footer-wm svg { height: 17px; width: auto; }
+    .footer-wm span { color: var(--vermillion); }
+    .footer-copy { font-family: var(--font-m); font-size: 11px; color: var(--cream-35); letter-spacing: .06em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .nav { padding: 0 20px; gap: 18px; }
+      .nav-links { display: none; }
+      .hero { padding: 110px 20px 70px; min-height: 68vh; }
+      .row-head, .footer { padding-left: 20px; padding-right: 20px; }
+      .row-track { padding-left: 20px; padding-right: 20px; }
+      .card { width: 270px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a class="nav-wm" href="/aplicativo">
+    <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>markete<span class="ia">ia</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#materiais">Materiais</a>
+    <a href="#clientes">Clientes</a>
+    <a href="#equipe">Equipe</a>
+  </div>
+  <div class="nav-tag">Sinal vs Ruído</div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <svg class="hero-wave" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#6fb5ac" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="hero-inner">
+    <div class="hero-badge">Em destaque · Diagnóstico</div>
+    <h1>Descubra onde está <em>o gargalo</em> do seu digital.</h1>
+    <p class="hero-desc">Em menos de 2 minutos, o Diagnóstico de Performance Digital identifica sua situação atual e qual dos 3 cenários está travando o seu resultado.</p>
+    <div class="hero-actions">
+      <a class="btn btn-play" href="/quiz"><span>▶</span> Fazer o diagnóstico</a>
+      <a class="btn btn-ghost" href="/sobrenos">Mais informações</a>
+    </div>
+    <div class="hero-meta">
+      <span class="hot">Gratuito</span>
+      <span>2 minutos</span>
+      <span>Resultado imediato</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ ROWS ═══ -->
+<main class="rows">
+
+  <!-- DIAGNÓSTICO -->
+  <section class="row" id="diagnostico">
+    <div class="row-head">
+      <h2 class="row-title">Diagnóstico</h2>
+      <span class="row-count">2 páginas</span>
+    </div>
+    <div class="row-track">
+
+      <a class="card" href="/quiz">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#f2ede3"/>
+            <circle cx="290" cy="30" r="90" fill="rgba(232,64,31,.08)"/>
+            <circle cx="30" cy="180" r="70" fill="rgba(111,181,172,.14)"/>
+            <path d="M 110,95 L 145,95 C 152,95 162,45 172,45 C 182,45 190,140 199,140 C 208,140 220,30 232,30 C 244,30 256,95 264,95 L 300,95" stroke="#e8401f" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".9"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge">Top 1</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Quiz · 2 min</div>
+          <h3 class="card-title">Diagnóstico de Performance Digital</h3>
+          <p class="card-sub">Identifique qual das 3 situações trava o seu resultado.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/quizdark">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0e282b"/>
+            <circle cx="60" cy="20" r="100" fill="rgba(111,181,172,.1)"/>
+            <path d="M 110,95 L 145,95 C 152,95 162,45 172,45 C 182,45 190,140 199,140 C 208,140 220,30 232,30 C 244,30 256,95 264,95 L 300,95" stroke="#6fb5ac" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Alt</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Quiz · Versão dark</div>
+          <h3 class="card-title">Diagnóstico — Modo Escuro</h3>
+          <p class="card-sub">O mesmo diagnóstico, na identidade petróleo.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MATERIAIS -->
+  <section class="row" id="materiais">
+    <div class="row-head">
+      <h2 class="row-title">Conteúdos &amp; Materiais</h2>
+      <span class="row-count">3 páginas</span>
+    </div>
+    <div class="row-track">
+
+      <a class="card" href="/ebook">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0a1f21"/>
+            <radialGradient id="g1" cx="80%" cy="15%" r="80%"><stop offset="0%" stop-color="rgba(111,181,172,.22)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <rect width="340" height="191" fill="url(#g1)"/>
+            <text x="18" y="150" font-family="Archivo, sans-serif" font-weight="900" font-size="92" fill="rgba(242,237,227,.06)" letter-spacing="-6">EBOOK</text>
+            <rect x="228" y="38" width="82" height="112" rx="6" fill="#122a2d" stroke="rgba(111,181,172,.35)"/>
+            <rect x="238" y="54" width="46" height="7" rx="3.5" fill="#e8401f"/>
+            <rect x="238" y="68" width="60" height="5" rx="2.5" fill="rgba(242,237,227,.25)"/>
+            <rect x="238" y="79" width="52" height="5" rx="2.5" fill="rgba(242,237,227,.25)"/>
+            <rect x="238" y="90" width="58" height="5" rx="2.5" fill="rgba(242,237,227,.15)"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge">Novo</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Ebook · 7 módulos</div>
+          <h3 class="card-title">A Estrutura Digital Ideal</h3>
+          <p class="card-sub">O material complementar do webinar, com checklists e campanhas.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/sobrenos">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#f2ede3"/>
+            <text x="14" y="152" font-family="Archivo, sans-serif" font-weight="900" font-size="96" fill="rgba(10,31,33,.06)" letter-spacing="-6">POR QUÊ</text>
+            <circle cx="285" cy="55" r="34" fill="none" stroke="#e8401f" stroke-width="9"/>
+            <line x1="285" y1="89" x2="285" y2="128" stroke="#e8401f" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge teal">Leitura</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Artigo · Mecanismo</div>
+          <h3 class="card-title">O Segredo dos Resultados com Digital</h3>
+          <p class="card-sub">Por que você investe em anúncios e não tem retorno.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/roteiro-webinar">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0e282b"/>
+            <radialGradient id="g2" cx="15%" cy="90%" r="80%"><stop offset="0%" stop-color="rgba(232,64,31,.16)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <rect width="340" height="191" fill="url(#g2)"/>
+            <circle cx="170" cy="88" r="34" fill="rgba(242,237,227,.08)" stroke="rgba(242,237,227,.25)"/>
+            <path d="M 162,72 L 186,88 L 162,104 Z" fill="#f2ede3"/>
+            <rect x="70" y="146" width="200" height="4" rx="2" fill="rgba(242,237,227,.12)"/>
+            <rect x="70" y="146" width="80" height="4" rx="2" fill="#e8401f"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Interno</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Roteiro · Webinar</div>
+          <h3 class="card-title">Aula: A Estrutura Digital Ideal</h3>
+          <p class="card-sub">Big Ideia, 3 mecanismos, 11 blocos e a matriz de 6 módulos.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section class="row" id="clientes">
+    <div class="row-head">
+      <h2 class="row-title">Clientes</h2>
+      <span class="row-count">2 páginas</span>
+    </div>
+    <div class="row-track">
+
+      <a class="card" href="/preonboarding">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0a1f21"/>
+            <radialGradient id="g3" cx="85%" cy="80%" r="90%"><stop offset="0%" stop-color="rgba(111,181,172,.18)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <rect width="340" height="191" fill="url(#g3)"/>
+            <circle cx="70" cy="70" r="17" fill="none" stroke="#6fb5ac" stroke-width="4"/>
+            <path d="M 62,70 L 68,76 L 79,63" stroke="#6fb5ac" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="130" cy="70" r="17" fill="none" stroke="#6fb5ac" stroke-width="4"/>
+            <path d="M 122,70 L 128,76 L 139,63" stroke="#6fb5ac" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="190" cy="70" r="17" fill="none" stroke="rgba(242,237,227,.25)" stroke-width="4"/>
+            <circle cx="250" cy="70" r="17" fill="none" stroke="rgba(242,237,227,.15)" stroke-width="4"/>
+            <line x1="87" y1="70" x2="113" y2="70" stroke="rgba(111,181,172,.4)" stroke-width="3"/>
+            <line x1="147" y1="70" x2="173" y2="70" stroke="rgba(111,181,172,.4)" stroke-width="3"/>
+            <line x1="207" y1="70" x2="233" y2="70" stroke="rgba(242,237,227,.12)" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge teal">Boas-vindas</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Pré-Onboarding</div>
+          <h3 class="card-title">Diferenciais &amp; Metodologia</h3>
+          <p class="card-sub">Como funciona a entrega, a metodologia e a visão de sucesso.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/lp">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0e282b"/>
+            <text x="16" y="150" font-family="Archivo, sans-serif" font-weight="900" font-size="80" fill="rgba(242,237,227,.05)" letter-spacing="-5">PAINEL</text>
+            <rect x="205" y="40" width="110" height="70" rx="8" fill="#122a2d" stroke="rgba(111,181,172,.3)"/>
+            <path d="M 215,95 L 235,80 L 252,90 L 272,60 L 290,72 L 305,52" stroke="#e8401f" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="230" y="120" width="60" height="8" rx="4" fill="rgba(111,181,172,.35)"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Landing page</div>
+          <h3 class="card-title">Marketing sem caixa-preta</h3>
+          <p class="card-sub">A proposta da marca: IA, transparência radical e painel aberto.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- EQUIPE -->
+  <section class="row" id="equipe">
+    <div class="row-head">
+      <h2 class="row-title">Equipe &amp; Ferramentas</h2>
+      <span class="row-count">1 página</span>
+    </div>
+    <div class="row-track">
+
+      <a class="card" href="/adminquiz">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0a1f21"/>
+            <rect x="40" y="42" width="120" height="14" rx="4" fill="rgba(111,181,172,.2)"/>
+            <rect x="40" y="66" width="260" height="10" rx="4" fill="rgba(242,237,227,.08)"/>
+            <rect x="40" y="84" width="260" height="10" rx="4" fill="rgba(242,237,227,.08)"/>
+            <rect x="40" y="102" width="260" height="10" rx="4" fill="rgba(242,237,227,.08)"/>
+            <rect x="40" y="120" width="180" height="10" rx="4" fill="rgba(232,64,31,.35)"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Restrito</span>
+        <span class="card-go">→</span>
+        <div class="card-body">
+          <div class="card-kicker">Admin</div>
+          <h3 class="card-title">Respostas do Diagnóstico</h3>
+          <p class="card-sub">Painel interno com os leads que responderam o quiz.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-wm">
+    <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    markete<span>ia</span>
+  </div>
+  <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 40);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
