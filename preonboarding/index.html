@@ -320,6 +320,8 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
     }
+    .cards-grid.grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 580px) { .cards-grid.grid-2x2 { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--petrol-surface);
@@ -399,9 +401,76 @@
 
     .pillar-text {
       font-size: 15px;
-      color: var(--cream-dim);
+      color: var(--cream);
       line-height: 1.5;
     }
+
+    /* ── EDIÇÃO PROTEGIDA (INVESTIMENTO) ── */
+    .edit-bar { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+    .edit-btn {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+      text-transform: uppercase; cursor: pointer;
+      color: var(--cream-muted); background: transparent;
+      border: 1px solid var(--border-default); border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .edit-btn:hover { color: var(--cream); border-color: rgba(111,181,172,.35); }
+    .edit-btn.save { color: var(--petrol-deep, #0a1f21); background: var(--sinal); border-color: var(--sinal); font-weight: 500; }
+    .edit-btn.save:hover { opacity: .88; }
+    .edit-btn.reset { color: rgba(232,64,31,.85); border-color: rgba(232,64,31,.3); }
+    .edit-btn.reset:hover { color: var(--vermillion, #e8401f); }
+
+    [data-edit][contenteditable="true"] {
+      outline: 1px dashed rgba(111,181,172,.6);
+      outline-offset: 4px;
+      border-radius: 3px;
+      cursor: text;
+      background: rgba(111,181,172,.05);
+    }
+    [data-edit][contenteditable="true"]:focus {
+      outline-style: solid;
+      background: rgba(111,181,172,.09);
+    }
+
+    .pw-overlay[hidden] { display: none; }
+    .pw-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(6,18,19,.8); backdrop-filter: blur(8px);
+      padding: 24px;
+    }
+    .pw-modal {
+      width: 100%; max-width: 380px;
+      background: var(--petrol-surface, #11393b);
+      border: 1px solid rgba(111,181,172,.25);
+      border-radius: var(--radius-lg, 14px);
+      padding: 30px 30px 26px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    }
+    .pw-label {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--sinal); margin-bottom: 10px;
+    }
+    .pw-title {
+      font-family: var(--font-display); font-weight: 800; font-size: 20px;
+      letter-spacing: -.02em; color: var(--cream); margin: 0 0 6px; line-height: 1.15;
+    }
+    .pw-sub { font-size: 13.5px; color: var(--cream-muted); margin: 0 0 18px; }
+    .pw-input {
+      width: 100%; font-family: var(--font-mono); font-size: 16px;
+      letter-spacing: .3em; text-align: center;
+      color: var(--cream); background: rgba(10,31,33,.6);
+      border: 1px solid var(--border-default); border-radius: var(--radius-sm);
+      padding: 12px 14px; outline: none;
+      transition: border-color .15s;
+    }
+    .pw-input:focus { border-color: var(--sinal); }
+    .pw-error {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--vermillion, #e8401f); margin-top: 10px; letter-spacing: .04em;
+    }
+    .pw-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
 
     /* ── CYCLE DIAGRAM ── */
     .cycle-wrap {
@@ -1117,7 +1186,7 @@
       </div>
     </div>
 
-    <div class="cards-grid" style="margin-top:40px">
+    <div class="cards-grid grid-2x2" style="margin-top:40px">
       <div class="card">
         <div class="card-icon">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
@@ -1419,20 +1488,20 @@
 
     <div class="invest-grid">
       <div class="invest-card featured">
-        <div class="ic-label">Implementação inicial</div>
-        <div class="ic-price"><sub>R$</sub>500</div>
-        <div class="ic-period">cobrança única · 1º mês</div>
-        <div class="ic-desc">
+        <div class="ic-label" data-edit="ic1-label">Implementação inicial</div>
+        <div class="ic-price" data-edit="ic1-price"><sub>R$</sub>500</div>
+        <div class="ic-period" data-edit="ic1-period">cobrança única · 1º mês</div>
+        <div class="ic-desc" data-edit="ic1-desc">
           Estruturação completa da sua presença digital: parametrização de campanhas, criação dos funis,
           configuração das comunicações e kick-off estratégico.
         </div>
       </div>
 
       <div class="invest-card">
-        <div class="ic-label">Prestação mensal</div>
-        <div class="ic-price"><sub>R$</sub>1.000</div>
-        <div class="ic-period">recorrente mensal · a partir do 2º mês</div>
-        <div class="ic-desc">
+        <div class="ic-label" data-edit="ic2-label">Prestação mensal</div>
+        <div class="ic-price" data-edit="ic2-price"><sub>R$</sub>1.000</div>
+        <div class="ic-period" data-edit="ic2-period">recorrente mensal · a partir do 2º mês</div>
+        <div class="ic-desc" data-edit="ic2-desc">
           Gestão completa: tráfego pago, conteúdo, relatórios, benchmarking, reuniões estratégicas
           e otimização contínua de todas as estruturas implementadas.
         </div>
@@ -1441,14 +1510,35 @@
 
     <div class="highlight-band" style="margin-top:24px">
       <div class="hb-label">Total 1ª parcela</div>
-      <div class="hb-title">R$ 1.500 <span style="font-size:20px;color:var(--cream-muted);font-weight:500">→ R$ 1.000/mês a partir do 2º</span></div>
-      <div class="hb-body">
+      <div class="hb-title" data-edit="hb-title">R$ 1.500 <span style="font-size:20px;color:var(--cream-muted);font-weight:500">→ R$ 1.000/mês a partir do 2º</span></div>
+      <div class="hb-body" data-edit="hb-body">
         Enquanto outros cobram R$ 2.500–5.000/mês de gestão sem garantia de resultado,
         a Marketeia mantém o seu custo fixo baixo para que você tenha mais verba disponível
         para investir em anúncios — onde o dinheiro realmente cresce.
       </div>
     </div>
+
+    <div class="edit-bar">
+      <button class="edit-btn" id="editToggle" type="button">✎ Editar valores</button>
+      <button class="edit-btn save" id="editSave" type="button" hidden>Salvar alterações</button>
+      <button class="edit-btn reset" id="editReset" type="button" hidden>Restaurar padrão</button>
+    </div>
   </section>
+
+  <!-- MODAL DE SENHA -->
+  <div class="pw-overlay" id="pwOverlay" hidden>
+    <div class="pw-modal">
+      <div class="pw-label">Área restrita</div>
+      <h3 class="pw-title">Editar estrutura de investimento</h3>
+      <p class="pw-sub">Digite a senha de edição para liberar os campos.</p>
+      <input class="pw-input" id="pwInput" type="password" inputmode="numeric" placeholder="Senha" autocomplete="off" />
+      <div class="pw-error" id="pwError" hidden>Senha incorreta. Tente novamente.</div>
+      <div class="pw-actions">
+        <button class="edit-btn" id="pwCancel" type="button">Cancelar</button>
+        <button class="edit-btn save" id="pwConfirm" type="button">Liberar edição</button>
+      </div>
+    </div>
+  </div>
 
   <div class="divider"></div>
 
@@ -1484,6 +1574,75 @@
     <div class="doc-footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
   </div>
 </footer>
+
+<script>
+(function () {
+  const PW_HASH = 'ba723435a66e490530c3efdfeac868e06fde6e35dcc43fa8528fb1b2c9411ef5'; // sha-256
+  const STORE_KEY = 'mk_invest_overrides';
+  const fields = document.querySelectorAll('[data-edit]');
+  const btnToggle = document.getElementById('editToggle');
+  const btnSave = document.getElementById('editSave');
+  const btnReset = document.getElementById('editReset');
+  const overlay = document.getElementById('pwOverlay');
+  const pwInput = document.getElementById('pwInput');
+  const pwError = document.getElementById('pwError');
+  let editing = false;
+
+  // aplica valores salvos ao carregar
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    fields.forEach(el => {
+      const k = el.dataset.edit;
+      if (saved[k]) el.innerHTML = saved[k];
+    });
+  } catch (e) { /* storage indisponível — segue com os valores padrão */ }
+
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function setEditing(on) {
+    editing = on;
+    fields.forEach(el => el.setAttribute('contenteditable', on ? 'true' : 'false'));
+    btnToggle.hidden = on;
+    btnSave.hidden = !on;
+    btnReset.hidden = !on;
+  }
+
+  function openModal() {
+    overlay.hidden = false;
+    pwError.hidden = true;
+    pwInput.value = '';
+    setTimeout(() => pwInput.focus(), 50);
+  }
+  function closeModal() { overlay.hidden = true; }
+
+  async function confirmPw() {
+    const ok = (await sha256(pwInput.value)) === PW_HASH;
+    if (ok) { closeModal(); setEditing(true); }
+    else { pwError.hidden = false; pwInput.value = ''; pwInput.focus(); }
+  }
+
+  btnToggle.addEventListener('click', openModal);
+  document.getElementById('pwCancel').addEventListener('click', closeModal);
+  document.getElementById('pwConfirm').addEventListener('click', confirmPw);
+  pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') confirmPw(); });
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+
+  btnSave.addEventListener('click', () => {
+    const data = {};
+    fields.forEach(el => { data[el.dataset.edit] = el.innerHTML; });
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+    setEditing(false);
+  });
+
+  btnReset.addEventListener('click', () => {
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
 
 </body>
 </html>
