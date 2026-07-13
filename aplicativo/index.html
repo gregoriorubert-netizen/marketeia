@@ -213,6 +213,9 @@
       opacity: 0; transition: opacity .25s var(--ease);
     }
     .card:hover .card-go { opacity: 1; }
+    .card.soon { cursor: default; }
+    .card.soon:hover { transform: none; box-shadow: none; border-color: rgba(111,181,172,.1); }
+    .card.soon .card-go { display: none; }
 
     /* card art variants */
     .art-type {
@@ -262,10 +265,10 @@
     <span>markete<span class="ia">ia</span></span>
   </a>
   <div class="nav-links">
-    <a href="#diagnostico">Diagnóstico</a>
-    <a href="#materiais">Materiais</a>
-    <a href="#clientes">Clientes</a>
-    <a href="#equipe">Equipe</a>
+    <a href="#diagnostico">Aulas</a>
+    <a href="#materiais">Estratégias</a>
+    <a href="#clientes">Implementações</a>
+    <a href="#equipe">Estruturas de Campanhas</a>
   </div>
   <div class="nav-tag">Sinal vs Ruído</div>
 </nav>
@@ -292,11 +295,11 @@
 <!-- ═══ ROWS ═══ -->
 <main class="rows">
 
-  <!-- DIAGNÓSTICO -->
+  <!-- AULAS -->
   <section class="row" id="diagnostico">
     <div class="row-head">
-      <h2 class="row-title">Diagnóstico</h2>
-      <span class="row-count">2 páginas</span>
+      <h2 class="row-title">Aulas</h2>
+      <span class="row-count">6 páginas</span>
     </div>
     <div class="row-track">
 
@@ -337,13 +340,85 @@
         </div>
       </a>
 
+      <div class="card soon">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#f2ede3"/>
+            <circle cx="300" cy="20" r="80" fill="rgba(232,64,31,.07)"/>
+            <path d="M105 130 Q125 70 150 100 T195 90 T235 60" stroke="#e8401f" stroke-width="7" fill="none" stroke-linecap="round" opacity=".55"/>
+            <circle cx="150" cy="100" r="6" fill="#e8401f" opacity=".7"/>
+            <circle cx="195" cy="90" r="6" fill="#e8401f" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Em breve</span>
+        <div class="card-body">
+          <div class="card-kicker">Aula · Nicho</div>
+          <h3 class="card-title">Estrutura Digital Ideal para Clínicas de Estética</h3>
+          <p class="card-sub">A jornada do lead adaptada para captação e conversão em clínicas de estética.</p>
+        </div>
+      </div>
+
+      <div class="card soon">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0e282b"/>
+            <rect x="70" y="60" width="60" height="70" rx="4" fill="rgba(111,181,172,.16)" stroke="rgba(111,181,172,.3)"/>
+            <rect x="150" y="40" width="60" height="90" rx="4" fill="rgba(242,237,227,.06)" stroke="rgba(242,237,227,.16)"/>
+            <rect x="230" y="75" width="60" height="55" rx="4" fill="rgba(111,181,172,.1)" stroke="rgba(111,181,172,.22)"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Em breve</span>
+        <div class="card-body">
+          <div class="card-kicker">Aula · Nicho</div>
+          <h3 class="card-title">Estrutura Digital Ideal para Loja de Móveis</h3>
+          <p class="card-sub">Estratégia digital para negócios de ticket alto e ciclo de venda mais longo.</p>
+        </div>
+      </div>
+
+      <div class="card soon">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#f2ede3"/>
+            <circle cx="170" cy="80" r="30" fill="none" stroke="#e8401f" stroke-width="7" opacity=".55"/>
+            <path d="M120 150 C120 115 150 105 170 105 C190 105 220 115 220 150" stroke="#e8401f" stroke-width="7" fill="none" stroke-linecap="round" opacity=".55"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Em breve</span>
+        <div class="card-body">
+          <div class="card-kicker">Aula · Nicho</div>
+          <h3 class="card-title">Estrutura Digital Ideal para Profissionais Autônomos</h3>
+          <p class="card-sub">Como gerar autoridade e agenda cheia sem depender só de indicação.</p>
+        </div>
+      </div>
+
+      <div class="card soon">
+        <div class="card-art">
+          <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="191" fill="#0e282b"/>
+            <circle cx="170" cy="70" r="22" fill="none" stroke="#6fb5ac" stroke-width="6" opacity=".6"/>
+            <path d="M130 150 C130 115 150 105 170 105 C190 105 210 115 210 150" stroke="#6fb5ac" stroke-width="6" fill="none" stroke-linecap="round" opacity=".6"/>
+            <path d="M95 140 L110 100 M245 140 L230 100" stroke="rgba(242,237,227,.3)" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-shade"></div>
+        <span class="card-badge ghost">Em breve</span>
+        <div class="card-body">
+          <div class="card-kicker">Aula · Nicho</div>
+          <h3 class="card-title">Estrutura Digital Ideal para Personais / Treinadores Físicos</h3>
+          <p class="card-sub">Captação de alunos e retenção com conteúdo e prova social recorrente.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- MATERIAIS -->
+  <!-- ESTRATÉGIAS -->
   <section class="row" id="materiais">
     <div class="row-head">
-      <h2 class="row-title">Conteúdos &amp; Materiais</h2>
+      <h2 class="row-title">Estratégias</h2>
       <span class="row-count">3 páginas</span>
     </div>
     <div class="row-track">
@@ -419,7 +494,7 @@
   <!-- CLIENTES -->
   <section class="row" id="clientes">
     <div class="row-head">
-      <h2 class="row-title">Clientes</h2>
+      <h2 class="row-title">Implementações</h2>
       <span class="row-count">2 páginas</span>
     </div>
     <div class="row-track">
@@ -476,7 +551,7 @@
   <!-- EQUIPE -->
   <section class="row" id="equipe">
     <div class="row-head">
-      <h2 class="row-title">Equipe &amp; Ferramentas</h2>
+      <h2 class="row-title">Estruturas de Campanhas</h2>
       <span class="row-count">1 página</span>
     </div>
     <div class="row-track">
