@@ -217,6 +217,13 @@
     .card.soon:hover { transform: none; box-shadow: none; border-color: rgba(111,181,172,.1); }
     .card.soon .card-go { display: none; }
 
+    /* card com legenda abaixo da imagem (não sobreposta) */
+    .card.stacked { aspect-ratio: unset; display: flex; flex-direction: column; }
+    .card.stacked .card-art { position: relative; width: 100%; aspect-ratio: 16/9; flex-shrink: 0; }
+    .card.stacked .card-shade { display: none; }
+    .card.stacked .card-body { position: static; padding: 14px 16px 16px; }
+    .card.stacked .card-sub { opacity: 1; transform: none; }
+
     /* card art variants */
     .art-type {
       display: flex; align-items: flex-start;
@@ -341,7 +348,7 @@
         </div>
       </a>
 
-      <div class="card soon">
+      <div class="card soon stacked">
         <div class="card-art">
           <img class="art-img" src="/assets/banners/banner-estetica.jpg" alt="" loading="lazy" />
         </div>
@@ -354,7 +361,7 @@
         </div>
       </div>
 
-      <div class="card soon">
+      <div class="card soon stacked">
         <div class="card-art">
           <img class="art-img" src="/assets/banners/banner-moveis.jpg" alt="" loading="lazy" />
         </div>
@@ -367,7 +374,7 @@
         </div>
       </div>
 
-      <div class="card soon">
+      <div class="card soon stacked">
         <div class="card-art">
           <img class="art-img" src="/assets/banners/banner-autonomos.jpg" alt="" loading="lazy" />
         </div>
@@ -380,7 +387,7 @@
         </div>
       </div>
 
-      <div class="card soon">
+      <div class="card soon stacked">
         <div class="card-art">
           <svg class="art-svg" viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice">
             <rect width="340" height="191" fill="#0e282b"/>
