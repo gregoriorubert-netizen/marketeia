@@ -7,6 +7,7 @@
     { "source": "/sobrenos",      "destination": "/sobrenos/index.html" },
     { "source": "/roteiro-webinar", "destination": "/roteiro-webinar/index.html" },
     { "source": "/ebook",         "destination": "/ebook/index.html" },
-    { "source": "/aplicativo",    "destination": "/aplicativo/index.html" }
+    { "source": "/aplicativo",    "destination": "/aplicativo/index.html" },
+    { "source": "/modulo",        "destination": "/modulo/index.html" }
   ]
 }
