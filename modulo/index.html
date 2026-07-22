@@ -100,12 +100,18 @@
       padding: 0 48px 40px; max-width: 720px;
     }
 
-    /* modo empilhado: banners com título já embutido na foto — texto some da imagem e vai abaixo, sem duplicar */
-    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 460px; }
-    .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 75%, var(--petrol) 100%); }
+    /* modo empilhado: banners com título, descrição e bullets já embutidos na própria foto —
+       só o essencial (botão) fica fora da imagem, para não duplicar texto */
+    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 460px; margin: 0 auto; }
+    .hero.stacked .hero-art img { object-position: center; }
+    .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 80%, var(--petrol) 100%); }
+    .hero.stacked .hero-kicker,
+    .hero.stacked h1,
+    .hero.stacked .hero-desc { display: none; }
     .hero.stacked .hero-text {
-      position: static; max-width: 720px;
-      padding: 36px 48px 8px; background: var(--petrol);
+      position: static; max-width: none;
+      padding: 26px 48px 6px; background: var(--petrol);
+      display: flex; justify-content: center;
     }
 
     .hero-kicker {
