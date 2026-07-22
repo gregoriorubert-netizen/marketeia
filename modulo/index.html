@@ -37,54 +37,25 @@
     }
 
     /* ── FUNDO DESFOCADO (simula a página anterior, tipo Netflix) ── */
+    /* iframe da propria area de membros ao fundo, desfocado (tipo Netflix) */
     .backdrop {
       position: fixed; inset: 0; z-index: 0;
-      overflow: hidden; pointer-events: none;
-      filter: blur(9px) brightness(.45) saturate(1.05);
-      transform: scale(1.04);
+      width: 100%; height: 100%; border: 0;
+      pointer-events: none;
+      filter: blur(8px) brightness(.55) saturate(1.05);
+      transform: scale(1.06);
     }
-    .bd-nav {
-      display: flex; align-items: center; gap: 28px;
-      padding: 0 48px; height: 68px;
-      background: var(--petrol);
-    }
-    .bd-wm {
-      font-family: var(--font-d); font-weight: 900; font-size: 20px;
-      letter-spacing: -.03em; color: var(--cream);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .bd-wm svg { height: 19px; width: auto; }
-    .bd-wm span { color: var(--vermillion); }
-    .bd-links { display: flex; gap: 22px; font-size: 13.5px; color: rgba(242,237,227,.6); }
-    .bd-hero {
-      height: 42vh; min-height: 280px;
-      background:
-        radial-gradient(ellipse 70% 90% at 85% 10%, rgba(111,181,172,.18) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 60% at 10% 95%, rgba(232,64,31,.14) 0%, transparent 60%),
-        var(--petrol);
-    }
-    .bd-row { display: flex; gap: 14px; padding: 24px 48px; background: var(--petrol); }
-    .bd-card {
-      flex: 1 1 0; aspect-ratio: 16/9; border-radius: 10px;
-      background: var(--petrol-mid); border: 1px solid rgba(111,181,172,.1);
-    }
-    .bd-card:nth-child(2) { background: #12302f; }
-    .bd-card:nth-child(3) { background: #0d2224; }
-    .bd-card:nth-child(4) { background: #123a2f; }
-    .bd-card:nth-child(5) { background: #101f21; }
 
     .scrim {
       position: fixed; inset: 0; z-index: 1;
-      background: rgba(4,14,14,.62);
+      background: rgba(4,14,14,.55);
     }
 
     /* ── MODAL FLUTUANTE ── */
     .modal-sheet {
       position: relative; z-index: 2;
       width: min(980px, 94vw);
-      max-height: 90vh;
-      margin: 5vh auto;
-      overflow-y: auto;
+      margin: 5vh auto 8vh;
       background: var(--petrol);
       border-radius: 14px;
       box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(111,181,172,.08);
@@ -105,7 +76,7 @@
     .hero-media {
       position: relative;
       aspect-ratio: 2 / 1;
-      max-height: 460px; min-height: 220px;
+      min-height: 220px;
       overflow: hidden;
     }
     .hero-art { position: absolute; inset: 0; }
@@ -135,8 +106,10 @@
       padding: 0 44px 28px; max-width: 680px;
     }
 
-    /* modo empilhado: banners com título, descrição e bullets já embutidos na própria foto */
-    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 440px; }
+    /* modo empilhado: banners com título, descrição e bullets já embutidos na própria foto —
+       banner 16/9 mostrado por inteiro, sem recorte */
+    .hero.stacked .hero-media { aspect-ratio: 16 / 9; }
+    .hero.stacked .hero-art img { object-fit: contain; background: var(--petrol); }
     .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 82%, var(--petrol) 100%); }
     .hero.stacked .hero-kicker,
     .hero.stacked h1,
@@ -232,23 +205,7 @@
 </head>
 <body>
 
-<div class="backdrop" aria-hidden="true">
-  <div class="bd-nav">
-    <div class="bd-wm">
-      <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      markete<span>ia</span>
-    </div>
-    <div class="bd-links"><span>Aulas</span><span>Estratégias</span><span>Implementações</span><span>Estruturas de Campanhas</span></div>
-  </div>
-  <div class="bd-hero"></div>
-  <div class="bd-row">
-    <div class="bd-card"></div>
-    <div class="bd-card"></div>
-    <div class="bd-card"></div>
-    <div class="bd-card"></div>
-    <div class="bd-card"></div>
-  </div>
-</div>
+<iframe class="backdrop" src="/aplicativo" tabindex="-1" aria-hidden="true" scrolling="no" loading="eager"></iframe>
 
 <a class="scrim" href="/aplicativo" aria-label="Fechar"></a>
 <a class="modal-close" href="/aplicativo" aria-label="Fechar">✕</a>
