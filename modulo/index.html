@@ -30,47 +30,82 @@
     body {
       margin: 0;
       font-family: var(--font-u);
-      background: var(--petrol);
+      background: #05100f;
       color: var(--cream);
       line-height: 1.6;
-      overflow-x: clip;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 20px;
-      padding: 0 48px; height: 64px;
-      background: rgba(10,31,33,.9); backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(111,181,172,.08);
+    /* ── FUNDO DESFOCADO (simula a página anterior, tipo Netflix) ── */
+    .backdrop {
+      position: fixed; inset: 0; z-index: 0;
+      overflow: hidden; pointer-events: none;
+      filter: blur(9px) brightness(.45) saturate(1.05);
+      transform: scale(1.04);
     }
-    .nav-wm {
+    .bd-nav {
+      display: flex; align-items: center; gap: 28px;
+      padding: 0 48px; height: 68px;
+      background: var(--petrol);
+    }
+    .bd-wm {
       font-family: var(--font-d); font-weight: 900; font-size: 20px;
       letter-spacing: -.03em; color: var(--cream);
-      display: flex; align-items: center; gap: 9px; text-decoration: none; flex-shrink: 0;
-    }
-    .nav-wm svg { height: 19px; width: auto; }
-    .nav-wm .ia { color: var(--vermillion); }
-    .nav-crumb {
-      font-family: var(--font-m); font-size: 11.5px; color: var(--cream-35);
       display: flex; align-items: center; gap: 8px;
     }
-    .nav-crumb a { color: var(--cream-35); text-decoration: none; }
-    .nav-crumb a:hover { color: var(--cream-60); }
-    .nav-back {
-      margin-left: auto;
-      font-size: 13px; font-weight: 500; color: var(--cream-60);
-      text-decoration: none; display: flex; align-items: center; gap: 6px;
+    .bd-wm svg { height: 19px; width: auto; }
+    .bd-wm span { color: var(--vermillion); }
+    .bd-links { display: flex; gap: 22px; font-size: 13.5px; color: rgba(242,237,227,.6); }
+    .bd-hero {
+      height: 42vh; min-height: 280px;
+      background:
+        radial-gradient(ellipse 70% 90% at 85% 10%, rgba(111,181,172,.18) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 10% 95%, rgba(232,64,31,.14) 0%, transparent 60%),
+        var(--petrol);
     }
-    .nav-back:hover { color: var(--cream); }
+    .bd-row { display: flex; gap: 14px; padding: 24px 48px; background: var(--petrol); }
+    .bd-card {
+      flex: 1 1 0; aspect-ratio: 16/9; border-radius: 10px;
+      background: var(--petrol-mid); border: 1px solid rgba(111,181,172,.1);
+    }
+    .bd-card:nth-child(2) { background: #12302f; }
+    .bd-card:nth-child(3) { background: #0d2224; }
+    .bd-card:nth-child(4) { background: #123a2f; }
+    .bd-card:nth-child(5) { background: #101f21; }
+
+    .scrim {
+      position: fixed; inset: 0; z-index: 1;
+      background: rgba(4,14,14,.62);
+    }
+
+    /* ── MODAL FLUTUANTE ── */
+    .modal-sheet {
+      position: relative; z-index: 2;
+      width: min(980px, 94vw);
+      max-height: 90vh;
+      margin: 5vh auto;
+      overflow-y: auto;
+      background: var(--petrol);
+      border-radius: 14px;
+      box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(111,181,172,.08);
+    }
+    .modal-close {
+      position: fixed; top: 22px; right: max(22px, calc(50vw - 490px + 22px));
+      z-index: 5;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,31,33,.75); border: 1px solid rgba(242,237,227,.2);
+      color: var(--cream); font-size: 15px; text-decoration: none;
+      transition: background .15s var(--ease), transform .15s var(--ease);
+    }
+    .modal-close:hover { background: rgba(10,31,33,.95); transform: scale(1.06); }
 
     /* ── HERO ── */
-    .hero { position: relative; }
+    .hero { position: relative; border-radius: 14px 14px 0 0; overflow: hidden; }
     .hero-media {
       position: relative;
       aspect-ratio: 2 / 1;
-      max-height: 520px; min-height: 260px;
+      max-height: 460px; min-height: 220px;
       overflow: hidden;
     }
     .hero-art { position: absolute; inset: 0; }
@@ -94,67 +129,57 @@
     .badge.teal { background: rgba(111,181,172,.9); color: var(--petrol); }
     .badge.ghost { background: rgba(10,31,33,.7); color: var(--cream-60); border: 1px solid var(--cream-15); }
 
-    /* modo overlay (padrão): texto sobre a imagem, ancorado embaixo */
+    /* modo overlay (padrão): título/descrição sobre a imagem, ancorados embaixo */
     .hero-text {
       position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
-      padding: 0 48px 40px; max-width: 720px;
+      padding: 0 44px 28px; max-width: 680px;
     }
 
-    /* modo empilhado: banners com título, descrição e bullets já embutidos na própria foto —
-       só o essencial (botão) fica fora da imagem, para não duplicar texto */
-    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 460px; margin: 0 auto; }
-    .hero.stacked .hero-art img { object-position: center; }
-    .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 80%, var(--petrol) 100%); }
+    /* modo empilhado: banners com título, descrição e bullets já embutidos na própria foto */
+    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 440px; }
+    .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 82%, var(--petrol) 100%); }
     .hero.stacked .hero-kicker,
     .hero.stacked h1,
     .hero.stacked .hero-desc { display: none; }
-    .hero.stacked .hero-text {
-      position: static; max-width: none;
-      padding: 26px 48px 6px; background: var(--petrol);
-      display: flex; justify-content: center;
-    }
 
     .hero-kicker {
       font-family: var(--font-m); font-size: 11px; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--sinal); margin-bottom: 14px;
+      text-transform: uppercase; color: var(--sinal); margin-bottom: 12px;
     }
     .hero h1 {
       font-family: var(--font-d); font-weight: 900;
-      font-size: clamp(30px, 4.4vw, 48px);
-      letter-spacing: -.03em; line-height: 1.03; margin: 0 0 16px;
+      font-size: clamp(26px, 3.6vw, 40px);
+      letter-spacing: -.03em; line-height: 1.05; margin: 0 0 12px;
     }
     .hero h1 em { font-style: normal; color: var(--vermillion); }
-    .hero-desc { font-size: 15.5px; color: var(--cream-60); max-width: 560px; margin: 0 0 28px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .hero-desc { font-size: 15px; color: var(--cream-60); max-width: 540px; margin: 0; }
+
+    /* ── BARRA DE AÇÃO (entre o banner e os painéis) ── */
+    .actions-bar { padding: 26px 44px 6px; display: flex; justify-content: flex-start; }
+    .hero.stacked ~ .actions-bar { justify-content: center; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
       font-family: var(--font-d); font-weight: 700; font-size: 15px;
       letter-spacing: -.01em; text-decoration: none;
-      padding: 14px 26px; border-radius: 8px; border: none; cursor: pointer;
+      padding: 14px 30px; border-radius: 8px; border: none; cursor: pointer;
       transition: transform .15s var(--ease), background .15s var(--ease), opacity .15s;
     }
     .btn:hover { transform: translateY(-2px); }
     .btn-play { background: var(--cream); color: var(--petrol); }
     .btn-play:hover { background: #fff; }
-    .btn-soon {
-      background: rgba(242,237,227,.08); color: var(--cream-60);
-      border: 1px solid rgba(242,237,227,.16); cursor: default;
-    }
-    .btn-soon:hover { transform: none; }
-    .hero-note { font-family: var(--font-m); font-size: 11px; color: var(--cream-35); letter-spacing: .04em; }
 
     /* ── CONTENT ── */
-    .content { max-width: 980px; margin: 0 auto; padding: 56px 48px 90px; }
+    .content { padding: 30px 44px 46px; }
     .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .panel {
       background: var(--petrol-mid);
       border: 1px solid rgba(111,181,172,.1);
       border-radius: 14px;
-      padding: 30px 32px;
+      padding: 28px 30px;
     }
     .panel-title {
-      font-family: var(--font-d); font-weight: 800; font-size: 17px;
-      letter-spacing: -.02em; margin: 0 0 18px;
+      font-family: var(--font-d); font-weight: 800; font-size: 16px;
+      letter-spacing: -.02em; margin: 0 0 16px;
       display: flex; align-items: center; gap: 10px;
     }
     .panel-title .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sinal); flex-shrink: 0; }
@@ -181,74 +206,90 @@
 
     .footer {
       border-top: 1px solid rgba(111,181,172,.08);
-      padding: 30px 48px;
+      padding: 24px 44px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 14px; flex-wrap: wrap;
     }
     .footer-wm {
-      font-family: var(--font-d); font-weight: 800; font-size: 16px;
+      font-family: var(--font-d); font-weight: 800; font-size: 15px;
       letter-spacing: -.02em; color: var(--cream);
       display: flex; align-items: center; gap: 9px;
     }
-    .footer-wm svg { height: 16px; width: auto; }
+    .footer-wm svg { height: 15px; width: auto; }
     .footer-wm span { color: var(--vermillion); }
-    .footer-copy { font-family: var(--font-m); font-size: 11px; color: var(--cream-35); letter-spacing: .06em; }
+    .footer-copy { font-family: var(--font-m); font-size: 10.5px; color: var(--cream-35); letter-spacing: .06em; }
 
     @media (max-width: 760px) {
-      .nav, .footer { padding-left: 20px; padding-right: 20px; }
-      .nav-crumb { display: none; }
-      .hero-text { padding: 0 20px 30px; }
-      .hero.stacked .hero-text { padding: 26px 20px 8px; }
-      .content { padding: 40px 20px 70px; }
+      .bd-nav, .bd-row { display: none; }
+      .modal-sheet { width: 100vw; max-height: 100vh; margin: 0; border-radius: 0; }
+      .hero { border-radius: 0; }
+      .modal-close { top: 14px; right: 14px; }
+      .hero-text { padding: 0 20px 22px; }
+      .actions-bar, .content, .footer { padding-left: 20px; padding-right: 20px; }
       .panels { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a class="nav-wm" href="/aplicativo">
-    <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>markete<span class="ia">ia</span></span>
-  </a>
-  <div class="nav-crumb" id="crumb"></div>
-  <a class="nav-back" href="/aplicativo">← Voltar ao hub</a>
-</nav>
-
-<section class="hero" id="hero">
-  <div class="hero-media">
-    <div class="hero-art" id="heroArt"></div>
-    <div class="hero-shade"></div>
-    <div class="hero-badges" id="heroBadges"></div>
-  </div>
-  <div class="hero-text">
-    <div class="hero-kicker" id="heroKicker"></div>
-    <h1 id="heroTitle"></h1>
-    <p class="hero-desc" id="heroDesc"></p>
-    <div class="hero-actions" id="heroActions"></div>
-  </div>
-</section>
-
-<div class="content">
-  <div class="panels">
-    <div class="panel">
-      <h2 class="panel-title"><span class="dot"></span>O que você vai aplicar</h2>
-      <ul class="bullets" id="bulletsList"></ul>
+<div class="backdrop" aria-hidden="true">
+  <div class="bd-nav">
+    <div class="bd-wm">
+      <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      markete<span>ia</span>
     </div>
-    <div class="panel">
-      <h2 class="panel-title"><span class="dot"></span>Conteúdo incluso</h2>
-      <ul class="topics" id="topicsList"></ul>
-    </div>
+    <div class="bd-links"><span>Aulas</span><span>Estratégias</span><span>Implementações</span><span>Estruturas de Campanhas</span></div>
+  </div>
+  <div class="bd-hero"></div>
+  <div class="bd-row">
+    <div class="bd-card"></div>
+    <div class="bd-card"></div>
+    <div class="bd-card"></div>
+    <div class="bd-card"></div>
+    <div class="bd-card"></div>
   </div>
 </div>
 
-<footer class="footer">
-  <div class="footer-wm">
-    <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    markete<span>ia</span>
+<a class="scrim" href="/aplicativo" aria-label="Fechar"></a>
+<a class="modal-close" href="/aplicativo" aria-label="Fechar">✕</a>
+
+<div class="modal-sheet">
+  <section class="hero" id="hero">
+    <div class="hero-media">
+      <div class="hero-art" id="heroArt"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-badges" id="heroBadges"></div>
+    </div>
+    <div class="hero-text">
+      <div class="hero-kicker" id="heroKicker"></div>
+      <h1 id="heroTitle"></h1>
+      <p class="hero-desc" id="heroDesc"></p>
+    </div>
+  </section>
+
+  <div class="actions-bar" id="actionsBar"></div>
+
+  <div class="content">
+    <div class="panels">
+      <div class="panel">
+        <h2 class="panel-title"><span class="dot"></span>O que você vai aplicar</h2>
+        <ul class="bullets" id="bulletsList"></ul>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title"><span class="dot"></span>Conteúdo incluso</h2>
+        <ul class="topics" id="topicsList"></ul>
+      </div>
+    </div>
   </div>
-  <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
-</footer>
+
+  <footer class="footer">
+    <div class="footer-wm">
+      <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      markete<span>ia</span>
+    </div>
+    <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
+  </footer>
+</div>
 
 <script>
 const SVG_QUIZ = `<svg viewBox="0 0 340 191" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -324,16 +365,8 @@ const SVG_PERSONAIS = `<svg viewBox="0 0 340 191" preserveAspectRatio="xMidYMid 
   <path d="M95 140 L110 100 M245 140 L230 100" stroke="rgba(242,237,227,.3)" stroke-width="6" stroke-linecap="round"/>
 </svg>`;
 
-const CATEGORIES = {
-  aulas:          { label: 'Aulas',                    anchor: '/aplicativo#diagnostico' },
-  estrategias:    { label: 'Estratégias',               anchor: '/aplicativo#materiais' },
-  implementacoes: { label: 'Implementações',            anchor: '/aplicativo#clientes' },
-  campanhas:      { label: 'Estruturas de Campanhas',   anchor: '/aplicativo#equipe' },
-};
-
 const MODULES = {
   quiz: {
-    category: 'aulas',
     badges: [{ text: 'Top 1' }],
     kicker: 'Quiz · 2 min',
     title: 'Diagnóstico de <em>Performance Digital</em>',
@@ -345,10 +378,9 @@ const MODULES = {
     ],
     topics: ['Bloco 1 — Perfil do seu negócio', 'Bloco 2 — Situação atual de anúncios', 'Bloco 3 — Diagnóstico e recomendação'],
     art: { type: 'svg', content: SVG_QUIZ },
-    cta: { label: 'Fazer o diagnóstico', href: '/quiz', ready: true },
+    href: '/quiz',
   },
   quizdark: {
-    category: 'aulas',
     badges: [{ text: 'Alt', cls: 'ghost' }],
     kicker: 'Quiz · Versão dark',
     title: 'Diagnóstico — <em>Modo Escuro</em>',
@@ -360,11 +392,10 @@ const MODULES = {
     ],
     topics: ['Bloco 1 — Perfil do seu negócio', 'Bloco 2 — Situação atual de anúncios', 'Bloco 3 — Diagnóstico e recomendação'],
     art: { type: 'svg', content: SVG_QUIZDARK },
-    cta: { label: 'Fazer o diagnóstico', href: '/quizdark', ready: true },
+    href: '/quizdark',
   },
   estetica: {
-    category: 'aulas',
-    badges: [{ text: 'Em breve', cls: 'ghost' }],
+    badges: [],
     kicker: 'Aula · Nicho',
     title: 'Estrutura Digital Ideal para <em>Clínicas de Estética</em>',
     desc: 'A jornada do lead adaptada para captação e conversão em clínicas de estética — do primeiro anúncio ao agendamento recorrente.',
@@ -380,11 +411,10 @@ const MODULES = {
       'Módulo 4 — Nutrição e retenção',
     ],
     art: { type: 'img', src: '/assets/banners/banner-estetica.jpg' },
-    cta: { label: 'Em breve', href: '#', ready: false },
+    href: '#',
   },
   moveis: {
-    category: 'aulas',
-    badges: [{ text: 'Em breve', cls: 'ghost' }],
+    badges: [],
     kicker: 'Aula · Nicho',
     title: 'Estrutura Digital Ideal para <em>Loja de Móveis</em>',
     desc: 'Estratégia digital para negócios de ticket alto e ciclo de venda mais longo — da atração ao fechamento.',
@@ -400,11 +430,10 @@ const MODULES = {
       'Módulo 4 — Nutrição de ciclo de venda longo',
     ],
     art: { type: 'img', src: '/assets/banners/banner-moveis.jpg' },
-    cta: { label: 'Em breve', href: '#', ready: false },
+    href: '#',
   },
   autonomos: {
-    category: 'aulas',
-    badges: [{ text: 'Em breve', cls: 'ghost' }],
+    badges: [],
     kicker: 'Aula · Nicho',
     title: 'Estrutura Digital Ideal para <em>Profissionais Autônomos</em>',
     desc: 'Como gerar autoridade e agenda cheia sem depender só de indicação.',
@@ -420,11 +449,10 @@ const MODULES = {
       'Módulo 4 — Nutrição e recorrência',
     ],
     art: { type: 'img', src: '/assets/banners/banner-autonomos.jpg' },
-    cta: { label: 'Em breve', href: '#', ready: false },
+    href: '#',
   },
   personais: {
-    category: 'aulas',
-    badges: [{ text: 'Em breve', cls: 'ghost' }],
+    badges: [],
     kicker: 'Aula · Nicho',
     title: 'Estrutura Digital Ideal para <em>Personais / Treinadores Físicos</em>',
     desc: 'Captação de alunos e retenção com conteúdo e prova social recorrente.',
@@ -440,10 +468,9 @@ const MODULES = {
       'Módulo 4 — Retenção e recorrência',
     ],
     art: { type: 'svg', content: SVG_PERSONAIS },
-    cta: { label: 'Em breve', href: '#', ready: false },
+    href: '#',
   },
   ebook: {
-    category: 'estrategias',
     badges: [{ text: 'Novo' }],
     kicker: 'Ebook · 7 módulos',
     title: 'A Estrutura Digital Ideal',
@@ -461,10 +488,9 @@ const MODULES = {
       'Módulo 7 — Estruturas de Campanha',
     ],
     art: { type: 'svg', content: SVG_EBOOK },
-    cta: { label: 'Abrir o ebook', href: '/ebook', ready: true },
+    href: '/ebook',
   },
   sobrenos: {
-    category: 'estrategias',
     badges: [{ text: 'Leitura', cls: 'teal' }],
     kicker: 'Artigo · Mecanismo',
     title: 'O Segredo dos Resultados com Digital',
@@ -476,10 +502,9 @@ const MODULES = {
     ],
     topics: ['As 3 situações mais comuns', 'A raiz do problema', 'A jornada do lead ideal'],
     art: { type: 'svg', content: SVG_SOBRENOS },
-    cta: { label: 'Ler o artigo', href: '/sobrenos', ready: true },
+    href: '/sobrenos',
   },
   'roteiro-webinar': {
-    category: 'estrategias',
     badges: [{ text: 'Interno', cls: 'ghost' }],
     kicker: 'Roteiro · Webinar',
     title: 'Aula: A Estrutura Digital Ideal',
@@ -491,10 +516,9 @@ const MODULES = {
     ],
     topics: ['Blocos 0–11 — Estrutura completa da aula', 'Anexo — Matriz dos 6 módulos', 'Tabela-mestra — Situação × Pilar × Gargalo'],
     art: { type: 'svg', content: SVG_ROTEIRO },
-    cta: { label: 'Abrir o roteiro', href: '/roteiro-webinar', ready: true },
+    href: '/roteiro-webinar',
   },
   preonboarding: {
-    category: 'implementacoes',
     badges: [{ text: 'Boas-vindas', cls: 'teal' }],
     kicker: 'Pré-Onboarding',
     title: 'Diferenciais &amp; Metodologia',
@@ -506,10 +530,9 @@ const MODULES = {
     ],
     topics: ['Por que escolher a Marketeia', 'Como funciona a implementação', 'Estrutura de investimento'],
     art: { type: 'svg', content: SVG_PREONBOARDING },
-    cta: { label: 'Abrir material', href: '/preonboarding', ready: true },
+    href: '/preonboarding',
   },
   lp: {
-    category: 'implementacoes',
     badges: [],
     kicker: 'Landing page',
     title: 'Marketing sem caixa-preta',
@@ -521,10 +544,9 @@ const MODULES = {
     ],
     topics: ['Hero e proposta de valor', 'Prova e diferenciais', 'CTA de diagnóstico'],
     art: { type: 'svg', content: SVG_LP },
-    cta: { label: 'Ver a landing page', href: '/lp', ready: true },
+    href: '/lp',
   },
   adminquiz: {
-    category: 'campanhas',
     badges: [{ text: 'Restrito', cls: 'ghost' }],
     kicker: 'Admin',
     title: 'Respostas do Diagnóstico',
@@ -536,7 +558,7 @@ const MODULES = {
     ],
     topics: ['Lista de respostas', 'Filtros por situação diagnosticada', 'Exportação de leads'],
     art: { type: 'svg', content: SVG_ADMIN },
-    cta: { label: 'Abrir painel', href: '/adminquiz', ready: true },
+    href: '/adminquiz',
   },
 };
 
@@ -550,12 +572,7 @@ function render() {
     return;
   }
 
-  const cat = CATEGORIES[data.category];
-
   document.title = `${data.title.replace(/<[^>]+>/g, '')} · marketeia`;
-
-  document.getElementById('crumb').innerHTML =
-    `<a href="/aplicativo">Aplicativo</a><span>／</span><a href="${cat.anchor}">${cat.label}</a>`;
 
   document.getElementById('heroArt').innerHTML =
     data.art.type === 'svg' ? data.art.content : `<img src="${data.art.src}" alt="" />`;
@@ -569,14 +586,8 @@ function render() {
   document.getElementById('heroTitle').innerHTML = data.title;
   document.getElementById('heroDesc').textContent = data.desc;
 
-  const actions = document.getElementById('heroActions');
-  if (data.cta.ready) {
-    actions.innerHTML = `<a class="btn btn-play" href="${data.cta.href}"><span>▶</span> ${data.cta.label}</a>`;
-  } else {
-    actions.innerHTML =
-      `<button class="btn btn-soon" type="button" disabled>${data.cta.label}</button>` +
-      `<span class="hero-note">Este módulo ainda está em produção — volte em breve.</span>`;
-  }
+  document.getElementById('actionsBar').innerHTML =
+    `<a class="btn btn-play" href="${data.href}"><span>▶</span> Assistir</a>`;
 
   document.getElementById('bulletsList').innerHTML =
     data.bullets.map(b => `<li><span class="ic">✓</span>${b}</li>`).join('');
@@ -586,6 +597,10 @@ function render() {
 }
 
 render();
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') location.href = '/aplicativo';
+});
 </script>
 
 </body>
