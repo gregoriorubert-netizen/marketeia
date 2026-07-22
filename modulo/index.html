@@ -66,10 +66,11 @@
     .nav-back:hover { color: var(--cream); }
 
     /* ── HERO ── */
-    .hero {
+    .hero { position: relative; }
+    .hero-media {
       position: relative;
-      min-height: 56vh;
-      display: flex; align-items: flex-end;
+      aspect-ratio: 2 / 1;
+      max-height: 520px; min-height: 260px;
       overflow: hidden;
     }
     .hero-art { position: absolute; inset: 0; }
@@ -80,8 +81,10 @@
         linear-gradient(180deg, rgba(10,31,33,.2) 0%, rgba(10,31,33,.55) 55%, var(--petrol) 100%),
         linear-gradient(90deg, rgba(10,31,33,.85) 0%, rgba(10,31,33,.15) 60%);
     }
-    .hero-inner { position: relative; padding: 48px 48px 44px; max-width: 720px; z-index: 1; }
-    .hero-badges { display: flex; gap: 8px; margin-bottom: 16px; }
+    .hero-badges {
+      position: absolute; top: 20px; left: 20px; z-index: 2;
+      display: flex; gap: 8px;
+    }
     .badge {
       font-family: var(--font-m); font-size: 10px; font-weight: 500;
       letter-spacing: .1em; text-transform: uppercase;
@@ -90,6 +93,21 @@
     }
     .badge.teal { background: rgba(111,181,172,.9); color: var(--petrol); }
     .badge.ghost { background: rgba(10,31,33,.7); color: var(--cream-60); border: 1px solid var(--cream-15); }
+
+    /* modo overlay (padrão): texto sobre a imagem, ancorado embaixo */
+    .hero-text {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+      padding: 0 48px 40px; max-width: 720px;
+    }
+
+    /* modo empilhado: banners com título já embutido na foto — texto some da imagem e vai abaixo, sem duplicar */
+    .hero.stacked .hero-media { aspect-ratio: 16 / 9; max-height: 460px; }
+    .hero.stacked .hero-shade { background: linear-gradient(180deg, transparent 75%, var(--petrol) 100%); }
+    .hero.stacked .hero-text {
+      position: static; max-width: 720px;
+      padding: 36px 48px 8px; background: var(--petrol);
+    }
+
     .hero-kicker {
       font-family: var(--font-m); font-size: 11px; letter-spacing: .14em;
       text-transform: uppercase; color: var(--sinal); margin-bottom: 14px;
@@ -173,7 +191,8 @@
     @media (max-width: 760px) {
       .nav, .footer { padding-left: 20px; padding-right: 20px; }
       .nav-crumb { display: none; }
-      .hero-inner { padding: 32px 20px 34px; }
+      .hero-text { padding: 0 20px 30px; }
+      .hero.stacked .hero-text { padding: 26px 20px 8px; }
       .content { padding: 40px 20px 70px; }
       .panels { grid-template-columns: 1fr; }
     }
@@ -190,11 +209,13 @@
   <a class="nav-back" href="/aplicativo">← Voltar ao hub</a>
 </nav>
 
-<section class="hero">
-  <div class="hero-art" id="heroArt"></div>
-  <div class="hero-shade"></div>
-  <div class="hero-inner">
+<section class="hero" id="hero">
+  <div class="hero-media">
+    <div class="hero-art" id="heroArt"></div>
+    <div class="hero-shade"></div>
     <div class="hero-badges" id="heroBadges"></div>
+  </div>
+  <div class="hero-text">
     <div class="hero-kicker" id="heroKicker"></div>
     <h1 id="heroTitle"></h1>
     <p class="hero-desc" id="heroDesc"></p>
@@ -532,6 +553,8 @@ function render() {
 
   document.getElementById('heroArt').innerHTML =
     data.art.type === 'svg' ? data.art.content : `<img src="${data.art.src}" alt="" />`;
+
+  document.getElementById('hero').classList.toggle('stacked', data.art.type === 'img');
 
   document.getElementById('heroBadges').innerHTML =
     data.badges.map(b => `<span class="badge ${b.cls || ''}">${b.text}</span>`).join('');
