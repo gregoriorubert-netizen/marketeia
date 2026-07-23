@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estrutura Digital Ideal · marketeia</title>
+  <meta name="description" content="Estruturamos a operação digital do seu negócio para gerar resultado com previsibilidade — não é sobre anunciar, é sobre o que e como você anuncia." />
+  <meta property="og:title" content="Estrutura Digital Ideal · marketeia" />
+  <meta property="og:description" content="Pare de anunciar no escuro. Estruturamos a sua operação digital inteira para escalar com previsibilidade." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --petrol:      #0a1f21;
+      --petrol-mid:  #0e282b;
+      --petrol-surf: #11313400;
+      --surf:        #102a2d;
+      --surf-2:      #0d2325;
+      --petrol-lt:   #163a3e;
+      --vermillion:  #e8401f;
+      --verm-bright: #ff5c36;
+      --verm-dim:    rgba(232,64,31,.1);
+      --sinal:       #6fb5ac;
+      --sinal-dim:   rgba(111,181,172,.12);
+      --cream:       #f2ede3;
+      --cream-70:    rgba(242,237,227,.7);
+      --cream-55:    rgba(242,237,227,.55);
+      --cream-35:    rgba(242,237,227,.35);
+      --cream-15:    rgba(242,237,227,.14);
+      --border:      rgba(111,181,172,.14);
+      --border-sub:  rgba(111,181,172,.08);
+      --font-d: "Archivo", sans-serif;
+      --font-u: "Inter Tight", system-ui, sans-serif;
+      --font-m: "JetBrains Mono", monospace;
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --maxw: 560px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font-u);
+      background: var(--petrol); color: var(--cream);
+      line-height: 1.6; overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+
+    h1,h2,h3,h4 { font-family: var(--font-d); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; margin: 0; }
+    strong { color: var(--cream); font-weight: 700; }
+    em { font-style: normal; color: var(--vermillion); }
+    .teal { color: var(--sinal); }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 22px; position: relative; z-index: 1; }
+    .section { padding: 64px 0; position: relative; z-index: 1; }
+
+    .eyebrow {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--sinal);
+      display: inline-flex; align-items: center; gap: 9px; margin-bottom: 18px;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+    .eyebrow.center { justify-content: center; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,31,33,.86); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-sub);
+    }
+    .topbar-in { max-width: var(--maxw); margin: 0 auto; padding: 11px 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .wm { display: flex; align-items: center; gap: 8px; text-decoration: none;
+      font-family: var(--font-d); font-weight: 900; font-size: 19px; letter-spacing: -.03em; color: var(--cream); }
+    .wm svg { height: 18px; width: auto; }
+    .wm .ia { color: var(--vermillion); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      font-family: var(--font-d); font-weight: 800; font-size: 14px; letter-spacing: -.01em;
+      text-decoration: none; cursor: pointer; border: none;
+      padding: 12px 20px; border-radius: 9px; white-space: nowrap;
+      transition: transform .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
+    }
+    .btn-primary { background: var(--vermillion); color: #fff; box-shadow: 0 6px 22px rgba(232,64,31,.28); }
+    .btn-primary:hover { background: var(--verm-bright); transform: translateY(-2px); }
+    .btn-lg { padding: 16px 30px; font-size: 15.5px; }
+    .btn-block { width: 100%; }
+    .tb-btn { padding: 9px 16px; font-size: 12.5px; border-radius: 8px; }
+    .btn .arrow {
+      width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.22);
+      display: inline-flex; align-items: center; justify-content: center; font-size: 11px;
+    }
+
+    /* ── HERO ── */
+    .hero { padding: 40px 0 54px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; left: 50%; top: -10%; transform: translateX(-50%);
+      width: 130%; height: 60%;
+      background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(111,181,172,.18) 0%, transparent 65%),
+                  radial-gradient(ellipse 40% 50% at 50% 40%, rgba(232,64,31,.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-photo {
+      position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 18px; overflow: hidden;
+      background: linear-gradient(160deg, var(--petrol-lt), var(--surf-2));
+      border: 1px solid var(--border); margin-bottom: 26px;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .hero-photo .ph-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-family: var(--font-m); font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--cream-35); background: rgba(10,31,33,.6); border: 1px dashed var(--cream-15);
+      padding: 5px 10px; border-radius: 6px;
+    }
+    .hero-photo .ph-wave { position: absolute; inset: 0; opacity: .16; }
+    .hero-photo .ph-wave svg { width: 100%; height: 100%; }
+    .hero-photo .ph-cap {
+      position: relative; z-index: 1; padding: 0 24px 26px; text-align: center;
+    }
+    .hero-photo .ph-cap .nm { font-family: var(--font-d); font-weight: 900; font-size: 18px; color: var(--cream); }
+    .hero-photo .ph-cap .rl { font-size: 12.5px; color: var(--cream-55); margin-top: 2px; }
+
+    .hero h1 { font-size: clamp(30px, 8vw, 42px); margin-bottom: 18px; }
+    .hero h1 .sub { display: block; color: var(--cream); }
+    .hero-lead { font-size: 15.5px; color: var(--cream-70); max-width: 460px; margin: 0 auto 24px; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 auto 26px; max-width: 420px; }
+    .hstat { background: var(--surf-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-align: left; }
+    .hstat .n { font-family: var(--font-d); font-weight: 900; font-size: 22px; color: var(--vermillion); letter-spacing: -.03em; }
+    .hstat .l { font-size: 11.5px; color: var(--cream-55); line-height: 1.35; margin-top: 2px; }
+    .hero-pills { display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin: 0 auto 28px; }
+    .hpill { display: flex; align-items: center; gap: 12px; padding: 13px 16px; background: var(--surf-2);
+      border: 1px solid var(--border); border-radius: 11px; text-align: left; }
+    .hpill .ic { width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px; background: var(--sinal-dim);
+      display: flex; align-items: center; justify-content: center; color: var(--sinal); }
+    .hpill .tx b { display: block; font-size: 13.5px; color: var(--cream); font-weight: 700; }
+    .hpill .tx span { font-size: 12px; color: var(--cream-55); }
+
+    /* ── LOGOS ── */
+    .logos { border-top: 1px solid var(--border-sub); border-bottom: 1px solid var(--border-sub); padding: 26px 0; }
+    .logos .cap { font-family: var(--font-m); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--cream-35); text-align: center; margin-bottom: 16px; }
+    .logo-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 24px; }
+    .logo-item { font-family: var(--font-d); font-weight: 900; font-size: 15px; letter-spacing: -.02em;
+      color: var(--cream-55); opacity: .8; }
+    .logo-ph { font-family: var(--font-m); font-size: 10px; letter-spacing: .1em; color: var(--cream-35);
+      border: 1px dashed var(--cream-15); border-radius: 7px; padding: 8px 14px; }
+
+    /* ── SECTION TITLES ── */
+    .stitle { font-size: clamp(24px, 6.5vw, 32px); margin-bottom: 16px; }
+    .stitle.center { text-align: center; }
+    .slead { font-size: 15px; color: var(--cream-70); margin-bottom: 8px; }
+    .slead.center { text-align: center; max-width: 460px; margin-left: auto; margin-right: auto; }
+
+    /* value band */
+    .band { background: var(--surf-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .band .stitle { text-align: center; }
+
+    /* ── CASE / CAROUSEL ── */
+    .carousel { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 6px 22px 14px; max-width: var(--maxw); margin: 0 auto; scrollbar-width: none; }
+    .carousel::-webkit-scrollbar { display: none; }
+    .case {
+      flex: 0 0 82%; scroll-snap-align: center; background: var(--surf-2);
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    }
+    .case-media { position: relative; aspect-ratio: 5/4; background: linear-gradient(150deg, var(--petrol-lt), var(--surf-2));
+      display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-sub); }
+    .case-media .ph-badge { position: absolute; top: 12px; left: 12px;
+      font-family: var(--font-m); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--cream-35);
+      background: rgba(10,31,33,.6); border: 1px dashed var(--cream-15); padding: 4px 9px; border-radius: 5px; }
+    .case-media .brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-d); font-weight: 900; color: var(--cream-55); }
+    .case-body { padding: 18px 20px 22px; }
+    .case-tag { font-family: var(--font-m); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--sinal); background: var(--sinal-dim); border-radius: 5px; padding: 3px 8px; display: inline-block; margin-bottom: 12px; }
+    .case-body h4 { font-size: 22px; margin-bottom: 8px; }
+    .case-body h4 .from { color: var(--cream-55); font-weight: 700; }
+    .case-body p { font-size: 13px; color: var(--cream-55); margin: 0; }
+    .swipe-hint { font-family: var(--font-m); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--cream-35); text-align: center; margin-top: 6px; }
+
+    /* ── FOR WHOM GRID ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 26px; }
+    .card { background: var(--surf-2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; }
+    .card .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--verm-dim);
+      display: flex; align-items: center; justify-content: center; color: var(--vermillion); margin-bottom: 14px; }
+    .card p { font-size: 13.5px; color: var(--cream-70); margin: 0; line-height: 1.45; }
+    .card p b { color: var(--cream); }
+
+    /* ── PROBLEM AGITATION ── */
+    .agit { text-align: center; }
+    .agit .big { font-size: clamp(28px, 8vw, 40px); margin-bottom: 22px; }
+    .agit-q {
+      background: var(--surf-2); border: 1px solid var(--border); border-left: 3px solid var(--vermillion);
+      border-radius: 0 14px 14px 0; padding: 22px 24px; text-align: left; margin: 24px 0;
+    }
+    .agit-q .q { font-family: var(--font-d); font-weight: 800; font-size: 19px; line-height: 1.25; margin-bottom: 12px; }
+    .agit-q p { font-size: 14px; color: var(--cream-70); margin: 0 0 10px; }
+    .agit-q p:last-child { margin-bottom: 0; }
+    .agit-icon { width: 66px; height: 66px; margin: 8px auto 0; border-radius: 16px; background: var(--sinal-dim);
+      display: flex; align-items: center; justify-content: center; color: var(--sinal); }
+
+    /* ── MECHANISM HUB ── */
+    .hub-wrap { display: flex; justify-content: center; margin: 30px 0 6px; }
+    .hub { width: 260px; height: 260px; position: relative; }
+
+    /* ── OPVT PILLARS ── */
+    .pillars { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+    .pillar { background: var(--surf-2); border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; position: relative; overflow: hidden; }
+    .pillar::after { content: attr(data-l); position: absolute; top: -18px; right: 8px;
+      font-family: var(--font-d); font-weight: 900; font-size: 100px; color: rgba(255,255,255,.03); letter-spacing: -.05em; }
+    .pillar .pk { font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--sinal); margin-bottom: 8px; }
+    .pillar h4 { font-size: 21px; margin-bottom: 12px; position: relative; }
+    .pillar > p { font-size: 13.5px; color: var(--cream-70); margin: 0 0 16px; position: relative; }
+    .pillar .change { display: flex; gap: 10px; align-items: flex-start; padding: 13px 15px; background: rgba(111,181,172,.07);
+      border: 1px solid var(--border-sub); border-radius: 10px; position: relative; }
+    .pillar .change .lb { font-family: var(--font-m); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--sinal); flex-shrink: 0; margin-top: 2px; }
+    .pillar .change p { font-size: 13px; color: var(--cream-70); margin: 0; }
+
+    /* ── TESTIMONIAL ── */
+    .quote { background: var(--surf-2); border: 1px solid var(--border); border-radius: 18px; padding: 28px 26px; }
+    .quote .qt { font-family: var(--font-d); font-weight: 800; font-style: italic; font-size: 18px; line-height: 1.35; margin-bottom: 20px; }
+    .quote .qt .mk { color: var(--vermillion); }
+    .quote .who { display: flex; align-items: center; gap: 12px; }
+    .quote .av { width: 44px; height: 44px; border-radius: 50%; background: var(--petrol-lt); border: 1px dashed var(--cream-15);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-m); font-size: 8px; color: var(--cream-35); text-align: center; flex-shrink: 0; }
+    .quote .who .nm { font-family: var(--font-d); font-weight: 800; font-size: 14px; color: var(--cream); }
+    .quote .who .rl { font-size: 12px; color: var(--cream-55); }
+
+    /* ── STEPS TIMELINE ── */
+    .steps { position: relative; margin-top: 28px; padding-left: 8px; }
+    .steps::before { content: ""; position: absolute; left: 25px; top: 20px; bottom: 20px; width: 2px; background: var(--border); }
+    .step { display: flex; gap: 18px; margin-bottom: 16px; position: relative; }
+    .step:last-child { margin-bottom: 0; }
+    .step .dot { width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; background: var(--vermillion); color: #fff;
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-weight: 900; font-size: 15px; z-index: 1; box-shadow: 0 0 0 5px var(--petrol); }
+    .step .st-body { background: var(--surf-2); border: 1px solid var(--border); border-radius: 13px; padding: 16px 18px; flex: 1; }
+    .step .st-k { font-family: var(--font-m); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--sinal); margin-bottom: 4px; }
+    .step .st-body h4 { font-size: 17px; margin-bottom: 6px; }
+    .step .st-body p { font-size: 13px; color: var(--cream-55); margin: 0; }
+
+    /* ── DETAILED PILLARS ── */
+    .detail { background: var(--surf-2); border: 1px solid var(--border); border-radius: 16px; padding: 26px 22px; margin-top: 16px; }
+    .detail .dk { font-family: var(--font-m); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--sinal); margin-bottom: 8px; }
+    .detail h3 { font-size: 22px; margin-bottom: 14px; }
+    .detail ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+    .detail li { display: flex; gap: 11px; font-size: 13.5px; color: var(--cream-70); line-height: 1.5; }
+    .detail li::before { content: "→"; font-family: var(--font-m); color: var(--sinal); flex-shrink: 0; }
+
+    /* ── DIFERENCIAL ── */
+    .diff { text-align: center; }
+    .diff .big { font-size: clamp(26px, 7vw, 36px); margin-bottom: 16px; }
+    .diff .vs { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; text-align: left; }
+    .diff .vs-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--surf-2);
+      border: 1px solid var(--border); border-radius: 11px; font-size: 13.5px; }
+    .diff .vs-row .x { color: var(--cream-35); font-family: var(--font-m); font-size: 11px; flex-shrink: 0; }
+    .diff .vs-row.win { border-color: rgba(232,64,31,.35); background: var(--verm-dim); }
+    .diff .vs-row.win .x { color: var(--vermillion); }
+    .diff .vs-row b { color: var(--cream); }
+
+    /* ── TWO PATHS ── */
+    .paths { display: flex; flex-direction: column; gap: 16px; margin-top: 26px; }
+    .path { background: var(--surf-2); border: 1px solid var(--border); border-radius: 16px; padding: 26px 22px; }
+    .path h3 { font-size: 22px; margin-bottom: 6px; }
+    .path .sub { font-family: var(--font-m); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--sinal); margin-bottom: 18px; }
+    .path ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .path li { display: flex; gap: 11px; font-size: 13.5px; color: var(--cream-70); line-height: 1.5; }
+    .path li .chk { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; background: var(--sinal-dim); color: var(--sinal);
+      display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 1px; }
+
+    /* ── SCARCITY ── */
+    .scarcity { text-align: center; }
+    .scar-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 10px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--vermillion); background: var(--verm-dim);
+      border: 1px solid rgba(232,64,31,.3); border-radius: 99px; padding: 7px 15px; margin-bottom: 20px; }
+    .scar-badge .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--vermillion); box-shadow: 0 0 0 0 rgba(232,64,31,.5); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(232,64,31,.5); } 70% { box-shadow: 0 0 0 10px rgba(232,64,31,0); } 100% { box-shadow: 0 0 0 0 rgba(232,64,31,0); } }
+    .scarcity .big { font-size: clamp(26px, 7vw, 36px); margin-bottom: 16px; }
+    .scarcity .big em { color: var(--vermillion); }
+    .scarcity p { font-size: 14px; color: var(--cream-70); max-width: 440px; margin: 0 auto 8px; }
+
+    /* ── FINAL CTA ── */
+    .final { text-align: center; position: relative; overflow: hidden; }
+    .final::before { content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,64,31,.14) 0%, transparent 65%); pointer-events: none; }
+    .final .big { font-size: clamp(28px, 8.5vw, 44px); margin-bottom: 18px; position: relative; }
+    .final .big em { color: var(--vermillion); }
+    .final p { font-size: 15px; color: var(--cream-70); max-width: 440px; margin: 0 auto 20px; position: relative; }
+    .final-card { background: var(--surf-2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      margin: 24px 0; text-align: left; position: relative; }
+    .final-card .fc-media { aspect-ratio: 16/10; background: linear-gradient(150deg, var(--petrol-lt), var(--surf-2));
+      display: flex; align-items: center; justify-content: center; position: relative; border-bottom: 1px solid var(--border-sub); }
+    .final-card .ph-badge { position: absolute; top: 12px; left: 12px; font-family: var(--font-m); font-size: 8.5px;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--cream-35); background: rgba(10,31,33,.6);
+      border: 1px dashed var(--cream-15); padding: 4px 9px; border-radius: 5px; }
+    .final-card .fc-body { padding: 20px; }
+    .final-card .fc-body h4 { font-size: 19px; margin-bottom: 12px; }
+
+    /* ── FOOTER ── */
+    .footer { border-top: 1px solid var(--border-sub); background: var(--petrol-mid); }
+    .footer-in { max-width: var(--maxw); margin: 0 auto; padding: 26px 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer .wm { font-size: 16px; }
+    .footer .cp { font-family: var(--font-m); font-size: 10px; color: var(--cream-35); letter-spacing: .06em; }
+
+    .cta-note { font-family: var(--font-m); font-size: 11px; color: var(--cream-35); letter-spacing: .04em; margin-top: 14px; }
+
+    @media (min-width: 620px) {
+      .case { flex-basis: 46%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="wm" href="/aplicativo">
+      <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>markete<span class="ia">ia</span></span>
+    </a>
+    <a class="btn btn-primary tb-btn" href="#aplicar">Aplique agora</a>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-photo">
+      <span class="ph-badge">◇ Substituir por foto real do fundador</span>
+      <div class="ph-wave">
+        <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#6fb5ac" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="ph-cap">
+        <div class="nm">[Nome do fundador]</div>
+        <div class="rl">Fundador · marketeia</div>
+      </div>
+    </div>
+
+    <div class="eyebrow center">Estrutura Digital Ideal</div>
+    <h1>Estruturamos a sua operação para <em>escalar no digital</em><span class="sub">com previsibilidade.</span></h1>
+    <p class="hero-lead">Não é sobre <strong>anunciar</strong>. É sobre <strong>o que</strong> e <strong>como</strong> você anuncia. Montamos a estrutura digital inteira do seu negócio — e operamos junto até o resultado aparecer.</p>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">◇</div><div class="l">Operações estruturadas <br><span style="opacity:.6">(preencher número real)</span></div></div>
+      <div class="hstat"><div class="n">◇</div><div class="l">Faturamento gerado <br><span style="opacity:.6">(preencher número real)</span></div></div>
+    </div>
+
+    <div class="hero-pills">
+      <div class="hpill">
+        <div class="ic"><svg width="18" height="18" fill="none" viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="tx"><b>Processo claro e estruturado</b><span>Você enxerga cada etapa da operação.</span></div>
+      </div>
+      <div class="hpill">
+        <div class="ic"><svg width="18" height="18" fill="none" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9" r="1.5" fill="currentColor"/></svg></div>
+        <div class="tx"><b>Visão estratégica e direção</b><span>Alguém que já chegou lá operando com você.</span></div>
+      </div>
+    </div>
+
+    <a class="btn btn-primary btn-lg btn-block" href="#aplicar">Aplique para escalar seu negócio <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<!-- ═══ LOGOS ═══ -->
+<section class="logos">
+  <div class="wrap">
+    <div class="cap">Negócios que já operam com a estrutura</div>
+    <div class="logo-row">
+      <span class="logo-ph">◇ Logo cliente</span>
+      <span class="logo-ph">◇ Logo cliente</span>
+      <span class="logo-ph">◇ Logo cliente</span>
+      <span class="logo-ph">◇ Logo cliente</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VALUE BAND ═══ -->
+<section class="section band">
+  <div class="wrap">
+    <div class="eyebrow center">Em 90 dias</div>
+    <h2 class="stitle center">Estruturamos negócios que saíram do <em>escuro</em> e passaram a operar com <span class="teal">previsibilidade</span>.</h2>
+    <p class="slead center">Chega de anunciar no escuro esperando o algoritmo resolver. A gente lê o sinal, monta a estrutura e opera junto.</p>
+    <div style="text-align:center;margin-top:20px"><a class="btn btn-primary" href="#cases">Veja abaixo ↓</a></div>
+  </div>
+</section>
+
+<!-- ═══ CASES ═══ -->
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="eyebrow">Resultados reais</div>
+    <h2 class="stitle">Do <em>escaço</em> à estrutura que escala.</h2>
+    <p class="slead">Arraste para o lado. <span style="color:var(--cream-35)">(Substitua pelos seus cases reais — com prova ao lado.)</span></p>
+  </div>
+  <div class="carousel">
+    <div class="case">
+      <div class="case-media"><span class="ph-badge">◇ Print / foto do case</span><div class="brand">◇ Cliente <span class="ia" style="color:var(--vermillion)">× mkt</span></div></div>
+      <div class="case-body"><span class="case-tag">Case · Serviço</span><h4><span class="from">De R$ __ mil</span><br>para R$ __ mil</h4><p>Descreva aqui o antes e depois real do cliente, o gargalo resolvido e em quanto tempo.</p></div>
+    </div>
+    <div class="case">
+      <div class="case-media"><span class="ph-badge">◇ Print / foto do case</span><div class="brand">◇ Cliente <span class="ia" style="color:var(--vermillion)">× mkt</span></div></div>
+      <div class="case-body"><span class="case-tag">Case · E-commerce</span><h4>Do zero<br>para R$ __ mil</h4><p>Descreva aqui o antes e depois real do cliente, o gargalo resolvido e em quanto tempo.</p></div>
+    </div>
+    <div class="case">
+      <div class="case-media"><span class="ph-badge">◇ Print / foto do case</span><div class="brand">◇ Cliente <span class="ia" style="color:var(--vermillion)">× mkt</span></div></div>
+      <div class="case-body"><span class="case-tag">Case · SaaS</span><h4><span class="from">De R$ __ mil</span><br>para R$ __ mil</h4><p>Descreva aqui o antes e depois real do cliente, o gargalo resolvido e em quanto tempo.</p></div>
+    </div>
+  </div>
+  <div class="swipe-hint">← arraste para ver mais →</div>
+</section>
+
+<!-- ═══ FOR WHOM ═══ -->
+<section class="section band">
+  <div class="wrap">
+    <div class="eyebrow">Para quem é</div>
+    <h2 class="stitle">Para quem é a <em>Estrutura Digital Ideal</em>?</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M3 6h14l-1 9H4L3 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 6a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <p>Quem é dono de <b>E-commerce, SaaS ou empresa de serviço</b>.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p>Quem diz <b>"não tenho tempo"</b> pra implementar mais nada sozinho.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M4 15V7l6-3 6 3v8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 15v-4h6v4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <p>Quem já contratou <b>agência, mentor ou consultoria</b> e não funcionou.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M4 10l4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p>Quem busca <b>estrutura validada</b>, não milagre barato.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M10 3l2 4 4 .5-3 3 .7 4L10 12l-3.7 2.5.7-4-3-3 4-.5 2-4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+        <p>Quem <b>não pode errar</b> mais uma vez com a verba de mídia.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="13" cy="7" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 16c0-2.2 1.8-4 4-4s4 1.8 4 4M11 16c0-2.2 1.8-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p>Quem quer <b>execução de quem tem resultado</b>, lado a lado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM AGITATION ═══ -->
+<section class="section">
+  <div class="wrap agit">
+    <div class="eyebrow center">A verdade que ninguém te conta</div>
+    <h2 class="big">Seu problema <em>NÃO</em> é tráfego pago.</h2>
+
+    <div class="agit-q">
+      <div class="q">Você concorda que <span class="teal">culpar o tráfego</span> é o caminho que o mercado te vendeu?</div>
+      <p>Nos últimos anos, dezenas de empresários chegaram até a gente com a mesma frase: <strong>"não escalo por causa do meu tráfego, é ruim."</strong></p>
+      <p>Mostramos, um a um, que a escala estava onde eles não enxergavam. Como você pode culpar o tráfego sem saber quanto custa cada etapa da jornada de compra do seu lead?</p>
+    </div>
+
+    <div class="agit-icon">
+      <svg width="30" height="30" fill="none" viewBox="0 0 30 30"><path d="M15 4a11 11 0 1 0 0 22 11 11 0 0 0 0-22Zm0 6v6M15 20h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <div style="margin-top:36px">
+      <h3 style="font-size:23px;margin-bottom:12px">Agências, consultores, gurus…<br><em>quantos</em> têm uma marca de sucesso? Uma operação escalada?</h3>
+      <p class="slead center">Do primeiro dia no mercado, a gente luta contra falsas promessas e gurus que dizem ter a fórmula mágica. Antes de opinar sobre qualquer empresa, a gente escala a nossa própria operação.</p>
+    </div>
+
+    <div style="margin-top:32px">
+      <h3 style="font-size:24px"><em>Não existe</em> fórmula mágica, atalho ou dica que te faça chegar lá.</h3>
+      <p class="slead center">Você precisa contar com alguém que já chegou — pra operar junto, fundar ou escalar a sua operação pro próximo nível.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MECHANISM INTRO ═══ -->
+<section class="section band">
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow center">O mecanismo</div>
+    <h2 class="stitle center">Conheça o mecanismo que usamos para <em>escalar</em> negócios com agilidade — <span class="teal">sem aumentar seus custos</span>.</h2>
+    <p class="slead center">Desenvolvemos esse mecanismo na nossa própria operação e replicamos em dezenas de negócios. É o que separa quem alavanca de quem trava o faturamento.</p>
+
+    <div class="hub-wrap">
+      <div class="hub">
+        <svg viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg" width="260" height="260">
+          <circle cx="130" cy="130" r="120" stroke="rgba(111,181,172,.18)" stroke-width="1"/>
+          <circle cx="130" cy="130" r="88" stroke="rgba(111,181,172,.14)" stroke-width="1"/>
+          <circle cx="130" cy="130" r="52" stroke="rgba(232,64,31,.35)" stroke-width="1.5"/>
+          <g font-family="JetBrains Mono, monospace" font-size="8" fill="#6fb5ac" letter-spacing="1">
+            <text x="130" y="22" text-anchor="middle">OFERTA</text>
+            <text x="243" y="133" text-anchor="middle">TRÁFEGO</text>
+            <text x="130" y="250" text-anchor="middle">VENDAS</text>
+            <text x="18" y="133" text-anchor="middle">POSIÇÃO</text>
+          </g>
+          <circle cx="130" cy="42" r="5" fill="#6fb5ac"/>
+          <circle cx="218" cy="130" r="5" fill="#6fb5ac"/>
+          <circle cx="130" cy="218" r="5" fill="#6fb5ac"/>
+          <circle cx="42" cy="130" r="5" fill="#6fb5ac"/>
+          <path d="M130 90 L130 42 M170 130 L218 130 M130 170 L130 218 M90 130 L42 130" stroke="rgba(111,181,172,.3)" stroke-width="1"/>
+          <text x="130" y="126" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="20" fill="#f2ede3" letter-spacing="-1">O.P.V.T</text>
+          <text x="130" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8401f" letter-spacing="2">MECANISMO</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPVT PILLARS ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Os 4 pilares</div>
+    <h2 class="stitle">O que a gente estrutura na sua operação.</h2>
+    <div class="pillars">
+      <div class="pillar" data-l="O">
+        <div class="pk">Pilar 01</div>
+        <h4>Oferta irresistível</h4>
+        <p>O motor. Diagnosticamos e reconstruímos a sua oferta a partir de narrativa, mecanismo e precificação — porque é ela que decide o quanto a sua empresa pode crescer.</p>
+        <div class="change"><span class="lb">O que muda</span><p>Você para de competir por preço. O mercado entende rápido por que você é a melhor opção.</p></div>
+      </div>
+      <div class="pillar" data-l="P">
+        <div class="pk">Pilar 02</div>
+        <h4>Posicionamento claro</h4>
+        <p>Não é só ter uma boa oferta — é estar posicionado. Estruturamos marca pessoal, identidade visual, conteúdo, narrativa, comunidade e formato criativo.</p>
+        <div class="change"><span class="lb">O que muda</span><p>Otimizamos a sua margem de lucro, aumentamos o volume de faturamento e melhoramos a saúde do negócio.</p></div>
+      </div>
+      <div class="pillar" data-l="V">
+        <div class="pk">Pilar 03</div>
+        <h4>Vendas previsíveis</h4>
+        <p>Quando você é o melhor vendedor da empresa, a operação tem teto. Viramos o comercial em processo replicável, com métricas e um funil de pré-qualificação.</p>
+        <div class="change"><span class="lb">O que muda</span><p>Sua operação deixa de depender de você pra vender. O comercial vira processo — com previsibilidade.</p></div>
+      </div>
+      <div class="pillar" data-l="T">
+        <div class="pk">Pilar 04</div>
+        <h4>Tráfego simplificado</h4>
+        <p>Tráfego só escala quando tudo antes está funcionando. Implementamos aquisição, qualificação, conversão e tráfego pago com dados inteligentes alimentando o algoritmo.</p>
+        <div class="change"><span class="lb">O que muda</span><p>O tráfego deixa de ser vilão e vira alavanca previsível do crescimento. Você não fica preso ao gerenciador de anúncios.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIAL ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="quote">
+      <div class="qt">"<span class="mk">◇ Depoimento real de um cliente aqui.</span> Descreva com as palavras dele o que mudou na operação depois da estrutura — e qual foi o resultado concreto."</div>
+      <div class="who">
+        <div class="av">◇ foto</div>
+        <div><div class="nm">[Nome do cliente]</div><div class="rl">CEO · [Empresa]</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS BAND ═══ -->
+<section class="section band">
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow center">Prova social</div>
+    <h2 class="stitle center">Resultados gerados em <em>90 dias</em> em negócios como o seu.</h2>
+    <p class="slead center">Arraste pro lado para ver alguns. <span style="color:var(--cream-35)">(Insira prints/depoimentos reais.)</span></p>
+  </div>
+  <div class="carousel">
+    <div class="case"><div class="case-media"><span class="ph-badge">◇ Print de resultado</span><div class="brand">◇ Cliente</div></div><div class="case-body"><span class="case-tag">Resultado</span><h4>+ __%</h4><p>Descreva a métrica e o período reais.</p></div></div>
+    <div class="case"><div class="case-media"><span class="ph-badge">◇ Print de resultado</span><div class="brand">◇ Cliente</div></div><div class="case-body"><span class="case-tag">Resultado</span><h4>+ __%</h4><p>Descreva a métrica e o período reais.</p></div></div>
+    <div class="case"><div class="case-media"><span class="ph-badge">◇ Print de resultado</span><div class="brand">◇ Cliente</div></div><div class="case-body"><span class="case-tag">Resultado</span><h4>+ __%</h4><p>Descreva a métrica e o período reais.</p></div></div>
+  </div>
+  <div class="swipe-hint">← arraste para ver mais →</div>
+</section>
+
+<!-- ═══ 3 STEPS ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Execução em 3 etapas</div>
+    <h2 class="stitle"><em>90 dias</em> para a aplicação completa do O.P.V.T.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="dot">D</div>
+        <div class="st-body"><div class="st-k">Etapa 01 · Auditoria</div><h4>Diagnóstico</h4><p>Análise do mercado, concorrentes e visão clara de onde estão as oportunidades, os vazamentos de receita e o caminho da estruturação.</p></div>
+      </div>
+      <div class="step">
+        <div class="dot">E</div>
+        <div class="st-body"><div class="st-k">Etapa 02 · Estruturação</div><h4>Plano de ação</h4><p>Definição das atividades, indicadores e metas para o projeto — oferta, posicionamento, funil e mídia, tudo mapeado.</p></div>
+      </div>
+      <div class="step">
+        <div class="dot">X</div>
+        <div class="st-body"><div class="st-k">Etapa 03 · Execução</div><h4>Implementação</h4><p>Execução das atividades definidas, acompanhamento das metas e escala do negócio — operando junto com você.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOUNDERS ═══ -->
+<section class="section band">
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow center">Quem opera com você</div>
+    <div class="hero-photo" style="aspect-ratio:16/10;margin-bottom:18px">
+      <span class="ph-badge">◇ Substituir por foto real dos fundadores</span>
+      <div class="ph-wave"><svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#6fb5ac" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="ph-cap"><div class="nm">Fundadores marketeia</div></div>
+    </div>
+    <p class="slead center">Cada cliente recebe a atenção pessoal de quem funda a operação. Contamos com um time sênior, mas a força de trabalho que faz a sua empresa escalar vem direto dos fundadores.</p>
+  </div>
+</section>
+
+<!-- ═══ DETAILED PILLARS ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Como fazemos</div>
+    <h2 class="stitle">Três frentes, uma operação inteira.</h2>
+
+    <div class="detail">
+      <div class="dk">01 · Auditoria</div>
+      <h3>Mapeamos os <em>gargalos</em> internos</h3>
+      <ul>
+        <li>Diagnóstico interno de gestão empresarial e financeiro</li>
+        <li>Análise do funil comercial e da oferta</li>
+        <li>Mapeamento de +20 pontos de atenção em marketing e criativos</li>
+        <li>Benchmark competitivo e ranking completo de concorrentes</li>
+      </ul>
+    </div>
+
+    <div class="detail">
+      <div class="dk">02 · Estruturação</div>
+      <h3>Um <em>plano de ação</em> por vertical</h3>
+      <ul>
+        <li>Plano de ação empresarial</li>
+        <li>Plano de branding e posicionamento</li>
+        <li>Plano de ação comercial</li>
+        <li>Plano de geração de demanda</li>
+      </ul>
+    </div>
+
+    <div class="detail">
+      <div class="dk">03 · Execução</div>
+      <h3>Construímos a operação <em>do zero ou na escala</em></h3>
+      <ul>
+        <li>Estratégia de oferta e branding da marca</li>
+        <li>Estruturas comerciais automatizadas com time de vendas</li>
+        <li>Landing pages, e-commerces e canais de conversão</li>
+        <li>Implementação de tráfego pago multicanal para aquisição</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIFERENCIAL ═══ -->
+<section class="section band">
+  <div class="wrap diff">
+    <div class="eyebrow center">Diferencial</div>
+    <h2 class="big">Nosso diferencial é a <em>execução</em>.</h2>
+    <div class="vs">
+      <div class="vs-row"><span class="x">Consultoria</span><span>entrega um <b>PDF</b>.</span></div>
+      <div class="vs-row"><span class="x">Agência</span><span>entrega <b>tráfego</b>.</span></div>
+      <div class="vs-row"><span class="x">Curso</span><span>entrega <b>aula</b>.</span></div>
+      <div class="vs-row win"><span class="x">marketeia</span><span>entrega a sua <b>operação rodando em escala</b>.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TWO PATHS ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Dois caminhos</div>
+    <h2 class="stitle">O que a gente faz por você.</h2>
+    <div class="paths">
+      <div class="path">
+        <h3>Para quem quer <em>escalar</em> a operação</h3>
+        <div class="sub">O que nós fazemos</div>
+        <ul>
+          <li><span class="chk">✓</span>Diagnosticamos os gargalos e as alavancas de crescimento</li>
+          <li><span class="chk">✓</span>Otimizamos a sua oferta com melhor posicionamento, precificação e margem</li>
+          <li><span class="chk">✓</span>Melhoramos a jornada de compra, funis e estrutura comercial</li>
+          <li><span class="chk">✓</span>Criamos novos canais de conversão (e-commerce, landing page, quiz, time comercial)</li>
+          <li><span class="chk">✓</span>Aplicamos a estratégia de tráfego pago simplificado</li>
+        </ul>
+      </div>
+      <div class="path">
+        <h3>Para quem quer <em>fundar</em> um negócio</h3>
+        <div class="sub">O que nós fazemos</div>
+        <ul>
+          <li><span class="chk">✓</span>Diagnosticamos se o projeto é comercialmente viável</li>
+          <li><span class="chk">✓</span>Construímos a marca: narrativa, identidade visual, logo, branding</li>
+          <li><span class="chk">✓</span>Conectamos você com fornecedores ou desenvolvedores</li>
+          <li><span class="chk">✓</span>Construímos o seu canal de conversão (e-commerce, landing page, quiz, comercial)</li>
+          <li><span class="chk">✓</span>Validamos a sua oferta e construímos o processo de escala</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCARCITY ═══ -->
+<section class="section band">
+  <div class="wrap scarcity">
+    <div class="scar-badge"><span class="pulse"></span>Capacidade limitada</div>
+    <h2 class="big">Atendemos apenas <em>12 empresas</em> por mês.</h2>
+    <p>Cada cliente recebe a atenção pessoal dos fundadores dentro da operação. Contamos com um time sênior, mas a força de trabalho que faz a sua empresa escalar vem diretamente de quem funda.</p>
+    <p>É isso que garante a qualidade estratégica e o resultado no seu negócio — e é isso que limita a nossa capacidade a 12.</p>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="section final" id="aplicar">
+  <div class="wrap">
+    <div class="eyebrow center">Último passo</div>
+    <h2 class="big">Aplique para acelerar <em>5 anos</em> do seu negócio em <em>90 dias</em>.</h2>
+    <p>Se você chegou até aqui, sabe que o problema não é falta de esforço. É falta de direção — de uma visão de alguém que já chegou lá.</p>
+    <p>É olhar pro tráfego quando o problema está no financeiro. É culpar o mercado quando o problema está na oferta. A <strong>marketeia</strong> existe pra entregar a visão que você não tem — e executar com você.</p>
+
+    <div class="final-card">
+      <div class="fc-media"><span class="ph-badge">◇ Print / foto de case</span><div class="brand" style="font-family:var(--font-d);font-weight:900;color:var(--cream-55)">◇ Cliente <span style="color:var(--vermillion)">× mkt</span></div></div>
+      <div class="fc-body">
+        <h4>Clique aqui para escalar seu negócio.</h4>
+        <a class="btn btn-primary btn-lg btn-block" href="#" onclick="return false;">Aplique para escalar seu negócio <span class="arrow">→</span></a>
+        <div class="cta-note">◇ Trocar o link pelo seu formulário / WhatsApp de aplicação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-in">
+    <a class="wm" href="/aplicativo">
+      <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>markete<span class="ia">ia</span></span>
+    </a>
+    <div class="cp">© 2026 Marketeia · SINAL VS RUÍDO</div>
+  </div>
+</footer>
+
+</body>
+</html>
