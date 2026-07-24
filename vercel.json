@@ -9,6 +9,6 @@
     { "source": "/ebook",         "destination": "/ebook/index.html" },
     { "source": "/aplicativo",    "destination": "/aplicativo/index.html" },
     { "source": "/modulo",        "destination": "/modulo/index.html" },
-    { "source": "/estrutura",     "destination": "/estrutura/index.html" }
+    { "source": "/oferta-start",  "destination": "/oferta-start/index.html" }
   ]
 }
