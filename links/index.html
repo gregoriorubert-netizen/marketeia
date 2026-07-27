@@ -12,21 +12,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
+      --cream:       #f2ede3;
+      --cream-sub:   #ece6da;
+      --card:        #ffffff;
       --petrol:      #0a1f21;
-      --petrol-mid:  #0e282b;
-      --petrol-lt:   #163a3e;
-      --surf:        #102a2d;
-      --surf-2:      #0d2325;
+      --ink:         #0a1f21;
+      --ink-2:       #2e4543;
+      --ink-3:       #6c695c;
+      --ink-4:       #9b9787;
       --vermillion:  #e8401f;
       --verm-bright: #ff5c36;
       --verm-dim:    rgba(232,64,31,.1);
-      --sinal:       #6fb5ac;
-      --sinal-dim:   rgba(111,181,172,.12);
-      --cream:       #f2ede3;
-      --cream-70:    rgba(242,237,227,.7);
-      --cream-55:    rgba(242,237,227,.55);
-      --cream-35:    rgba(242,237,227,.35);
-      --border:      rgba(111,181,172,.14);
+      --teal:        #6fb5ac;
+      --teal-ink:    #2f7268;
+      --teal-dim:    rgba(111,181,172,.16);
+      --border:      rgba(10,31,33,.1);
+      --border-sub:  rgba(10,31,33,.06);
       --font-d: "Archivo", sans-serif;
       --font-u: "Inter Tight", system-ui, sans-serif;
       --font-m: "JetBrains Mono", monospace;
@@ -36,7 +37,7 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0; font-family: var(--font-u);
-      background: var(--petrol); color: var(--cream);
+      background: var(--cream); color: var(--ink);
       line-height: 1.6; -webkit-font-smoothing: antialiased;
       min-height: 100vh; display: flex; flex-direction: column;
       overflow-x: clip;
@@ -44,11 +45,11 @@
     body::before {
       content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse 80% 50% at 50% -5%, rgba(111,181,172,.16) 0%, transparent 60%),
-        radial-gradient(ellipse 70% 40% at 50% 105%, rgba(232,64,31,.1) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 45% at 50% -5%, rgba(111,181,172,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 40% at 50% 106%, rgba(232,64,31,.1) 0%, transparent 60%);
     }
     body::after {
-      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .04;
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
     }
 
@@ -60,50 +61,50 @@
     .head { text-align: center; margin-bottom: 34px; }
     .avatar {
       width: 84px; height: 84px; margin: 0 auto 18px;
-      border-radius: 24px; background: linear-gradient(155deg, var(--petrol-lt), var(--surf-2));
-      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      border-radius: 24px; background: var(--petrol);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 14px 40px rgba(10,31,33,.18);
     }
     .avatar svg { width: 46px; height: auto; }
-    .brand { font-family: var(--font-d); font-weight: 900; font-size: 26px; letter-spacing: -.03em; }
+    .brand { font-family: var(--font-d); font-weight: 900; font-size: 26px; letter-spacing: -.03em; color: var(--ink); }
     .brand .ia { color: var(--vermillion); }
     .tagline {
-      font-family: var(--font-m); font-size: 10.5px; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--sinal); margin-top: 8px;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--teal-ink); margin-top: 9px;
       display: inline-flex; align-items: center; gap: 8px;
     }
     .tagline::before, .tagline::after { content: ""; width: 16px; height: 1px; background: currentColor; opacity: .5; }
-    .bio { font-size: 14px; color: var(--cream-55); max-width: 320px; margin: 14px auto 0; }
+    .bio { font-size: 14px; color: var(--ink-3); max-width: 320px; margin: 14px auto 0; }
 
     /* ── LINKS ── */
     .links { display: flex; flex-direction: column; gap: 13px; }
     .link {
       position: relative; display: flex; align-items: center; gap: 15px;
       padding: 17px 18px; border-radius: 15px; text-decoration: none;
-      background: var(--surf-2); border: 1px solid var(--border); color: var(--cream);
-      overflow: hidden;
-      transition: transform .16s var(--ease), border-color .16s var(--ease), background .16s var(--ease);
+      background: var(--card); border: 1px solid var(--border-sub); color: var(--ink);
+      box-shadow: 0 2px 10px rgba(10,31,33,.05); overflow: hidden;
+      transition: transform .16s var(--ease), border-color .16s var(--ease), box-shadow .16s var(--ease);
     }
     .link::before {
       content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: var(--vermillion); opacity: 0; transition: opacity .16s var(--ease);
     }
-    .link:hover { transform: translateY(-2px); border-color: rgba(111,181,172,.3); background: var(--surf); }
+    .link:hover { transform: translateY(-2px); border-color: rgba(232,64,31,.25); box-shadow: 0 10px 26px rgba(10,31,33,.1); }
     .link:hover::before { opacity: 1; }
     .link-ic {
       width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
     }
     .link-ic.verm { background: var(--verm-dim); color: var(--vermillion); }
-    .link-ic.teal { background: var(--sinal-dim); color: var(--sinal); }
+    .link-ic.teal { background: var(--teal-dim); color: var(--teal-ink); }
     .link-tx { flex: 1; min-width: 0; }
-    .link-tx .k { font-family: var(--font-m); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--sinal); margin-bottom: 3px; }
-    .link-tx .t { font-family: var(--font-d); font-weight: 800; font-size: 15.5px; letter-spacing: -.02em; line-height: 1.2; }
-    .link-tx .s { font-size: 12px; color: var(--cream-55); margin-top: 2px; }
+    .link-tx .k { font-family: var(--font-m); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-ink); margin-bottom: 3px; }
+    .link-tx .t { font-family: var(--font-d); font-weight: 800; font-size: 15.5px; letter-spacing: -.02em; line-height: 1.2; color: var(--ink); }
+    .link-tx .s { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
     .link-go {
       flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(242,237,227,.06); display: flex; align-items: center; justify-content: center;
-      color: var(--cream-55); font-size: 13px; transition: background .16s var(--ease), color .16s var(--ease), transform .16s var(--ease);
+      background: var(--cream-sub); display: flex; align-items: center; justify-content: center;
+      color: var(--ink-3); font-size: 13px; transition: background .16s var(--ease), color .16s var(--ease), transform .16s var(--ease);
     }
     .link:hover .link-go { background: var(--vermillion); color: #fff; transform: translateX(2px); }
 
@@ -114,14 +115,8 @@
     }
 
     /* ── FOOTER ── */
-    .foot { margin-top: 32px; text-align: center; }
-    .foot .cta {
-      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-      font-family: var(--font-m); font-size: 11px; letter-spacing: .06em; color: var(--cream-35);
-    }
-    .foot .cta:hover { color: var(--cream-70); }
     .footer-bar { position: relative; z-index: 1; text-align: center; padding: 18px 22px 26px; }
-    .footer-bar .cp { font-family: var(--font-m); font-size: 10px; letter-spacing: .06em; color: var(--cream-35); }
+    .footer-bar .cp { font-family: var(--font-m); font-size: 10px; letter-spacing: .06em; color: var(--ink-4); }
   </style>
 </head>
 <body>
@@ -132,7 +127,7 @@
       <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5,40 L 20,40 C 23,40 28,13 33,13 C 38,13 42,53 46,53 C 50,53 56,7 62,7 C 68,7 74,40 78,40 L 95,40" stroke="#e8401f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div class="brand">markete<span class="ia">ia</span></div>
-    <div class="tagline">Sinal vs Ruído</div>
+    <div class="tagline">Marketing Digital de Resultados Reais</div>
     <p class="bio">Estruturamos a operação digital do seu negócio para gerar resultado com previsibilidade. Comece por aqui:</p>
   </div>
 
@@ -179,7 +174,7 @@
 </main>
 
 <footer class="footer-bar">
-  <div class="cp">© 2026 marketeia · SINAL VS RUÍDO</div>
+  <div class="cp">© 2026 marketeia · Marketing Digital de Resultados Reais</div>
 </footer>
 
 </body>
