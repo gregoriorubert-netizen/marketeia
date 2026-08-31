@@ -506,9 +506,108 @@
       .gps-block { padding: 28px 20px; }
       .hero-h1, .hero-h1-2 { font-size: 34px; }
     }
+    /* ── LEAD GATE (pop-up obrigatório) ── */
+    .lg-overlay {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,31,33,.72); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0; pointer-events: none;
+      transition: opacity .25s var(--ease);
+    }
+    .lg-overlay.show { opacity: 1; pointer-events: auto; }
+    body.lg-lock { overflow: hidden; }
+    .lg-card {
+      width: 100%; max-width: 420px; background: var(--bg);
+      border-radius: var(--r-xl); border: 1px solid var(--border-str);
+      padding: 34px 30px 28px; position: relative; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      transform: translateY(10px) scale(.98); transition: transform .3s var(--ease);
+    }
+    .lg-overlay.show .lg-card { transform: translateY(0) scale(1); }
+    .lg-card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: var(--accent-soft); pointer-events: none;
+    }
+    .lg-eyebrow {
+      font-family: var(--font-m); font-size: 10.5px; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px; position: relative;
+    }
+    .lg-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--accent); }
+    .lg-card h3 {
+      font-family: var(--font-d); font-weight: 900; font-size: 24px;
+      letter-spacing: -.02em; line-height: 1.15; color: var(--text); margin: 0 0 10px; position: relative;
+    }
+    .lg-card h3 em { font-style: normal; color: var(--accent); }
+    .lg-card p.lg-sub {
+      font-size: 14px; color: var(--text-3); line-height: 1.5; margin: 0 0 22px; position: relative;
+    }
+    .lg-field { margin-bottom: 12px; position: relative; }
+    .lg-field label {
+      display: block; font-family: var(--font-m); font-size: 10px; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 6px;
+    }
+    .lg-field input {
+      width: 100%; padding: 13px 14px; border-radius: var(--r-md);
+      border: 1px solid var(--border-str); background: #fff; color: var(--text);
+      font-family: var(--font-u); font-size: 14.5px; outline: none;
+      transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+    }
+    .lg-field input::placeholder { color: var(--text-4); }
+    .lg-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .lg-field input:invalid.touched { border-color: #c0392b; }
+    .lg-submit {
+      width: 100%; margin-top: 10px; padding: 14px 20px; border: none; border-radius: var(--r-md);
+      background: var(--accent); color: #fff; font-family: var(--font-d); font-weight: 700;
+      font-size: 14.5px; letter-spacing: -.01em; cursor: pointer;
+      transition: background .15s var(--ease), transform .15s var(--ease);
+    }
+    .lg-submit:hover { background: var(--accent-bright); transform: translateY(-1px); }
+    .lg-submit:disabled { opacity: .6; cursor: default; transform: none; }
+    .lg-note {
+      margin-top: 14px; font-size: 11.5px; color: var(--text-4); text-align: center; line-height: 1.4; position: relative;
+    }
+    .lg-error {
+      font-size: 12px; color: #c0392b; margin: -4px 0 10px; display: none;
+    }
+    .lg-error.show { display: block; }
+    @media (max-width: 460px) {
+      .lg-card { padding: 28px 22px 24px; }
+      .lg-card h3 { font-size: 21px; }
+    }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="/quiz/firebase-config.js"></script>
 </head>
-<body>
+<body class="lg-lock">
+
+<!-- LEAD GATE: pop-up obrigatório de captura antes de liberar o conteúdo -->
+<div class="lg-overlay show" id="lgOverlay" role="dialog" aria-modal="true" aria-labelledby="lgTitle">
+  <div class="lg-card">
+    <div class="lg-eyebrow">Antes de continuar</div>
+    <h3 id="lgTitle">Receba esse material também por <em>e-mail e WhatsApp</em>.</h3>
+    <p class="lg-sub">Deixe seus dados para desbloquear a leitura e receber o material completo direto no seu e-mail e WhatsApp.</p>
+    <form id="lgForm" novalidate>
+      <div class="lg-field">
+        <label for="lgNome">Nome</label>
+        <input type="text" id="lgNome" name="nome" placeholder="Seu nome" autocomplete="name" required />
+      </div>
+      <div class="lg-field">
+        <label for="lgEmail">E-mail</label>
+        <input type="email" id="lgEmail" name="email" placeholder="seu@email.com" autocomplete="email" required />
+      </div>
+      <div class="lg-field">
+        <label for="lgWhats">WhatsApp</label>
+        <input type="tel" id="lgWhats" name="whatsapp" placeholder="(11) 91234-5678" autocomplete="tel" required />
+      </div>
+      <div class="lg-error" id="lgError">Preencha nome, e-mail e WhatsApp corretamente para continuar.</div>
+      <button type="submit" class="lg-submit" id="lgSubmit">Quero receber o material</button>
+    </form>
+    <div class="lg-note">Seus dados são usados só para enviar esse material. Sem spam.</div>
+  </div>
+</div>
 
 <!-- TOPBAR -->
 <header class="topbar">
@@ -526,7 +625,7 @@
   <div class="hero">
     <div class="hero-eyebrow">O segredo dos resultados com digital</div>
 
-    <h1 class="hero-h1">Por que você investe em anúncios</h1>
+    <h1 class="hero-h1">Por que você investe em anúncios online</h1>
     <h1 class="hero-h1-2">e não tem retorno.</h1>
 
     <p class="hero-sub">
@@ -992,6 +1091,71 @@
   </div>
   <div class="footer-copy">© 2026 Marketeia · SINAL VS RUÍDO</div>
 </footer>
+
+<script>
+(function () {
+  var STORE_KEY = "mk_lead_sobrenos";
+  var overlay = document.getElementById("lgOverlay");
+  var form = document.getElementById("lgForm");
+  var errorEl = document.getElementById("lgError");
+  var submitBtn = document.getElementById("lgSubmit");
+
+  // já deixou os dados nesse navegador antes: libera direto, sem pop-up
+  try {
+    if (localStorage.getItem(STORE_KEY)) {
+      overlay.classList.remove("show");
+      document.body.classList.remove("lg-lock");
+    }
+  } catch (e) {}
+
+  var db = null;
+  try {
+    if (typeof firebase !== "undefined" &&
+        typeof FIREBASE_CONFIG !== "undefined" &&
+        FIREBASE_CONFIG.projectId !== "COLE_AQUI") {
+      firebase.initializeApp(FIREBASE_CONFIG);
+      db = firebase.firestore();
+    }
+  } catch (e) { console.warn("[Firebase]", e.message); }
+
+  function saveLead(data) {
+    if (!db) return;
+    db.collection("sobrenos_leads").add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      pagina: "sobrenos",
+      nome: data.nome,
+      email: data.email,
+      whatsapp: data.whatsapp
+    }).catch(function (e) { console.warn("[Firebase] Erro ao salvar lead:", e); });
+  }
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function isValidPhone(v) { return v.replace(/\D/g, "").length >= 10; }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var nome = form.nome.value.trim();
+    var email = form.email.value.trim();
+    var whatsapp = form.whatsapp.value.trim();
+
+    var valid = nome.length >= 2 && isValidEmail(email) && isValidPhone(whatsapp);
+    if (!valid) {
+      errorEl.classList.add("show");
+      [form.nome, form.email, form.whatsapp].forEach(function (el) { el.classList.add("touched"); });
+      return;
+    }
+    errorEl.classList.remove("show");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando…";
+
+    saveLead({ nome: nome, email: email, whatsapp: whatsapp });
+    try { localStorage.setItem(STORE_KEY, "1"); } catch (e) {}
+
+    overlay.classList.remove("show");
+    document.body.classList.remove("lg-lock");
+  });
+})();
+</script>
 
 </body>
 </html>
