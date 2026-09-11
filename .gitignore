@@ -28,3 +28,9 @@ Modelar Posts/
 # Binários legados pesados (deck herdado da Impulsionar, exports do FigJam)
 *.pdf
 *.jam
+
+# Exceção: PDF do documento Diferenciais e Metodologia (material de pré-onboarding
+# baixável pelo lead — não é legado pesado)
+!metodologia/*.pdf
+
+.vercel
