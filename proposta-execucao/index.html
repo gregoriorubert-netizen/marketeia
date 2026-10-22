@@ -242,6 +242,16 @@
     .timeline-result b { display: block; color: var(--signal); font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
     .timeline-result p { margin-top: 9px; font-size: 15px; }
 
+    .scope-band { background: var(--paper-deep); }
+    .scope-layout { display: grid; grid-template-columns: .62fr 1.38fr; gap: 76px; margin-top: 60px; align-items: start; }
+    .scope-summary { padding-top: 22px; border-top: 3px solid var(--signal-dark); }
+    .scope-summary strong { display: block; font: 800 42px/1 var(--display); letter-spacing: -.04em; }
+    .scope-summary p { margin-top: 14px; color: rgba(10,31,33,.66); }
+    .scope-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 42px; }
+    .scope-item { display: grid; grid-template-columns: 42px 1fr; gap: 14px; align-items: baseline; padding: 22px 0; border-top: 1px solid rgba(10,31,33,.15); }
+    .scope-num { color: var(--signal-dark); font: 600 11px/1 var(--mono); letter-spacing: .08em; }
+    .scope-item h3 { font-size: 20px; line-height: 1.15; }
+
     .cadence-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 26px; margin-top: 58px; }
     .cadence-main { padding: 36px; border: 1px solid rgba(242,237,227,.12); border-radius: 20px; background: var(--surface); }
     .cadence-main h3 { font-size: 29px; }
@@ -295,7 +305,7 @@
 
     @media (max-width: 900px) {
       .chapters a:not(.offer-link) { display: none; }
-      .hero-grid, .operation-grid, .cadence-grid { grid-template-columns: 1fr; }
+      .hero-grid, .operation-grid, .scope-layout, .cadence-grid { grid-template-columns: 1fr; }
       .hero-grid { gap: 48px; }
       .hero-meta { grid-template-columns: repeat(3, 1fr); }
       .meta-row { grid-template-columns: 1fr; gap: 5px; }
@@ -327,6 +337,7 @@
       .month-body { grid-template-columns: 1fr; gap: 18px; padding: 20px; }
       .month-marker::after { right: -4px; }
       .timeline-result { margin-left: 70px; }
+      .scope-list { grid-template-columns: 1fr; }
       .plans { grid-template-columns: 1fr; }
       .plan { min-height: auto; }
       .offer-note, .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -349,6 +360,7 @@
       <nav class="chapters" aria-label="Capítulos da proposta">
         <a href="#operacao">Operação</a>
         <a href="#cronograma">Cronograma</a>
+        <a href="#entregaveis">Entregáveis</a>
         <a href="#rituais">Rituais</a>
         <a class="offer-link" href="#oferta">Oferta</a>
       </nav>
@@ -504,9 +516,34 @@
       </div>
     </section>
 
+    <section class="band light scope-band" id="entregaveis">
+      <div class="shell">
+        <div class="eyebrow">04 · Escopo de entrega</div>
+        <h2 class="section-title">Entregáveis e Implementações</h2>
+        <p class="section-copy">O ciclo reúne as frentes necessárias para construir presença, produzir conteúdo, gerar demanda e organizar o acompanhamento comercial.</p>
+
+        <div class="scope-layout">
+          <aside class="scope-summary reveal">
+            <strong>8 frentes</strong>
+            <p>A prioridade e a ordem de implementação entram no plano de ação após o diagnóstico inicial.</p>
+          </aside>
+          <div class="scope-list">
+            <article class="scope-item reveal"><span class="scope-num">01</span><h3>Desenvolvimento de Site e LP</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">02</span><h3>Gestão de Conteúdo Instagram</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">03</span><h3>Gestão de Posicionamento Instagram</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">04</span><h3>Roteirização de Anúncios e Conteúdos</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">05</span><h3>Edição de Vídeo</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">06</span><h3>Tráfego Pago</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">07</span><h3>Google Meu Negócio</h3></article>
+            <article class="scope-item reveal"><span class="scope-num">08</span><h3>CRM</h3></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="band dark" id="rituais">
       <div class="shell">
-        <div class="eyebrow">04 · Gestão do projeto</div>
+        <div class="eyebrow">05 · Gestão do projeto</div>
         <h2 class="section-title">Acompanhamento sem caixa-preta</h2>
         <p class="section-copy">A operação fica visível. O cliente acompanha o andamento, os anúncios ativos e as decisões tomadas em cada ciclo.</p>
         <div class="cadence-grid">
@@ -531,7 +568,7 @@
     <section class="band offer" id="oferta">
       <div class="shell">
         <div class="offer-head">
-          <div class="eyebrow">05 · Oferta</div>
+          <div class="eyebrow">06 · Oferta</div>
           <h2 class="section-title">Escolha o ciclo de execução</h2>
           <p class="section-copy">Os dois planos partem da mesma base. A diferença está no tempo disponível para testar, ajustar e consolidar o que funciona.</p>
         </div>
