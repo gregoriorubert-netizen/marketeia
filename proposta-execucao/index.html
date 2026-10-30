@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Plano de execução · marketeia</title>
-  <meta name="description" content="Plano de execução de marketing da marketeia, com ciclos de 3 e 6 meses, entregas, rituais de acompanhamento e investimento." />
+  <meta name="description" content="Plano de execução de marketing da marketeia, com projeção de leads, ciclos de 3 e 6 meses, entregas, acompanhamento e investimento." />
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,6 +201,28 @@
     .process-step h3 { font-size: 21px; line-height: 1.05; }
     .process-step p { margin-top: 14px; color: rgba(242,237,227,.62); font-size: 14px; }
 
+    .projection-band { background: var(--paper-deep); }
+    .projection-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 26px; margin-top: 60px; align-items: stretch; }
+    .projection-controls { padding: 32px; border: 1px solid rgba(10,31,33,.13); border-radius: 18px; background: var(--paper); }
+    .projection-controls h3 { font-size: 27px; }
+    .projection-controls > p { margin-top: 10px; color: rgba(10,31,33,.62); font-size: 14px; }
+    .projection-fields { display: grid; gap: 18px; margin-top: 28px; }
+    .projection-field label { display: block; margin-bottom: 8px; color: var(--signal-dark); font: 600 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .projection-input-wrap { display: grid; grid-template-columns: auto 1fr; align-items: center; min-height: 54px; border: 1px solid rgba(10,31,33,.17); border-radius: 10px; background: rgba(255,255,255,.52); overflow: hidden; transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease); }
+    .projection-input-wrap:focus-within { border-color: var(--signal-dark); box-shadow: 0 0 0 3px rgba(30,107,99,.12); }
+    .projection-input-wrap span { padding-left: 16px; color: rgba(10,31,33,.52); font: 600 13px/1 var(--mono); }
+    .projection-input { width: 100%; min-width: 0; padding: 14px 16px 14px 8px; border: 0; outline: 0; color: var(--ink); background: transparent; font: 800 23px/1 var(--display); }
+    .projection-note { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(10,31,33,.12); color: rgba(10,31,33,.54); font-size: 12px; }
+    .projection-results { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .projection-card { display: flex; min-height: 190px; padding: 26px; border: 1px solid rgba(10,31,33,.13); border-radius: 18px; flex-direction: column; justify-content: space-between; background: rgba(255,255,255,.34); }
+    .projection-card:nth-child(1) { color: var(--cream); border-color: transparent; background: var(--petrol); }
+    .projection-card:nth-child(4) { background: var(--signal); }
+    .projection-label { max-width: 190px; color: rgba(10,31,33,.58); font: 600 11px/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .projection-card:nth-child(1) .projection-label { color: var(--signal); }
+    .projection-value { display: block; margin-top: 24px; font: 800 clamp(32px,4vw,52px)/.95 var(--display); letter-spacing: -.04em; }
+    .projection-basis { display: block; margin-top: 10px; color: rgba(10,31,33,.54); font-size: 12px; }
+    .projection-card:nth-child(1) .projection-basis { color: rgba(242,237,227,.58); }
+
     .timeline-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; }
     .timeline-tabs {
       display: inline-flex;
@@ -305,7 +327,7 @@
 
     @media (max-width: 900px) {
       .chapters a:not(.offer-link) { display: none; }
-      .hero-grid, .operation-grid, .scope-layout, .cadence-grid { grid-template-columns: 1fr; }
+      .hero-grid, .operation-grid, .projection-layout, .scope-layout, .cadence-grid { grid-template-columns: 1fr; }
       .hero-grid { gap: 48px; }
       .hero-meta { grid-template-columns: repeat(3, 1fr); }
       .meta-row { grid-template-columns: 1fr; gap: 5px; }
@@ -332,6 +354,8 @@
       .process { grid-template-columns: 1fr; }
       .process-step { min-height: 0; border-right: 0; border-bottom: 1px solid rgba(242,237,227,.1); }
       .process-step:last-child { border-bottom: 0; }
+      .projection-results { grid-template-columns: 1fr; }
+      .projection-card { min-height: 160px; }
       .month { grid-template-columns: 52px 1fr; gap: 18px; }
       .timeline-track::before { left: 50px; }
       .month-body { grid-template-columns: 1fr; gap: 18px; padding: 20px; }
@@ -359,6 +383,7 @@
       </a>
       <nav class="chapters" aria-label="Capítulos da proposta">
         <a href="#operacao">Operação</a>
+        <a href="#projecao">Projeção</a>
         <a href="#cronograma">Cronograma</a>
         <a href="#entregaveis">Entregáveis</a>
         <a href="#rituais">Rituais</a>
@@ -452,11 +477,44 @@
       </div>
     </section>
 
+    <section class="band light projection-band" id="projecao">
+      <div class="shell">
+        <div class="eyebrow">03 · Projeção</div>
+        <h2 class="section-title">Projeção de mídia e geração de leads</h2>
+        <p class="section-copy">Ajuste o investimento e o custo por lead para visualizar uma referência diária. Os cálculos usam uma base de 30 dias.</p>
+
+        <div class="projection-layout">
+          <div class="projection-controls reveal">
+            <h3>Simule o cenário</h3>
+            <p>Edite os dois valores abaixo. A projeção é atualizada automaticamente.</p>
+            <div class="projection-fields">
+              <div class="projection-field">
+                <label for="projection-investment">Investimento mensal</label>
+                <div class="projection-input-wrap"><span>R$</span><input class="projection-input" id="projection-investment" type="number" min="0" step="100" value="3000" inputmode="decimal" /></div>
+              </div>
+              <div class="projection-field">
+                <label for="projection-cpl">Custo por lead</label>
+                <div class="projection-input-wrap"><span>R$</span><input class="projection-input" id="projection-cpl" type="number" min="0.01" step="1" value="20" inputmode="decimal" /></div>
+              </div>
+            </div>
+            <p class="projection-note">Simulação de referência. O volume real varia conforme mercado, público, oferta, criativos e conversão da campanha.</p>
+          </div>
+
+          <div class="projection-results" aria-live="polite">
+            <article class="projection-card reveal"><span class="projection-label">Projeção de Leads Diário</span><div><strong class="projection-value" id="projection-leads-day">5,0</strong><span class="projection-basis">leads por dia</span></div></article>
+            <article class="projection-card reveal"><span class="projection-label">Custo por Lead</span><div><strong class="projection-value" id="projection-cpl-output">R$ 20</strong><span class="projection-basis">valor médio estimado</span></div></article>
+            <article class="projection-card reveal"><span class="projection-label">Investimento Mensal</span><div><strong class="projection-value" id="projection-month-output">R$ 3.000</strong><span class="projection-basis">verba total do período</span></div></article>
+            <article class="projection-card reveal"><span class="projection-label">Investimento Diário</span><div><strong class="projection-value" id="projection-day-output">R$ 100</strong><span class="projection-basis">base de 30 dias</span></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="band light" id="cronograma">
       <div class="shell">
         <div class="timeline-head">
           <div>
-            <div class="eyebrow">03 · Linha do tempo</div>
+            <div class="eyebrow">04 · Linha do tempo</div>
             <h2 class="section-title">Execução em 3 ou 6 meses</h2>
             <p class="section-copy">Escolha o ciclo para ver as prioridades de cada mês. O plano avançado mantém a base e acrescenta tempo de aprendizado, otimização e consolidação.</p>
           </div>
@@ -518,7 +576,7 @@
 
     <section class="band light scope-band" id="entregaveis">
       <div class="shell">
-        <div class="eyebrow">04 · Escopo de entrega</div>
+        <div class="eyebrow">05 · Escopo de entrega</div>
         <h2 class="section-title">Entregáveis e Implementações</h2>
         <p class="section-copy">O ciclo reúne as frentes necessárias para construir presença, produzir conteúdo, gerar demanda e organizar o acompanhamento comercial.</p>
 
@@ -543,7 +601,7 @@
 
     <section class="band dark" id="rituais">
       <div class="shell">
-        <div class="eyebrow">05 · Gestão do projeto</div>
+        <div class="eyebrow">06 · Gestão do projeto</div>
         <h2 class="section-title">Acompanhamento sem caixa-preta</h2>
         <p class="section-copy">A operação fica visível. O cliente acompanha o andamento, os anúncios ativos e as decisões tomadas em cada ciclo.</p>
         <div class="cadence-grid">
@@ -568,7 +626,7 @@
     <section class="band offer" id="oferta">
       <div class="shell">
         <div class="offer-head">
-          <div class="eyebrow">06 · Oferta</div>
+          <div class="eyebrow">07 · Oferta</div>
           <h2 class="section-title">Escolha o ciclo de execução</h2>
           <p class="section-copy">Os dois planos partem da mesma base. A diferença está no tempo disponível para testar, ajustar e consolidar o que funciona.</p>
         </div>
@@ -652,6 +710,30 @@
           next.focus();
         });
       });
+
+      const investmentInput = document.querySelector('#projection-investment');
+      const cplInput = document.querySelector('#projection-cpl');
+      const leadsDayOutput = document.querySelector('#projection-leads-day');
+      const cplOutput = document.querySelector('#projection-cpl-output');
+      const monthOutput = document.querySelector('#projection-month-output');
+      const dayOutput = document.querySelector('#projection-day-output');
+      const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+      const decimal = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+      function updateProjection() {
+        const monthlyInvestment = Math.max(0, Number(investmentInput.value) || 0);
+        const cpl = Math.max(0, Number(cplInput.value) || 0);
+        const dailyInvestment = monthlyInvestment / 30;
+        const dailyLeads = cpl > 0 ? dailyInvestment / cpl : 0;
+
+        leadsDayOutput.textContent = decimal.format(dailyLeads);
+        cplOutput.textContent = currency.format(cpl);
+        monthOutput.textContent = currency.format(monthlyInvestment);
+        dayOutput.textContent = currency.format(dailyInvestment);
+      }
+
+      [investmentInput, cplInput].forEach(input => input.addEventListener('input', updateProjection));
+      updateProjection();
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduceMotion || !('IntersectionObserver' in window)) {
