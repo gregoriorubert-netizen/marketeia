@@ -11,6 +11,7 @@
     { "source": "/modulo",        "destination": "/modulo/index.html" },
     { "source": "/oferta-start",  "destination": "/oferta-start/index.html" },
     { "source": "/links",         "destination": "/links/index.html" },
-    { "source": "/metodologia",   "destination": "/metodologia/index.html" }
+    { "source": "/metodologia",   "destination": "/metodologia/index.html" },
+    { "source": "/proposta-execucao", "destination": "/proposta-execucao/index.html" }
   ]
 }
