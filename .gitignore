@@ -34,3 +34,7 @@ Modelar Posts/
 !metodologia/*.pdf
 
 .vercel
+
+# Segredos locais. O modelo público de chaves fica em .env.example.
+.env.local
+.env.*.local

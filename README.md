@@ -40,6 +40,18 @@ chrome --headless=new --disable-gpu --force-device-scale-factor=2 \
   --window-size=1080,1350 --screenshot=out.png _idv_build/post.html
 ```
 
+## Projeção com dados da Meta
+
+A seção **Projeção** de `/proposta-execucao` consulta os Insights da conta de anúncios nos últimos 30 dias por meio da função `/api/meta-projection`.
+
+Configure no Vercel:
+
+- `META_AD_ACCOUNT_ID`: ID numérico da conta, com ou sem `act_`;
+- `META_ACCESS_TOKEN`: token com permissão `ads_read`, salvo como **Secret**;
+- `META_API_VERSION`: opcional; o padrão atual está em `.env.example`.
+
+O navegador nunca recebe o token. O endpoint público devolve somente os custos, contagens, período e horário da leitura, com cache de 15 minutos.
+
 ## Convenções
 
 - **Tokens, nunca hardcode.** Cor, espaço e tipo saem de `design_system/tokens.css` via `var(--token)`.
