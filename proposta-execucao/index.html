@@ -218,6 +218,28 @@
     .projection-value { display: block; margin-top: 24px; font: 800 clamp(30px,3.4vw,48px)/.95 var(--display); letter-spacing: -.04em; }
     .projection-basis { display: block; margin-top: 12px; color: rgba(10,31,33,.54); font-size: 12px; }
     .projection-note { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(10,31,33,.12); color: rgba(10,31,33,.54); font-size: 12px; }
+    .cpl-dashboard { margin-top: 18px; padding: 34px; border: 1px solid rgba(10,31,33,.13); border-radius: 20px; background: rgba(255,255,255,.48); box-shadow: var(--shadow); }
+    .cpl-dashboard-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+    .cpl-dashboard-title { margin-top: 10px; font-size: clamp(28px,3.6vw,44px); letter-spacing: -.035em; }
+    .cpl-dashboard-copy { max-width: 620px; margin-top: 10px; color: rgba(10,31,33,.6); font-size: 14px; }
+    .cpl-window { flex: 0 0 auto; padding: 9px 12px; border: 1px solid rgba(10,31,33,.12); border-radius: 999px; color: var(--signal-dark); font: 600 10px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .cpl-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); margin-top: 30px; border-top: 1px solid rgba(10,31,33,.12); border-bottom: 1px solid rgba(10,31,33,.12); }
+    .cpl-stat { min-width: 0; padding: 22px 20px 22px 0; }
+    .cpl-stat + .cpl-stat { padding-left: 20px; border-left: 1px solid rgba(10,31,33,.12); }
+    .cpl-stat-label { display: block; color: rgba(10,31,33,.54); font: 600 10px/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .cpl-stat-value { display: block; margin-top: 12px; font: 800 clamp(25px,3vw,38px)/1 var(--display); letter-spacing: -.035em; white-space: nowrap; }
+    .cpl-stat-detail { display: block; min-height: 17px; margin-top: 9px; color: rgba(10,31,33,.52); font-size: 12px; }
+    .cpl-stat[data-trend="down"] .cpl-stat-value { color: var(--signal-dark); }
+    .cpl-stat[data-trend="up"] .cpl-stat-value { color: var(--primary); }
+    .cpl-chart-frame { position: relative; min-height: 360px; margin-top: 24px; overflow: hidden; }
+    .cpl-chart { display: block; width: 100%; height: auto; min-height: 340px; }
+    .cpl-chart .grid-line { stroke: rgba(10,31,33,.1); stroke-width: 1; }
+    .cpl-chart .axis-label { fill: rgba(10,31,33,.52); font: 500 11px var(--mono); }
+    .cpl-chart .area { fill: url(#cpl-area-gradient); }
+    .cpl-chart .trend-line { fill: none; stroke: var(--signal-dark); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .cpl-chart .data-point { fill: var(--paper); stroke: var(--signal-dark); stroke-width: 3; }
+    .cpl-empty { position: absolute; inset: 0; display: grid; place-items: center; padding: 30px; border: 1px dashed rgba(10,31,33,.17); border-radius: 14px; color: rgba(10,31,33,.52); text-align: center; font-size: 14px; }
+    .cpl-empty[hidden] { display: none; }
 
     .timeline-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; }
     .timeline-tabs {
@@ -332,6 +354,9 @@
       .process-step:nth-child(2) { border-right: 0; }
       .process-step:nth-child(-n+2) { border-bottom: 1px solid rgba(242,237,227,.1); }
       .timeline-head { align-items: start; flex-direction: column; }
+      .cpl-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .cpl-stat:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid rgba(10,31,33,.12); }
+      .cpl-stat:nth-child(4) { border-top: 1px solid rgba(10,31,33,.12); }
     }
 
     @media (max-width: 680px) {
@@ -353,6 +378,14 @@
       .projection-results { grid-template-columns: 1fr; }
       .projection-summary, .projection-card { min-height: 190px; }
       .projection-period { width: 100%; margin-left: 24px; }
+      .cpl-dashboard { padding: 24px 18px; }
+      .cpl-dashboard-head { align-items: flex-start; flex-direction: column; gap: 16px; }
+      .cpl-stat { padding: 18px 12px 18px 0; }
+      .cpl-stat + .cpl-stat { padding-left: 12px; }
+      .cpl-stat:nth-child(3) { padding-left: 0; }
+      .cpl-stat-value { font-size: clamp(22px,7vw,30px); }
+      .cpl-chart-frame { min-height: 250px; margin: 18px -8px 0; }
+      .cpl-chart { width: 100%; min-height: 0; }
       .month { grid-template-columns: 52px 1fr; gap: 18px; }
       .timeline-track::before { left: 50px; }
       .month-body { grid-template-columns: 1fr; gap: 18px; padding: 20px; }
@@ -498,6 +531,29 @@
             <article class="projection-card reveal"><span class="projection-label">Custo por Lead</span><div><strong class="projection-value" id="projection-lead">—</strong><span class="projection-basis" id="projection-lead-basis">Aguardando a Meta</span></div></article>
           </div>
         </div>
+
+        <section class="cpl-dashboard reveal" aria-labelledby="cpl-dashboard-title">
+          <div class="cpl-dashboard-head">
+            <div>
+              <span class="projection-label">Leitura diária</span>
+              <h3 class="cpl-dashboard-title" id="cpl-dashboard-title">Desenvolvimento do custo por lead</h3>
+              <p class="cpl-dashboard-copy">A linha mostra quanto cada lead custou por dia nas campanhas da Meta. Quanto menor, mais eficiente foi a captação.</p>
+            </div>
+            <span class="cpl-window">Últimos 30 dias</span>
+          </div>
+
+          <div class="cpl-stats" aria-label="Resumo do custo por lead">
+            <div class="cpl-stat"><span class="cpl-stat-label">CPL atual</span><strong class="cpl-stat-value" id="cpl-current">—</strong><span class="cpl-stat-detail" id="cpl-current-detail">Último dia com dado</span></div>
+            <div class="cpl-stat"><span class="cpl-stat-label">Média do período</span><strong class="cpl-stat-value" id="cpl-average">—</strong><span class="cpl-stat-detail">Média ponderada por leads</span></div>
+            <div class="cpl-stat"><span class="cpl-stat-label">Melhor dia</span><strong class="cpl-stat-value" id="cpl-best">—</strong><span class="cpl-stat-detail" id="cpl-best-detail">Menor CPL do período</span></div>
+            <div class="cpl-stat" id="cpl-variation-card"><span class="cpl-stat-label">Variação</span><strong class="cpl-stat-value" id="cpl-variation">—</strong><span class="cpl-stat-detail" id="cpl-variation-detail">Primeiro x último dia</span></div>
+          </div>
+
+          <div class="cpl-chart-frame">
+            <svg class="cpl-chart" id="cpl-chart" viewBox="0 0 960 360" role="img" aria-label="Evolução diária do custo por lead nos últimos 30 dias"></svg>
+            <div class="cpl-empty" id="cpl-empty">O gráfico aparece quando a Meta retornar pelo menos dois dias com custo por lead.</div>
+          </div>
+        </section>
         <p class="projection-note" id="projection-note">Fonte: campanhas da Meta Ads. Atualização automática com cache de 15 minutos.</p>
       </div>
     </section>
@@ -708,6 +764,16 @@
       const projectionPeriod = document.querySelector('#projection-period');
       const projectionAverage = document.querySelector('#projection-average');
       const projectionNote = document.querySelector('#projection-note');
+      const cplChart = document.querySelector('#cpl-chart');
+      const cplEmpty = document.querySelector('#cpl-empty');
+      const cplCurrent = document.querySelector('#cpl-current');
+      const cplCurrentDetail = document.querySelector('#cpl-current-detail');
+      const cplAverage = document.querySelector('#cpl-average');
+      const cplBest = document.querySelector('#cpl-best');
+      const cplBestDetail = document.querySelector('#cpl-best-detail');
+      const cplVariation = document.querySelector('#cpl-variation');
+      const cplVariationDetail = document.querySelector('#cpl-variation-detail');
+      const cplVariationCard = document.querySelector('#cpl-variation-card');
       const projectionMetricElements = {
         subscription: [document.querySelector('#projection-subscription'), document.querySelector('#projection-subscription-basis')],
         message: [document.querySelector('#projection-message'), document.querySelector('#projection-message-basis')],
@@ -715,6 +781,8 @@
       };
       const projectionCurrency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
       const projectionDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const projectionShortDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' });
+      const projectionPercent = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
       function formatProjectionCost(value) {
         return typeof value === 'number' && Number.isFinite(value) ? projectionCurrency.format(value) : 'Sem dado';
@@ -727,6 +795,134 @@
         return `${start} a ${end}`;
       }
 
+      function formatShortDate(value) {
+        return projectionShortDate.format(new Date(`${value}T12:00:00`));
+      }
+
+      function renderCplDashboard(series = [], periodAverage = null) {
+        const records = Array.isArray(series)
+          ? series
+            .filter(item => item?.date)
+            .map(item => ({
+              date: item.date,
+              cost: typeof item.cost === 'number' && Number.isFinite(item.cost) && item.cost > 0 ? item.cost : null,
+              count: typeof item.count === 'number' && Number.isFinite(item.count) ? item.count : null,
+            }))
+            .sort((a, b) => a.date.localeCompare(b.date))
+          : [];
+        const available = records.filter(item => item.cost !== null);
+        const first = available[0];
+        const current = available.at(-1);
+        const best = available.reduce((lowest, item) => !lowest || item.cost < lowest.cost ? item : lowest, null);
+        const average = typeof periodAverage === 'number' && Number.isFinite(periodAverage)
+          ? periodAverage
+          : available.length
+            ? available.reduce((sum, item) => sum + item.cost, 0) / available.length
+            : null;
+        const variation = first && current && first.cost > 0 ? (current.cost - first.cost) / first.cost : null;
+
+        cplCurrent.textContent = formatProjectionCost(current?.cost);
+        cplCurrentDetail.textContent = current ? `${formatShortDate(current.date)} · último dia com dado` : 'Último dia com dado';
+        cplAverage.textContent = formatProjectionCost(average);
+        cplBest.textContent = formatProjectionCost(best?.cost);
+        cplBestDetail.textContent = best ? `${formatShortDate(best.date)} · menor CPL` : 'Menor CPL do período';
+        cplVariation.textContent = variation === null
+          ? 'Sem dado'
+          : `${variation > 0 ? '+' : ''}${projectionPercent.format(variation * 100)}%`;
+        cplVariationDetail.textContent = variation === null
+          ? 'Primeiro x último dia'
+          : variation > 0
+            ? 'CPL aumentou no período'
+            : variation < 0
+              ? 'CPL caiu no período'
+              : 'CPL permaneceu estável';
+        cplVariationCard.dataset.trend = variation > 0 ? 'up' : variation < 0 ? 'down' : 'flat';
+
+        cplChart.replaceChildren();
+        const hasChart = records.length > 1 && available.length > 1;
+        cplChart.hidden = !hasChart;
+        cplEmpty.hidden = hasChart;
+        if (!hasChart) return;
+
+        const namespace = 'http://www.w3.org/2000/svg';
+        const addSvg = (tag, attributes = {}, parent = cplChart) => {
+          const element = document.createElementNS(namespace, tag);
+          Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+          parent.appendChild(element);
+          return element;
+        };
+        const compactChart = window.matchMedia('(max-width: 680px)').matches;
+        const width = compactChart ? 420 : 960;
+        const height = compactChart ? 300 : 360;
+        const margin = compactChart
+          ? { top: 20, right: 14, bottom: 42, left: 62 }
+          : { top: 24, right: 24, bottom: 50, left: 76 };
+        cplChart.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const costs = available.map(item => item.cost);
+        const observedMin = Math.min(...costs);
+        const observedMax = Math.max(...costs);
+        const span = observedMax - observedMin;
+        const padding = span > 0 ? span * .15 : Math.max(observedMax * .2, 1);
+        const min = Math.max(0, observedMin - padding);
+        const max = observedMax + padding;
+        const x = index => margin.left + (index / Math.max(records.length - 1, 1)) * plotWidth;
+        const y = value => margin.top + ((max - value) / Math.max(max - min, 1)) * plotHeight;
+        const baseline = margin.top + plotHeight;
+
+        const defs = addSvg('defs');
+        const gradient = addSvg('linearGradient', { id: 'cpl-area-gradient', x1: '0', y1: '0', x2: '0', y2: '1' }, defs);
+        addSvg('stop', { offset: '0%', 'stop-color': '#1E6B63', 'stop-opacity': '.24' }, gradient);
+        addSvg('stop', { offset: '100%', 'stop-color': '#1E6B63', 'stop-opacity': '0' }, gradient);
+
+        for (let index = 0; index < 5; index += 1) {
+          const ratio = index / 4;
+          const tickValue = max - ratio * (max - min);
+          const tickY = margin.top + ratio * plotHeight;
+          addSvg('line', { x1: margin.left, y1: tickY, x2: width - margin.right, y2: tickY, class: 'grid-line' });
+          const label = addSvg('text', { x: margin.left - 12, y: tickY + 4, 'text-anchor': 'end', class: 'axis-label' });
+          label.textContent = projectionCurrency.format(tickValue);
+        }
+
+        const segments = [];
+        let segment = [];
+        records.forEach((record, index) => {
+          if (record.cost === null) {
+            if (segment.length) segments.push(segment);
+            segment = [];
+            return;
+          }
+          segment.push({ ...record, x: x(index), y: y(record.cost) });
+        });
+        if (segment.length) segments.push(segment);
+
+        segments.forEach(points => {
+          if (points.length > 1) {
+            const linePath = points.map((point, index) => `${index ? 'L' : 'M'} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(' ');
+            const areaPath = `${linePath} L ${points.at(-1).x.toFixed(2)} ${baseline} L ${points[0].x.toFixed(2)} ${baseline} Z`;
+            addSvg('path', { d: areaPath, class: 'area' });
+            addSvg('path', { d: linePath, class: 'trend-line' });
+          }
+          points.forEach(point => {
+            const circle = addSvg('circle', { cx: point.x, cy: point.y, r: 5, class: 'data-point', tabindex: '0' });
+            const title = addSvg('title', {}, circle);
+            title.textContent = `${formatShortDate(point.date)}: ${formatProjectionCost(point.cost)}${point.count !== null ? ` · ${point.count} leads` : ''}`;
+          });
+        });
+
+        [...new Set([0, Math.floor((records.length - 1) / 2), records.length - 1])].forEach((index, labelIndex, labels) => {
+          const label = addSvg('text', {
+            x: x(index),
+            y: height - 18,
+            'text-anchor': labelIndex === 0 ? 'start' : labelIndex === labels.length - 1 ? 'end' : 'middle',
+            class: 'axis-label',
+          });
+          label.textContent = formatShortDate(records[index].date);
+        });
+        cplChart.setAttribute('aria-label', `Evolução diária do custo por lead. De ${formatProjectionCost(first.cost)} em ${formatShortDate(first.date)} para ${formatProjectionCost(current.cost)} em ${formatShortDate(current.date)}.`);
+      }
+
       async function loadMetaProjection() {
         try {
           const response = await fetch('/api/meta-projection', { headers: { Accept: 'application/json' } });
@@ -735,6 +931,7 @@
 
           projectionAverage.textContent = formatProjectionCost(payload.averageCost);
           projectionPeriod.textContent = formatProjectionPeriod(payload.period);
+          renderCplDashboard(payload.leadSeries, payload.metrics?.lead?.cost);
           Object.entries(projectionMetricElements).forEach(([key, elements]) => {
             const metric = payload.metrics?.[key];
             elements[0].textContent = formatProjectionCost(metric?.cost);
@@ -744,6 +941,7 @@
           });
           projectionStatus.dataset.state = 'success';
           projectionStatusText.textContent = 'Dados consolidados da Meta';
+          projectionNote.textContent = 'Fonte: campanhas da Meta Ads. Atualização automática com cache de 15 minutos.';
         } catch (error) {
           projectionStatus.dataset.state = 'error';
           projectionStatusText.textContent = 'Métricas da Meta indisponíveis';
@@ -752,6 +950,7 @@
             elements[0].textContent = '—';
             elements[1].textContent = 'Aguardando conexão com a conta de anúncios';
           });
+          renderCplDashboard([], null);
           projectionNote.textContent = error.message || 'A leitura será ativada assim que a conta da Meta estiver conectada.';
         }
       }

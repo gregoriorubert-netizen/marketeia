@@ -54,7 +54,7 @@ function firstAction(items, actionTypes) {
   return null
 }
 
-function buildMetric(row, definition) {
+function buildDailyMetric(row, definition) {
   const cost = firstAction(row.cost_per_action_type, definition.actionTypes)
   const count = firstAction(row.actions, definition.actionTypes)
 
@@ -63,6 +63,28 @@ function buildMetric(row, definition) {
     cost: cost?.value ?? null,
     count: count?.value ?? null,
     actionType: cost?.actionType ?? count?.actionType ?? null,
+  }
+}
+
+function buildMetric(rows, definition) {
+  const dailyMetrics = rows.map(row => buildDailyMetric(row, definition))
+  const availableCosts = dailyMetrics.filter(metric => typeof metric.cost === 'number')
+  const weightedCosts = availableCosts.filter(metric => typeof metric.count === 'number')
+  const weightedCount = weightedCosts.reduce((sum, metric) => sum + metric.count, 0)
+  const cost = weightedCount > 0
+    ? weightedCosts.reduce((sum, metric) => sum + (metric.cost * metric.count), 0) / weightedCount
+    : availableCosts.length
+      ? availableCosts.reduce((sum, metric) => sum + metric.cost, 0) / availableCosts.length
+      : null
+  const counts = dailyMetrics
+    .map(metric => metric.count)
+    .filter(count => typeof count === 'number')
+
+  return {
+    label: definition.label,
+    cost,
+    count: counts.length ? counts.reduce((sum, count) => sum + count, 0) : null,
+    actionType: dailyMetrics.find(metric => metric.actionType)?.actionType ?? null,
   }
 }
 
@@ -85,8 +107,9 @@ export async function GET(request) {
     fields: 'spend,actions,cost_per_action_type,date_start,date_stop',
     level: 'account',
     date_preset: DATE_PRESET,
+    time_increment: '1',
     action_report_time: 'conversion',
-    limit: '1',
+    limit: '100',
   })
 
   try {
@@ -102,8 +125,10 @@ export async function GET(request) {
       return json({ configured: true, code: 'META_API_ERROR', message }, 502)
     }
 
-    const row = metaPayload.data?.[0]
-    if (!row) {
+    const rows = Array.isArray(metaPayload.data)
+      ? [...metaPayload.data].sort((a, b) => String(a.date_start).localeCompare(String(b.date_start)))
+      : []
+    if (!rows.length) {
       return json({
         configured: true,
         source: 'Meta Ads',
@@ -117,13 +142,22 @@ export async function GET(request) {
             actionType: null,
           }]),
         ),
+        leadSeries: [],
         updatedAt: new Date().toISOString(),
       }, 200, 'public, s-maxage=900, stale-while-revalidate=3600')
     }
 
     const metrics = Object.fromEntries(
-      Object.entries(METRICS).map(([key, definition]) => [key, buildMetric(row, definition)]),
+      Object.entries(METRICS).map(([key, definition]) => [key, buildMetric(rows, definition)]),
     )
+    const leadSeries = rows.map(row => {
+      const lead = buildDailyMetric(row, METRICS.lead)
+      return {
+        date: row.date_start ?? null,
+        cost: lead.cost,
+        count: lead.count,
+      }
+    })
     const availableCosts = Object.values(metrics)
       .map(metric => metric.cost)
       .filter(cost => typeof cost === 'number')
@@ -134,9 +168,14 @@ export async function GET(request) {
     return json({
       configured: true,
       source: 'Meta Ads',
-      period: { preset: DATE_PRESET, start: row.date_start ?? null, end: row.date_stop ?? null },
+      period: {
+        preset: DATE_PRESET,
+        start: rows[0]?.date_start ?? null,
+        end: rows.at(-1)?.date_stop ?? rows.at(-1)?.date_start ?? null,
+      },
       averageCost,
       metrics,
+      leadSeries,
       updatedAt: new Date().toISOString(),
     }, 200, 'public, s-maxage=900, stale-while-revalidate=3600')
   } catch (error) {
